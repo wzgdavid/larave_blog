@@ -30,21 +30,28 @@
 </head>
 
     <body>
-        {{-- navbar --}}
-        @include('laravel-authentication-acl::admin.layouts.navbar')
+        <div class="wrapper">
+            {{-- main header --}}
+            @include('laravel-authentication-acl::admin.layouts.navbar')
+        
+            {{--main sidebar--}}
+            @include('laravel-authentication-acl::admin.layouts.main-sidebar')
+            {{--content wrapper--}}
 
-        {{-- content --}}
-        <div class="container-fluid">
-            @yield('container')
+            <div class="container-wrapper">
+                @yield('container')
+            </div>
+
+
+
+            {{-- Start footer scripts --}}
+            @yield('before_footer_scripts')
+
+            {!! HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/jquery-1.10.2.min.js') !!}
+            {!! HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/bootstrap.min.js') !!}
+
+            @yield('footer_scripts')
+            {{-- End footer scripts --}}
         </div>
-
-        {{-- Start footer scripts --}}
-        @yield('before_footer_scripts')
-
-        {!! HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/jquery-1.10.2.min.js') !!}
-        {!! HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/bootstrap.min.js') !!}
-
-        @yield('footer_scripts')
-        {{-- End footer scripts --}}
     </body>
 </html>

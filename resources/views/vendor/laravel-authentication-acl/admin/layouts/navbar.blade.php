@@ -10,13 +10,14 @@
             </button>
         </div>
         <div class="collapse navbar-collapse" id="nav-main-menu">
-            <ul class="nav navbar-nav">
+            <!--<ul class="nav navbar-nav">
                 @if(isset($menu_items))
                     @foreach($menu_items as $item)
                         <li class="{!! LaravelAcl\Library\Views\Helper::get_active_route_name($item->getRoute()) !!}"> <a href="{!! $item->getLink() !!}">{!!$item->getName()!!}</a></li>
                     @endforeach
                 @endif
-            </ul>
+            </ul>-->
+
             <div class="navbar-nav nav navbar-right">
                 <li class="dropdown dropdown-user">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown-profile">

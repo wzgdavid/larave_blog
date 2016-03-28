@@ -1,11 +1,17 @@
 @extends('laravel-authentication-acl::admin.layouts.base')
 
 @section('container')
-    <div class="row-fluid">
-        <div class="col-sm-3 col-md-2 col-xs-12 sidebar">
-            @include('laravel-authentication-acl::admin.layouts.sidebar')
+    <div class="content-wrapper">
+        <div class="content-header">
+        	<ul class="nav navbar-nav">
+                @if(isset($sidebar_items) && $sidebar_items)
+                    @foreach($sidebar_items as $name => $data)
+                        <li class="{!! LaravelAcl\Library\Views\Helper::get_active($data['url']) !!}"><a href="{!! $data['url'] !!}">{!! $data['icon'] !!} {{$name}}</a></li>
+                    @endforeach
+                @endif
+            </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-xs-12 main">
+        <div class="content">
             @yield('content')
         </div>
     </div>
