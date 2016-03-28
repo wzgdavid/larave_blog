@@ -29,10 +29,10 @@
     <![endif]-->
 </head>
 
-    <body>
+    <body class="skin-blue sidebar-mini">
         <div class="wrapper">
             {{-- main header --}}
-            @include('laravel-authentication-acl::admin.layouts.navbar')
+            @include('laravel-authentication-acl::admin.layouts.main-header')
         
             {{--main sidebar--}}
             @include('laravel-authentication-acl::admin.layouts.main-sidebar')
