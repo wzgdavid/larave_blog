@@ -1,12 +1,12 @@
     <aside class="main-sidebar">
-        <section class-"sidebar">
+        <section class="sidebar">
                   <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          @include('laravel-authentication-acl::admin.layouts.partials.avatar', ['size' => 30])
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p><span id="nav-email">{!! isset($logged_user) ? $logged_user->email : 'User' !!}</span></p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>

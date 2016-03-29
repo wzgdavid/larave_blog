@@ -12,7 +12,7 @@
 
     {!! HTML::style('packages/jacopo/laravel-authentication-acl/css/bootstrap.min.css') !!}
     {!! HTML::style('packages/jacopo/laravel-authentication-acl/css/style.css') !!}
-    {!! HTML::style('packages/jacopo/laravel-authentication-acl/css/baselayout.css') !!}
+    <!--{!! HTML::style('packages/jacopo/laravel-authentication-acl/css/baselayout.css') !!}-->
     {!! HTML::style('packages/jacopo/laravel-authentication-acl/css/fonts.css') !!}
     {!! HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css') !!}
     
@@ -31,6 +31,7 @@
 
     <body class="skin-blue sidebar-mini">
         <div class="wrapper">
+            
             {{-- main header --}}
             @include('laravel-authentication-acl::admin.layouts.main-header')
         
@@ -54,6 +55,7 @@
 
             @yield('footer_scripts')
             {{-- End footer scripts --}}
+            
         </div>
     </body>
 </html>
