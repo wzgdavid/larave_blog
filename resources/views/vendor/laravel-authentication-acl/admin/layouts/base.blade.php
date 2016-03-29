@@ -44,6 +44,8 @@
 
 
 
+            @include('laravel-authentication-acl::admin.layouts.control-sidebar')
+
             {{-- Start footer scripts --}}
             @yield('before_footer_scripts')
 
