@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -17,4 +16,68 @@ Route::group(['middleware' => ['web']], function () {
         return view('welcome');
     });
 
+    //Route::get('sitemap', 'SitemapController@sitemap');
+    Route::get('sitemap',['uses'=>'SitemapController@sitemap', App::make("sitemap")]);
+
+});
+
+
+
+Route::get('sitemap2', function(){
+
+    // create new sitemap object
+    $sitemap = App::make("sitemap");
+
+    // set cache key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean)
+    // by default cache is disabled
+    $sitemap->setCache('laravel.sitemap', 100);
+
+    // check if there is cached sitemap and build new only if is not
+    //if (!$sitemap->isCached())
+    {
+         // add item to the sitemap (url, date, priority, freq)
+         $sitemap->add(URL::to('/test'), '2012-08-25T20:10:00+02:00', '1.0', 'daily');
+         //$sitemap->add(URL::to('page'), '2012-08-26T12:30:00+02:00', '0.9', 'monthly');
+
+         // add item with translations (url, date, priority, freq, images, title, translations)
+         $translations = [
+                           ['language' => 'fr', 'url' => URL::to('pageFr')],
+                           ['language' => 'de', 'url' => URL::to('pageDe')],
+                           ['language' => 'bg', 'url' => URL::to('pageBg')],
+                         ];
+         $sitemap->add(URL::to('pageEn'), '2015-06-24T14:30:00+02:00', '0.9', 'monthly', [], null, $translations);
+
+         // add item with images
+         $images = [
+                     ['url' => URL::to('images/pic1.jpg'), 'title' => 'Image title', 'caption' => 'Image caption', 'geo_location' => 'Plovdiv, Bulgaria'],
+                     ['url' => URL::to('images/pic2.jpg'), 'title' => 'Image title2', 'caption' => 'Image caption2'],
+                     ['url' => URL::to('images/pic3.jpg'), 'title' => 'Image title3'],
+                   ];
+         $sitemap->add(URL::to('post-with-images'), '2015-06-24T14:30:00+02:00', '0.9', 'monthly', $images);
+
+         // get all posts from db
+         $users = DB::table('users')->orderBy('created_at', 'desc')->get();
+
+         // add every post to the sitemap
+         foreach ($users as $user)
+         {
+            $sitemap->add($user->name, $user->email, $user->activated, $user->created_at);
+         }
+    }
+    $sitemap->store('xml', 'sitemap');
+    // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
+    return $sitemap->render('xml');
+
+});
+
+
+Route::get('sitemap3', function(){
+
+    // create new sitemap object
+    $sitemap = App::make("sitemap");
+    echo $sitemap;
+    $sitemap->add(URL::to('page2'), '2012-08-26T12:30:00+02:00', '0.9', 'monthly');
+
+    $sitemap->store('xml', 'mysitemap');
+    return $sitemap->render('xml');
 });

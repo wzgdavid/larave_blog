@@ -157,6 +157,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         'LaravelAcl\Authentication\AuthenticationServiceProvider',
+        'Roumen\Sitemap\SitemapServiceProvider',
 
     ],
 
