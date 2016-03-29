@@ -69,3 +69,4 @@
     </div>
   </aside>
   <!-- /.control-sidebar -->
+  <div class="control-sidebar-bg" style="position: fixed;height:auto;"></div>
