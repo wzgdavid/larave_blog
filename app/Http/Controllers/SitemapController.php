@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Roumen\Sitemap\Sitemap;
-
+//use Sentry, Redirect, App, Config, URL;
 class SitemapController extends Controller
 {
 
@@ -19,23 +19,14 @@ class SitemapController extends Controller
         
         $this->sitemap = $sitemap;
     }
-    public function sitemap(Request $request, Sitemap $sitemap)
+    public function sitemap(Request $request)
     {
-            // create new sitemap object
-    	//$sitemap = Sitemap(config('sitemap'));
-
-
-    	// add items to the sitemap (url, date, priority, freq)
-    	$sitemap->add(URL::to('page2'), '2012-08-26T12:30:00+02:00', '0.9', 'monthly');
-    	$sitemap->add(URL::to('page3'), '2012-08-26T12:30:00+02:00', '0.9', 'monthly');
-    	// get all posts from db
-
-    	// add every post to the sitemap
+    // create new sitemap object
+    $sitemap = App::make("sitemap");
     
+    $sitemap->add(URL::to('page2'), '2012-08-26T12:30:00+02:00', '0.9', 'monthly');
 
-    	// generate your sitemap (format, filename)
-    	$sitemap->store('xml', 'mysitemap');
-    	// this will generate file mysitemap.xml to your public folder
-    	return $sitemap->render('xml');
+    $sitemap->store('xml', 'mysitemap');
+    return $sitemap->render('xml');
     }
 }

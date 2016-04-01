@@ -17,7 +17,7 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     //Route::get('sitemap', 'SitemapController@sitemap');
-    Route::get('sitemap',['uses'=>'SitemapController@sitemap', App::make("sitemap")]);
+    Route::get('sitemap',['uses'=>'SitemapController@sitemap']);
 
 });
 
@@ -75,7 +75,7 @@ Route::get('sitemap3', function(){
 
     // create new sitemap object
     $sitemap = App::make("sitemap");
-    echo $sitemap;
+    
     $sitemap->add(URL::to('page2'), '2012-08-26T12:30:00+02:00', '0.9', 'monthly');
 
     $sitemap->store('xml', 'mysitemap');
