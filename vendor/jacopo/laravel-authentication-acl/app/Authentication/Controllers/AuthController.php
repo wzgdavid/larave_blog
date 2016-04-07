@@ -1,7 +1,7 @@
 <?php namespace LaravelAcl\Authentication\Controllers;
 
 use Illuminate\Http\Request;
-use Sentry, Redirect, App, Config, DB;
+use Sentry, Redirect, App, Config, DB, Log;
 use LaravelAcl\Authentication\Validators\ReminderValidator;
 use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
 use LaravelAcl\Authentication\Services\ReminderService;
@@ -32,23 +32,53 @@ class AuthController extends Controller {
     public function postAdminLogin(Request $request)
     {
         list($email, $password, $remember) = $this->getLoginInput($request);
-        try
-        {
-            $this->authenticator->authenticate(array(
+        $users = DB::table('users')->where('email', $email)->get();
+        $user = $users[0];
+        Log::info('user id '.$user->id);
+        if (!isset($user->password) or strlen($user->password)<=1){//old user
+            Log::info('old user ');
+            //$gp = DB::table('users_groups')->where('user_id', $user->id)->where('group_id',1)->get();
+            $gpinfo = DB::select('select * from users_groups where user_id = ? and group_id = 1', [$user->id]);
+            //Log::info('group info  '.$gpinfo[0]->user_id.'  '.$gpinfo[0]->group_id);
+            if(isset($gpinfo[0])){
+                Log::info('group info found');
+                if($this->check_password($password, $user->password_old)){
+                    Log::info('passwordchecked');
+                $this->authenticator->authenticate(array(
                                                 "email" => $email,
                                                 "password" => $password
                                              ), $remember);
-        }
-        catch(JacopoExceptionsInterface $e)
-        {
-            $errors = $this->authenticator->getErrors();
-            return redirect()->route("user.admin.login")->withInput()->withErrors($errors);
-        }
+                    return redirect()->route('dashboard.default');
+                    
+                }else{
+                //check failed
+                    Log::info('passwordcheck failed');
+                    return redirect()->route("user.admin.login");
+                }
+            }else{
+                Log::info('not admin user');
+                return redirect()->route("user.admin.login");
+            }
+            
+        }else{
+            Log::info('new user ');
+            try
+            {
+                $this->authenticator->authenticate(array(
+                                                "email" => $email,
+                                                "password" => $password
+                                             ), $remember);
+            }
+            catch(JacopoExceptionsInterface $e)
+            {
+                $errors = $this->authenticator->getErrors();
+                return redirect()->route("user.admin.login")->withInput()->withErrors($errors);
+            }
 
-        return redirect()->route('dashboard.default');
+            return redirect()->route('dashboard.default');
+        }
     }
 
-    //  wzg coding start ----------------------
     private function pbkdf2($p, $s, $c, $dk_len, $algo = 'sha1') {
 
     // experimentally determine h_len for the algorithm in question
@@ -75,6 +105,7 @@ class AuthController extends Controller {
     private function check_password($raw_password, $encoded){
         #$encoded = 'pbkdf2_sha256$12000$sISLZL4fiqDX$RByE+rrWa89cOwuVqedK7abA3dj52i5XLCJp0DexZh4=';
         #$encoded = 'pbkdf2_sha256$12000$k4m0cjBwlqpo$d5OZEAwCrcflBmjFhFcypG16U2QIMwJ+9yNT8B3YW1M=';
+        $rtn = false;
         $list = explode('$',$encoded);
         $salt = $list[2];
         $iterate = intval($list[1]);
@@ -83,37 +114,36 @@ class AuthController extends Controller {
         $hash2 = base64_encode($hash);
         $raw_encoded = 'pbkdf2_sha256$'.strval($iterate).'$'.$salt.'$'.$hash2;
         //echo $hash2;
+ 
         if ($raw_encoded == $encoded) {
-            return 1;
-        }else{
-            return 0;
+            $rtn = true;
         }
+   
+        return $rtn;
     }
 
-    //  wzg coding end ----------------------
     public function postClientLogin(Request $request)
     {
         list($email, $password, $remember) = $this->getLoginInput($request);
-        
-        // wzg coding start ----------------------
+        //$users = DB::select('select * from users where email = ?;', [$email]);
+        $users = DB::table('users')->where('email', $email)->get();
+        $user = $users[0];
 
-        $users = DB::select('select * from users where email = ?;', [$email]);
-
-        //if (isset($users[0]->password_old)){
-        //$password_old = $users[0]->password_old;
-        if (!isset($users[0]->password) or strlen($users[0]->password)<=1){
+        if (!isset($user->password) or strlen($user->password)<=1){ //old user
             //return redirect()->route("user.admin.login");
-            if($this->check_password($password, $users[0]->password_old)){
+            if($this->check_password($password, $user->password_old)){
+                $this->authenticator->authenticate(array(
+                                                    "email" => $email,
+                                                    "password" => $password
+                                               ), $remember);
                 return Redirect::to(Config::get('acl_base.user_login_redirect_url'));
             }else{
+                //check failed
                 return redirect()->route("user.login");
             }
-
-
             
         }else{
     
-        // wzg coding   end  ----------------------
         try
         {
             $this->authenticator->authenticate(array(
@@ -185,7 +215,7 @@ class AuthController extends Controller {
         $email = $request->get('email');
         $token = $request->get('token');
         $password = $request->get('password');
-
+        //Log::info('reset password : '.$password);
         if (! $this->reminder_validator->validate($request->all()) )
         {
           return redirect()->route("user.change-password")->withErrors($this->reminder_validator->getErrors())->withInput();
