@@ -43,10 +43,10 @@ return array(
     | This option allows you to specify the default hasher used by Sentry
     |
     | Supported: "native", "bcrypt", "sha256", "whirlpool"
-    |
+    | wzg add : 'pbkdf2_sha256'
     */
-
-    'hasher' => 'sha256',
+    //'hasher' => 'sha256',
+    'hasher' => 'pbkdf2_sha256',
 
     /*
     |--------------------------------------------------------------------------
