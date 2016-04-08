@@ -99,6 +99,94 @@ Admin area: Edit user profile
                             {!! Form::text('address', null, ['class' => 'form-control', 'placeholder' => '']) !!}
                         </div>
                         <span class="text-danger">{!! $errors->first('address') !!}</span>
+
+        <!-- mugshot text field -->
+                        <div class="form-group">
+                            {!! Form::label('mugshot','mugshot:') !!}
+                            {!! Form::text('mugshot', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('mugshot') !!}</span>
+        <!-- privacy text field -->
+                        <div class="form-group">
+                            {!! Form::label('privacy','privacy:') !!}
+                            {!! Form::text('privacy', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('privacy') !!}</span>
+                                <!-- housing_uid text field -->
+                        <div class="form-group">
+                            {!! Form::label('housing_uid','housing_uid:') !!}
+                            {!! Form::text('housing_uid', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('housing_uid') !!}</span>
+                                <!-- company_name text field -->
+                        <div class="form-group">
+                            {!! Form::label('company_name','company_name:') !!}
+                            {!! Form::text('company_name', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('company_name') !!}</span>
+                                <!-- live_area text field -->
+                        <div class="form-group">
+                            {!! Form::label('live_area','live_area:') !!}
+                            {!! Form::text('live_area', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('live_area') !!}</span>
+                                <!-- come_from text field -->
+                        <div class="form-group">
+                            {!! Form::label('come_from','come_from:') !!}
+                            {!! Form::text('come_from', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('come_from') !!}</span>
+                                <!-- come_reason text field -->
+                        <div class="form-group">
+                            {!! Form::label('come_reason','come_reason:') !!}
+                            {!! Form::text('come_reason', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('come_reason') !!}</span>
+                                <!-- gender text field -->
+                        <div class="form-group">
+                            {!! Form::label('gender','gender:') !!}
+                            {!! Form::text('gender', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('gender') !!}</span>
+                                <!-- marital text field -->
+                        <div class="form-group">
+                            {!! Form::label('marital','marital:') !!}
+                            {!! Form::text('marital', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('marital') !!}</span>
+                                <!-- kids text field -->
+                        <div class="form-group">
+                            {!! Form::label('kids','kids:') !!}
+                            {!! Form::text('kids', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('kids') !!}</span>
+                                <!-- birthday text field -->
+                        <div class="form-group">
+                            {!! Form::label('birthday','birthday:') !!}
+                            {!! Form::text('birthday', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('birthday') !!}</span>
+                                <!-- is_bussiness text field -->
+                        <div class="form-group">
+                            {!! Form::label('is_bussiness','is_bussiness:') !!}
+                            {!! Form::text('is_bussiness', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('is_bussiness') !!}</span>
+        <!-- is_paid_for_classifieds text field -->
+                        <div class="form-group">
+                            {!! Form::label('is_paid_for_classifieds','is_paid_for_classifieds:') !!}
+                            {!! Form::text('is_paid_for_classifieds', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('is_paid_for_classifieds') !!}</span>
+                                <!-- is_approved text field -->
+                        <div class="form-group">
+                            {!! Form::label('is_approved','is_approved:') !!}
+                            {!! Form::text('is_approved', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('is_approved') !!}</span>
+
+
+
                         {{-- custom profile fields --}}
                         @foreach($custom_profile->getAllTypesWithValues() as $profile_data)
                         <div class="form-group">

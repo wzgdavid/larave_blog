@@ -24,7 +24,21 @@ class UserProfile extends BaseModel
         'zip',
         'code',
         'address',
-        'avatar'
+        'avatar',
+        'mugshot',
+        'privacy',
+        'housing_uid',
+        'company_name',
+        'live_area',
+        'come_from',
+        'come_reason',
+        'gender',
+        'marital',
+        'kids',
+        'birthday',
+        'is_bussiness',
+        'is_paid_for_classifieds',
+        'is_approved'
     ];
 
     protected $guarded = ["id"];
