@@ -23,7 +23,7 @@ use Cartalyst\Sentry\Groups\Eloquent\Provider as GroupProvider;
 use Cartalyst\Sentry\Hashing\BcryptHasher;
 use Cartalyst\Sentry\Hashing\NativeHasher;
 use Cartalyst\Sentry\Hashing\Sha256Hasher;
-use Cartalyst\Sentry\Hashing\Pbkdf2_Sha256Hasher;
+use Cartalyst\Sentry\Hashing\Pbkdf2Sha256Hasher;
 use Cartalyst\Sentry\Hashing\WhirlpoolHasher;
 use Cartalyst\Sentry\Sentry;
 use Cartalyst\Sentry\Sessions\IlluminateSession;
@@ -92,7 +92,7 @@ class SentryServiceProvider extends ServiceProvider {
 					break;
 
 				case 'pbkdf2_sha256':
-					return new Pbkdf2_Sha256Hasher;
+					return new Pbkdf2Sha256Hasher;
 					break;
 
 				case 'whirlpool':

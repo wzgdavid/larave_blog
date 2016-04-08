@@ -32,36 +32,7 @@ class AuthController extends Controller {
     public function postAdminLogin(Request $request)
     {
         list($email, $password, $remember) = $this->getLoginInput($request);
-        $users = DB::table('users')->where('email', $email)->get();
-        $user = $users[0];
-        Log::info('user id '.$user->id);
-        if (!isset($user->password) or strlen($user->password)<=1){//old user
-            Log::info('old user ');
-            //$gp = DB::table('users_groups')->where('user_id', $user->id)->where('group_id',1)->get();
-            $gpinfo = DB::select('select * from users_groups where user_id = ? and group_id = 1', [$user->id]);
-            //Log::info('group info  '.$gpinfo[0]->user_id.'  '.$gpinfo[0]->group_id);
-            if(isset($gpinfo[0])){
-                Log::info('group info found');
-                if($this->check_password($password, $user->password_old)){
-                    Log::info('passwordchecked');
-                $this->authenticator->authenticate(array(
-                                                "email" => $email,
-                                                "password" => $password
-                                             ), $remember);
-                    return redirect()->route('dashboard.default');
-                    
-                }else{
-                //check failed
-                    Log::info('passwordcheck failed');
-                    return redirect()->route("user.admin.login");
-                }
-            }else{
-                Log::info('not admin user');
-                return redirect()->route("user.admin.login");
-            }
-            
-        }else{
-            Log::info('new user ');
+        
             try
             {
                 $this->authenticator->authenticate(array(
@@ -76,73 +47,15 @@ class AuthController extends Controller {
             }
 
             return redirect()->route('dashboard.default');
-        }
-    }
-
-    private function pbkdf2($p, $s, $c, $dk_len, $algo = 'sha1') {
-
-    // experimentally determine h_len for the algorithm in question
-        static $lengths;
-        if (!isset($lengths[$algo])) { $lengths[$algo] = strlen(hash($algo, null, true)); }    
-        $h_len = $lengths[$algo];
-    
-        if ($dk_len > (pow(2, 32) - 1) * $h_len) {
-            return false; // derived key is too long
-        } else {
-            $l = ceil($dk_len / $h_len); // number of derived key blocks to compute
-            $t = null;
-            for ($i = 1; $i <= $l; $i++) {
-                $f = $u = hash_hmac($algo, $s . pack('N', $i), $p, true); // first iterate
-                for ($j = 1; $j < $c; $j++) {
-                    $f ^= ($u = hash_hmac($algo, $u, $p, true)); // xor each iterate
-                }
-                $t .= $f; // concatenate blocks of the derived key
-            }
-            return substr($t, 0, $dk_len); // return the derived key of correct length
-        }
 
     }
-    private function check_password($raw_password, $encoded){
-        #$encoded = 'pbkdf2_sha256$12000$sISLZL4fiqDX$RByE+rrWa89cOwuVqedK7abA3dj52i5XLCJp0DexZh4=';
-        #$encoded = 'pbkdf2_sha256$12000$k4m0cjBwlqpo$d5OZEAwCrcflBmjFhFcypG16U2QIMwJ+9yNT8B3YW1M=';
-        $rtn = false;
-        $list = explode('$',$encoded);
-        $salt = $list[2];
-        $iterate = intval($list[1]);
 
-        $hash = $this->pbkdf2($raw_password, $salt, $iterate, 32,$algo = 'sha256');
-        $hash2 = base64_encode($hash);
-        $raw_encoded = 'pbkdf2_sha256$'.strval($iterate).'$'.$salt.'$'.$hash2;
-        //echo $hash2;
- 
-        if ($raw_encoded == $encoded) {
-            $rtn = true;
-        }
-   
-        return $rtn;
-    }
 
     public function postClientLogin(Request $request)
     {
-        list($email, $password, $remember) = $this->getLoginInput($request);
-        //$users = DB::select('select * from users where email = ?;', [$email]);
-        $users = DB::table('users')->where('email', $email)->get();
-        $user = $users[0];
 
-        if (!isset($user->password) or strlen($user->password)<=1){ //old user
-            //return redirect()->route("user.admin.login");
-            if($this->check_password($password, $user->password_old)){
-                $this->authenticator->authenticate(array(
-                                                    "email" => $email,
-                                                    "password" => $password
-                                               ), $remember);
-                return Redirect::to(Config::get('acl_base.user_login_redirect_url'));
-            }else{
-                //check failed
-                return redirect()->route("user.login");
-            }
-            
-        }else{
+        list($email, $password, $remember) = $this->getLoginInput($request);
+        
     
         try
         {
@@ -158,7 +71,7 @@ class AuthController extends Controller {
         }
 
         return Redirect::to(Config::get('acl_base.user_login_redirect_url'));
-        }
+        
     }
 
     /**
