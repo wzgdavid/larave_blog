@@ -25,7 +25,7 @@ def get_user_data():
     cur.execute('''
     select * from auth_user join accounts_myprofile 
     on auth_user.id = accounts_myprofile.user_id
-    limit 5;
+    limit 20;
         ''')
     rows = cur.fetchall() 
 
@@ -46,7 +46,7 @@ def save_user_to_mysql(rows):
         userrow.append(row[0]) # 0 id 
         userrow.append(row[4]) # 1 name
         userrow.append(row[7]) # 2 email
-        userrow.append('') # 3 password
+        userrow.append(row[1]) # 3 password
         userrow.append(1) if row[9] is True else userrow.append(0) # 5 activated
         userrow.append(0)      # 6 banned
         r2 = row[2]
@@ -59,11 +59,11 @@ def save_user_to_mysql(rows):
         created_at = datetime.datetime(r10.year, r10.month, r10.day, r10.hour, r10.minute, r10.second)
         created_at = created_at.strftime('%Y-%m-%d %H:%M:%S')
         userrow.append(created_at) #  13 created_at
-        userrow.append(row[1]) # 16 password_old
+        #userrow.append(row[1]) # 16 password_old
 
         sql = '''
-            insert into users(id, name, email, password, activated, banned,last_login,protected, created_at,password_old) 
-                       values(%d, '%s', '%s',  '%s',     %s,        %d,    '%s',        %d,        '%s',        '%s')
+            insert into users(id, name, email, password, activated, banned,last_login,protected, created_at) 
+                       values(%d, '%s', '%s',  '%s',     %s,        %d,    '%s',        %d,        '%s')
         ''' % tuple(userrow)
         
         cur.execute(sql) 
