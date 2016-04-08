@@ -163,28 +163,30 @@ Admin area: Edit user profile
                                 <!-- birthday text field -->
                         <div class="form-group">
                             {!! Form::label('birthday','birthday:') !!}
-                            {!! Form::text('birthday', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                            {!! Form::date('birthday', null, ['class' => 'form-control', 'placeholder' => '']) !!}
                         </div>
                         <span class="text-danger">{!! $errors->first('birthday') !!}</span>
-                                <!-- is_bussiness text field -->
+                                <!-- is_bussiness text field 
                         <div class="form-group">
                             {!! Form::label('is_bussiness','is_bussiness:') !!}
                             {!! Form::text('is_bussiness', null, ['class' => 'form-control', 'placeholder' => '']) !!}
                         </div>
-                        <span class="text-danger">{!! $errors->first('is_bussiness') !!}</span>
+                        <span class="text-danger">{!! $errors->first('is_bussiness') !!}</span>-->
+<!-- is_bussiness text field -->
+                        <div class="form-group">
+                        {!! Form::label("is_bussiness","is_bussiness: ") !!}
+                        {!! Form::select('is_bussiness', ["1" => "Yes", "0" => "No"], (isset($user_profile->is_bussiness) && $user_profile->is_bussiness) ? $user_profile->is_bussiness : "0", ["class"=> "form-control"] ) !!}
+                        </div>
         <!-- is_paid_for_classifieds text field -->
                         <div class="form-group">
-                            {!! Form::label('is_paid_for_classifieds','is_paid_for_classifieds:') !!}
-                            {!! Form::text('is_paid_for_classifieds', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        {!! Form::label("is_paid_for_classifieds","is_paid_for_classifieds: ") !!}
+                        {!! Form::select('is_paid_for_classifieds', ["1" => "Yes", "0" => "No"], (isset($user_profile->is_paid_for_classifieds) && $user_profile->is_paid_for_classifieds) ? $user_profile->is_paid_for_classifieds : "0", ["class"=> "form-control"] ) !!}
                         </div>
-                        <span class="text-danger">{!! $errors->first('is_paid_for_classifieds') !!}</span>
                                 <!-- is_approved text field -->
                         <div class="form-group">
-                            {!! Form::label('is_approved','is_approved:') !!}
-                            {!! Form::text('is_approved', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                        {!! Form::label("is_approved","is_approved: ") !!}
+                        {!! Form::select('is_approved', ["1" => "Yes", "0" => "No"], (isset($user_profile->is_approved) && $user_profile->is_approved) ? $user_profile->is_approved : "0", ["class"=> "form-control"] ) !!}
                         </div>
-                        <span class="text-danger">{!! $errors->first('is_approved') !!}</span>
-
 
 
                         {{-- custom profile fields --}}
