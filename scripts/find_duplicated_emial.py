@@ -8,10 +8,12 @@ shanghaiexpat 中有些用命令创建的superuser,所以导致了有些email不
 '''
 
 from collections import Counter
-from django.contrib.auth.models import User;
+from django.contrib.auth.models import User
+
 
 users = User.objects.all()
 emails = []
+users2 = [] # users no email
 for user in users:
     if len(user.email) > 0:
         emails.append(user.email)
@@ -20,4 +22,14 @@ cnt = Counter()
 for email in emails:
     cnt[email] += 1
 
-cnt.most_common(538)
+cnt.most_common(10)
+
+
+for user in users:
+    if len(user.email)<=1:
+        users2.append(user)
+# the users have no email is not the instance of User
+for user in users:
+    if not isinstance(users[2], User):
+        users2.append(user)
+
