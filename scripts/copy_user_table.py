@@ -15,8 +15,6 @@ psycopg2_conn = psycopg2.connect(
 
 
 
-
-
 mysql_conn= MySQLdb.connect(
         host='localhost',
         port = 3306,
