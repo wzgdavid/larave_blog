@@ -9,10 +9,13 @@ shanghaiexpat 中有些用命令创建的superuser,所以导致了有些email不
 
 from collections import Counter
 from django.contrib.auth.models import User;
+
 users = User.objects.all()
 emails = []
 for user in users:
-    emails.append(user.email)
+    if len(user.email) > 0:
+        emails.append(user.email)
+
 cnt = Counter()
 for email in emails:
     cnt[email] += 1
