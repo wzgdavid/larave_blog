@@ -107,9 +107,14 @@ mysql> describe user_profile; 						  account_myprofile table
 ALTER TABLE users ADD COLUMN password_old VARCHAR(255);
 
 试验时复原laravel的mysql表
+命令行
 DELETE FROM users where id not in (3,4);
 delete from users_groups where user_id not in (3,4);
 delete from user_profile where user_id not in (3,4);
+MySQL界面
+DELETE FROM blog.users where id not in (3,4);
+delete from blog.users_groups where user_id not in (3,4);
+delete from blog.user_profile where user_id not in (3,4);
 
 看log
 david@ubuntu:~/blog$ tail -f storage/laravel.log

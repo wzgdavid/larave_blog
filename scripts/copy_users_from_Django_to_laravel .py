@@ -10,13 +10,7 @@ psycopg2_conn = psycopg2.connect(
         host="localhost", 
         port="5432"
     ) '''
-psycopg2_conn = psycopg2.connect(
-        database="expat", 
-        user="ringier", 
-        password="1qaz,2wsx", 
-        host="expat-posgres-0327.cps3uyndw5ab.ap-northeast-1.rds.amazonaws.com", 
-        port="5432"
-    ) 
+
 mysql_conn= MySQLdb.connect(
         host='localhost',
         port = 3306,
@@ -134,9 +128,19 @@ def save_user_to_mysql(rows):
     mysql_conn.close()
 #save_user_to_mysql(None)
 
+def find_duplicated_emial():
+    '''
+    shanghaiexpat 中有些用命令创建的superuser,所以导致了有些email不唯一
+    找出这些email ，可能需要手动删掉
+
+    '''
+
+
+    pass
 
 
 if __name__ == '__main__':
-    rows=get_user_data()
-    save_user_to_mysql(rows)
+    #rows=get_user_data()
+    #save_user_to_mysql(rows)
+
     pass
