@@ -2,6 +2,7 @@ import psycopg2
 import MySQLdb
 import datetime, time
 
+# copy users  from Django to laravel
 '''
 psycopg2_conn = psycopg2.connect(
         database="expat", 
