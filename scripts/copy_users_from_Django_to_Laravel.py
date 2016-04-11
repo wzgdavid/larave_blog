@@ -10,13 +10,7 @@ psycopg2_conn = psycopg2.connect(
         host="localhost", 
         port="5432"
     ) '''
-psycopg2_conn = psycopg2.connect(
-        database="expat", 
-        user="ringier", 
-        password="1qaz,2wsx", 
-        host="expat-posgres-0327.cps3uyndw5ab.ap-northeast-1.rds.amazonaws.com", 
-        port="5432"
-    ) 
+
 mysql_conn= MySQLdb.connect(
         host='localhost',
         port = 3306,
