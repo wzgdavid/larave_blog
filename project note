@@ -117,3 +117,8 @@ david@ubuntu:~/blog$ tail -f storage/laravel.log
 //把/config/app.php里面的aliases项利用PHP库函数class_alias创建别名，从此，我们可以使用App::make('app')方式取得实例
 
 user_profile 来自expat各字段的值在 expat.accounts.constant.py 中
+
+从ShanghaiExpat（正式） 导出某个表
+pg_dump -h expat-posgres-0327.cps3uyndw5ab.ap-northeast-1.rds.amazonaws.com -U ringier expat  -t auth_user >~/expat.auth_user.sql
+
+        
