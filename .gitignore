@@ -5,4 +5,4 @@ Homestead.yaml
 Homestead.json
 .env
 scripts/copy_users_table.py
-/scripts
+scripts

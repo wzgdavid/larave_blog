@@ -46,7 +46,7 @@ for one in users3:
         profile = MyProfile.objects.get(user=one)
 
 
-# 名字带有__rent 且没有在那之后登录过
+# 名字带有__rent 且没有在那之后登录过 sdfsd
 a = datetime.datetime(2014, 11, 21, 0, 0, 0)
 users3 = User.objects.filter(username__contains="__rent", last_login__lt=a)#;len(users3)
 for i, user in enumerate(users3[:]):
