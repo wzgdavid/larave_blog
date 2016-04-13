@@ -130,4 +130,15 @@ user_profile 来自expat各字段的值在 expat.accounts.constant.py 中
 从ShanghaiExpat（正式） 导出某个表
 pg_dump -h expat-posgres-0327.cps3uyndw5ab.ap-northeast-1.rds.amazonaws.com -U ringier expat  -t auth_user >~/expat.auth_user.sql
 
+重复的emails
+[(u'dina.vonjisoa@ringierchina.com', 3),
+ (u'963022960@qq.com', 2),
+ (u'milena_dim92@yahoo.com', 2),
+ (u'chicgabriela@yahoo.com', 2),
+ (u'alexandrer.liu@gmail.com', 2),
+ (u'annycheng95@yahoo.com', 2),
+ (u'kuhntelak@yahoo.com', 2),
+ (u'events@sproutlifestyle.com', 2),
+ (u'elizabeth@flexa.com.cn', 2),
+
         
