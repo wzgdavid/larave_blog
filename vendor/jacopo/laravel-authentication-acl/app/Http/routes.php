@@ -104,17 +104,21 @@ Route::group(['middleware' => ['web']], function ()
       |--------------------------------------------------------------------------
       |
       */
-        Route::get('/user/profile/edit', [
-                'as'   => 'userprofile.edit',
-                'uses' => 'LaravelAcl\Authentication\Controllers\AuthController@editProfile'
-        ]);
-        Route::post('/user/profile/edit', [
-                'as'   => 'userprofile.edit',
-                'uses' => 'LaravelAcl\Authentication\Controllers\AuthController@postEditProfile'
-        ]);
+
     Route::group(['middleware' => ['logged', 'can_see']], function ()
     {
-
+        Route::get('/test', [
+            'as'   => 'userprofile.test',
+            'uses' => 'LaravelAcl\Authentication\Controllers\AuthController@test'
+        ]);
+        Route::get('/user/profile/edit', [
+            'as'   => 'userprofile.edit',
+            'uses' => 'LaravelAcl\Authentication\Controllers\AuthController@editProfile'
+        ]);
+        Route::post('/user/profile/edit', [
+            'as'   => 'userprofile.edit',
+            'uses' => 'LaravelAcl\Authentication\Controllers\AuthController@postEditProfile'
+        ]);
 
     });
 

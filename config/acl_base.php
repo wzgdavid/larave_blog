@@ -45,7 +45,7 @@ return [
   | The user/login redirection url
   |
   */
-  "user_login_redirect_url" => "/",
+  "user_login_redirect_url" => "/test",
 
   /*
   |--------------------------------------------------------------------------

@@ -1,0 +1,140 @@
+
+
+html,body {
+	height:100%;
+}
+
+
+#footer-main {
+	background:#161616;
+	margin-top:35px;
+	color:#fff;
+	clear:both;
+	z-index:5;
+	position:relative;
+	bottom:-20px;
+}
+#footer-widgets {
+	padding:40px 0 25px;
+}
+#footer-links {
+	background:#000;
+	padding:10px 0;
+}
+#footer-links ul {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+#footer-links ul li {
+	display:inline-block;
+	margin:5px 0;
+	border-right:1px solid rgba(255,255,255,.3);
+	font-family:'GothamLight';
+	font-size:14px;
+}
+#footer-links ul li:last-child {
+	border-right:0;
+}
+#footer-links ul li  a {
+	padding:0 18px 0 15px;
+	color:#fff;
+	text-decoration:none;
+	transition:color .25s ease-out;
+}
+#footer-links ul li  a:hover {
+	color:#28afff;
+	text-decoration:none;
+}
+.copyright {
+	padding:10px 0;
+	color:#ddd;
+	font-size:12px;
+}
+.ft-cw-logo {
+	padding:5px 15px 5px 0;
+	float:left;
+	margin-right:0px;
+}
+.ft-cw-logo img {
+	max-width:115px;
+}
+.ft-cw-brief {
+	text-align:justify;
+}
+#footer-widgets h3,#footer-widgets  h4 {
+	color:#fff;
+	border-bottom:1px solid #2b2b2b;
+	padding-bottom:6px;
+	margin:0 0 15px 0;
+}
+.cw-newsletter-sub {
+	background:#fff;
+	padding:15px;
+	margin:30px 0 20px;
+	text-align:center;
+	color:#555;
+	border:5px solid #e5e5e5;
+	position:relative;
+}
+.cw-newsletter-sub h4 {
+	color:#555555 !important;
+	border-bottom:0 !important;
+}
+.cw-newsletter-sub  .signup-badge {
+	position:absolute;
+	top:-10px;
+	left:-10px;
+	z-index:10;
+}
+.ft-links {
+	margin:0;
+	padding:0;
+}
+.ft-links li {
+	margin:10px 0;
+	padding:0;
+	list-style:none;
+	display:block;
+	float:left;
+	width:100%;
+}
+.ft-links li a {
+	color:#fff;
+	text-decoration:none;
+	transition:color .25s ease-out;
+	line-height:20px;
+	padding:3px 0;
+}
+.ft-links li a:hover {
+	color:#28afff;
+	text-decoration:none;
+}
+.social-ul {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+.social-ul li {
+	margin:10px 0;
+	list-style:none;
+	padding:0;
+	float:left;
+	display:black;
+	width:50%;
+}
+.social-icon {
+	display:inline-block;
+	position:relative;
+	height:28px;
+	width:115px;
+	line-height:28px;
+	color:#fff;
+	text-align:center;
+	-moz-border-radius:32px;
+	text-align:left;
+	-webkit-border-radius:32px;
+	border-radius:32px;
+	-webkit-transition:background-color 250ms ease-in-out;
+	transition:background-color 250ms ease-in-out;
+}

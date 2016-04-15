@@ -1,0 +1,72 @@
+#main-container{
+	width: 80%;
+	max-width: 920px;
+}
+.row{
+	/*border: 1px dotted red;*/
+}
+.vote-header{
+	text-align: center;
+}
+.votediv{
+	height: 180px;
+	padding: 2px;
+	/*border: 1px solid red;*/
+}
+
+.vote-btn{
+    position: absolute;
+    top: 150px;
+}
+
+.vote-nums{
+
+    position: absolute;
+    top: 160px;
+    left: 100px;
+    width: 30px;
+    background-color: #f78;
+    text-align: center;
+}
+.banner{
+	background-color: yellow;
+}
+
+.sidebar{
+	/*border: 1px solid blue;*/
+	height: 180px; 
+	width: 100%;
+}
+
+.stitle{
+	color:white;
+	background-color: red;
+	text-align: center;
+}
+.person_info{
+	float:left;
+}
+.personimg{
+    height:60px;
+    width:60px;
+}
+.side-article{
+	/*border: 1px solid blue;*/
+	height: 540px;
+}
+
+.content-footer{
+	width: 92%;
+	margin: 0px auto;
+}
+
+#sponsors{
+	border: 1px solid green;
+	background-color: white;
+}
+
+.logo{
+	height: 180px;
+	padding: 2px;
+	/*border: 1px solid red;*/
+}
