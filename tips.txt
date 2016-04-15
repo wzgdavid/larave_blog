@@ -1,0 +1,148 @@
+全局变量， 可以在views中取得比如{{ app('path') }}， 或直接取得app('path')
+app_path()        -----/home/david/vote/app   同app('path')
+config_path()      -----/home/david/vote/config
+config_path('auth')-----/home/david/vote/config/auth
+
+django 密码加密代码， 但怎么解码？
+vim /home/david/.virtualenvs/expat/local/lib/python2.7/site-packages/django/contrib/auth/hashers.py
+
+
+
+mysql> describe users;
++---------------------+------------------+------+-----+---------+----------------+
+| Field               | Type             | Null | Key | Default | Extra          |auth_user table
++---------------------+------------------+------+-----+---------+----------------+
+| id                  | int(10) unsigned | NO   | PRI | NULL    | auto_increment |id
+| name                | varchar(255)     | NO   |     | NULL    |                |username
+| email               | varchar(255)     | NO   | UNI | NULL    |                |email
+| password            | varchar(255)     | NO   |     | NULL    |                |
+| permissions         | text             | YES  |     | NULL    |                |
+| activated           | tinyint(1)       | NO   |     | 0       |                |is_active
+| banned              | tinyint(1)       | NO   |     | 0       |                |
+| activation_code     | varchar(255)     | YES  | MUL | NULL    |                |
+| activated_at        | timestamp        | YES  |     | NULL    |                |
+| last_login          | timestamp        | YES  |     | NULL    |                |last_login 
+| persist_code        | varchar(255)     | YES  |     | NULL    |                |
+| reset_password_code | varchar(255)     | YES  | MUL | NULL    |                |
+| protected           | tinyint(1)       | NO   |     | 0       |                |
+| created_at          | timestamp        | YES  |     | NULL    |                |date_joined
+| updated_at          | timestamp        | YES  |     | NULL    |                |
+| remember_token      | varchar(100)     | YES  |     | NULL    |                |
+| password_old        | varchar(255)     | NO   |     | NULL    |                |password
++---------------------+------------------+------+-----+---------+----------------+
+ users_groups 								is_staff,is_superuser
+                                                                        last_name, first_name
+
+
+
+mysql> describe user_profile; 						  account_myprofile table
++------------+------------------+------+-----+---------+----------------+
+| Field      | Type             | Null | Key | Default | Extra          |
++------------+------------------+------+-----+---------+----------------+
+| id         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |id
+| user_id    | int(10) unsigned | NO   | MUL | NULL    |                |user_id
+| code       | varchar(25)      | YES  |     | NULL    |                |
+| vat        | varchar(20)      | YES  |     | NULL    |                |
+| first_name | varchar(50)      | YES  |     | NULL    |                |auth_user.first_name
+| last_name  | varchar(50)      | YES  |     | NULL    |                |auth_user.last_name
+| phone      | varchar(20)      | YES  |     | NULL    |                |phone
+| state      | varchar(20)      | YES  |     | NULL    |                |
+| city       | varchar(50)      | YES  |     | NULL    |                |
+| country    | varchar(50)      | YES  |     | NULL    |                |
+| zip        | varchar(20)      | YES  |     | NULL    |                |
+| address    | varchar(100)     | YES  |     | NULL    |                |address
+| avatar     | blob             | YES  |     | NULL    |                |
+| created_at | timestamp        | YES  |     | NULL    |                |auth_user.date_joined
+| updated_at | timestamp        | YES  |     | NULL    |                |	
++------------+------------------+------+-----+---------+----------------+
+									 mugshot     varchar(100)
+									privacy      varchar(15)
+									housing_uid  int
+									company_name varchar(500)
+									live_area  (住上海哪个区) int 
+									come_from  （来自哪国）   int
+									come_reason   int
+									gender  int
+									marital  int
+									kids     int
+									birthday  date
+									is_bussiness   bool
+									is_paid_for_classifieds  bool
+  									is_approved    bool
+
+
++-------------------------+------------------+------+-----+---------+----------------+
+| Field                   | Type             | Null | Key | Default | Extra          |
++-------------------------+------------------+------+-----+---------+----------------+
+| id                      | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| user_id                 | int(10) unsigned | NO   | MUL | NULL    |                |
+| code                    | varchar(25)      | YES  |     | NULL    |                |
+| vat                     | varchar(20)      | YES  |     | NULL    |                |
+| first_name              | varchar(50)      | YES  |     | NULL    |                |
+| last_name               | varchar(50)      | YES  |     | NULL    |                |
+| phone                   | varchar(20)      | YES  |     | NULL    |                |
+| state                   | varchar(20)      | YES  |     | NULL    |                |
+| city                    | varchar(50)      | YES  |     | NULL    |                |
+| country                 | varchar(50)      | YES  |     | NULL    |                |
+| zip                     | varchar(20)      | YES  |     | NULL    |                |
+| address                 | varchar(100)     | YES  |     | NULL    |                |
+| avatar                  | blob             | YES  |     | NULL    |                |
+| created_at              | timestamp        | YES  |     | NULL    |                |
+| updated_at              | timestamp        | YES  |     | NULL    |                |
+| mugshot                 | varchar(255)     | YES  |     | NULL    |                |
+| privacy                 | varchar(15)      | YES  |     | NULL    |                |
+| company_name            | varchar(500)     | YES  |     | NULL    |                |
+| housing_uid             | int(11)          | YES  |     | NULL    |                |
+| live_area               | int(11)          | YES  |     | NULL    |                |
+| come_from               | int(11)          | YES  |     | NULL    |                |
+| come_reason             | int(11)          | YES  |     | NULL    |                |
+| gender                  | int(11)          | YES  |     | NULL    |                |
+| marital                 | int(11)          | YES  |     | NULL    |                |
+| kids                    | int(11)          | YES  |     | NULL    |                |
+| is_bussiness            | tinyint(1)       | YES  |     | NULL    |                |
+| is_paid_for_classifieds | tinyint(1)       | YES  |     | NULL    |                |
+| is_approved             | tinyint(1)       | YES  |     | NULL    |                |
+| birthday                | date             | YES  |     | NULL    |                |
++-------------------------+------------------+------+-----+---------+----------------+
+
+
+
+
+ALTER TABLE users ADD COLUMN password_old VARCHAR(255);
+
+试验时复原laravel的mysql表
+命令行
+DELETE FROM users where id not in (3,4);
+delete from users_groups where user_id not in (3,4);
+delete from user_profile where user_id not in (3,4);
+MySQL界面
+DELETE FROM blog.users where id not in (3,4);
+delete from blog.users_groups where user_id not in (3,4);
+delete from blog.user_profile where user_id not in (3,4);
+
+看log
+david@ubuntu:~/blog$ tail -f storage/logs/laravel.log
+在需要打log的文件中
+use Log;
+然后
+Log::info(xxx);
+
+//把/config/app.php里面的aliases项利用PHP库函数class_alias创建别名，从此，我们可以使用App::make('app')方式取得实例
+
+user_profile 来自expat各字段的值在 expat.accounts.constant.py 中
+
+从ShanghaiExpat导出某个表
+pg_dump -h hostip -U ringier expat  -t auth_user >~/expat.auth_user.sql
+
+重复的emails
+[(u'dina.vonjisoa@ringierchina.com', 3),
+ (u'963022960@qq.com', 2),
+ (u'milena_dim92@yahoo.com', 2),
+ (u'chicgabriela@yahoo.com', 2),
+ (u'alexandrer.liu@gmail.com', 2),
+ (u'annycheng95@yahoo.com', 2),
+ (u'kuhntelak@yahoo.com', 2),
+ (u'events@sproutlifestyle.com', 2),
+ (u'elizabeth@flexa.com.cn', 2),
+
+        
