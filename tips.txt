@@ -133,6 +133,8 @@ user_profile 来自expat各字段的值在 expat.accounts.constant.py 中
 
 从ShanghaiExpat导出某个表
 pg_dump -h hostip -U ringier expat  -t auth_user >~/expat.auth_user.sql
+导入表
+psql -U david postgres <~/expat.auth_user.sql
 
 重复的emails
 [(u'dina.vonjisoa@ringierchina.com', 3),
@@ -144,5 +146,11 @@ pg_dump -h hostip -U ringier expat  -t auth_user >~/expat.auth_user.sql
  (u'kuhntelak@yahoo.com', 2),
  (u'events@sproutlifestyle.com', 2),
  (u'elizabeth@flexa.com.cn', 2),
+
+查重复email的rows
+select * from auth_user 
+where email in (select email from auth_user group by email having count(email) > 1) 
+table中email有大小写之分，应该不分大小写，只要字母一样都算重复
+select *  from auth_user  where LOWER(email) in (select LOWER(email) from auth_user group by LOWER(email) having count(LOWER(email)) > 1)  order by email
 
         

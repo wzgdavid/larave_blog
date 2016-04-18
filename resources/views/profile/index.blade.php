@@ -26,11 +26,13 @@
                 </div>
             </div>
             <div class="panel-body">
+                <!--
                 <div class="row">
                     <div class="col-md-12">
                         <a href="{!! URL::route('users.edit',['id' => $user_profile->user_id]) !!}" class="btn btn-info pull-right"><i class="fa fa-pencil-square-o"></i> Edit user</a>
                     </div>
                 </div>
+                -->
                 <div class="row">
                     <div class="col-md-6 col-xs-12">
 

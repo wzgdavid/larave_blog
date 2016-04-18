@@ -78,42 +78,7 @@ class AuthController extends Controller {
     }
 
 
-    public function editUser(Request $request)
-    {
-        try
-        {
-            $user = $this->user_repository->find($request->get('id'));
-        } catch(JacopoExceptionsInterface $e)
-        {
-            $user = new User;
-        }
-        $presenter = new UserPresenter($user);
 
-        return View::make('laravel-authentication-acl::admin.user.edit')->with(["user" => $user, "presenter" => $presenter]);
-    }
-
-    public function postEditUser(Request $request)
-    {
-        $id = $request->get('id');
-
-        DbHelper::startTransaction();
-        try
-        {
-            $user = $this->f->process($request->all());
-            $this->profile_repository->attachEmptyProfile($user);
-        } catch(JacopoExceptionsInterface $e)
-        {
-            DbHelper::rollback();
-            $errors = $this->f->getErrors();
-            // passing the id incase fails editing an already existing item
-            return Redirect::route("users.edit", $id ? ["id" => $id] : [])->withInput()->withErrors($errors);
-        }
-
-        DbHelper::commit();
-
-        return Redirect::route('users.edit', ["id" => $user->id])
-                       ->withMessage(Config::get('acl_messages.flash.success.user_edit_success'));
-    }
 
     public function test(Request $request)
     {                                                
@@ -122,49 +87,22 @@ class AuthController extends Controller {
 
     }
 
-    public function editProfile(Request $request)
+    public function editProfile2(Request $request)
     {
-        $user_id = $request->get('user_id');
-        Log::info('user id ----------------- '.$user_id.'====');
-        $user_id = '3';
-        try
-        {
-            $user_profile = $this->profile_repository->getFromUserId($user_id);
-        } catch(UserNotFoundException $e)
-        {
-            return Redirect::route('users.list')
-                           ->withErrors(new MessageBag(['model' => Config::get('acl_messages.flash.error.user_user_not_found')]));
-        } catch(ProfileNotFoundException $e)
-        {
-            $user_profile = new UserProfile(["user_id" => $user_id]);
-        }
+        //for client user
+        //$user_id = $request->get('user_id');
+        //Log::info('user id ----------------- '.$user_id.'====');
+
+        $logged_user = $this->authenticator->getLoggedUser();
+
+        $user_id = $logged_user->user_profile()->first()->id;
+        $user_profile = $logged_user->user_profile()->first();
         $custom_profile_repo = App::make('custom_profile_repository', [$user_profile->id]);
 
         return view('profile.index', [
-                                    'user_profile'   => $user_profile,
-                                    "custom_profile" => $custom_profile_repo
+                                    "user_profile"   => $user_profile,
+                                  "custom_profile" => $custom_profile_repo
                                                                                   ]);
-    }
-
-
-    public function postEditProfile(Request $request)
-    {
-        $input = $request->all();
-        $service = new UserProfileService($this->profile_validator);
-
-        try
-        {
-            $service->processForm($input);
-        } catch(JacopoExceptionsInterface $e)
-        {
-            $errors = $service->getErrors();
-            return Redirect::back()
-                           ->withInput()
-                           ->withErrors($errors);
-        }
-        return Redirect::back()
-                       ->withInput()
-                       ->withMessage(Config::get('acl_messages.flash.success.user_profile_edit_success'));
     }
 
 

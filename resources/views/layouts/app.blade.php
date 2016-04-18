@@ -103,7 +103,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{!! URL::route('users.selfprofile.edit') !!}"><i class="fa fa-user"></i> Your profile</a>
+                                    <a href="{!! URL::route('userprofile.edit') !!}"><i class="fa fa-user"></i> Your profile</a>
                                 </li>
                                 <li class="divider">asdf</li>
                                 <li>
