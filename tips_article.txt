@@ -1,0 +1,49 @@
+原来django中有5个表，
+article_article
+article_articleauthor
+article_articlecategory
+article_articlepic
+article_articletype
+看下来只要拷前三个表，拷到laravel中的表名为
+article_article ---> article
+article_articleauthor ---> article_author
+article_articlecategory  --->  article_category
+
+拷article表时，有些datetime_publish的时间是0001年，会出错，做一下修改
+update article_article set datetime_publish =now()  where datetime_publish < now() - interval '10 years'
+
+从postgres中导出数据到csv中
+1--件文件，给权限
+david@ubuntu:~$ vim limit.csv
+david@ubuntu:~$ chmod 777 limit.csv
+2--超级用户postgres， 密码postgres 登录
+运行sql
+COPY (SELECT * FROM article_article limit 50) TO '/home/david/myfile.csv' WITH CSV HEADER;
+3--把导出的csv文件的第一行（culomn名删了）
+csv导入mysql
+mysql 是从 /var/lib/mysql/blog （blog是数据库名）这个目录下读文件的，所以把csv放到此目录下
+然后在mysql运行sql命令：
+load data infile 'myfile.csv' 
+into table blog.article
+fields terminated by ',' optionally enclosed by '"' escaped by '"' 
+lines terminated by '\n'; 
+
+***问题
+postgres中boolean是用true和false表示
+但mysql中是用1和0表示，直接导入的话在mysql中都是显示0
+
+
+****when export from postgres
+1  need to login postgres by a root user, the username is postgres
+2  create the new csv file,and chmod 777 it
+3  run the sql below
+COPY (SELECT * FROM article_article limit 50) TO '/home/david/xxx.csv' WITH CSV HEADER;
+4  delete the first line in the exported CSV file (the first line is column name, if not delete the line will be copied to mysql table)
+5 the boolean value in postgres is t and f,but in mysql is 1 and 0 (tinyint),it will not be transformed 	automaticly, so need do something to change the t and f to 1 and 0 in the CSV
+****when import to mysql
+1 mysql read the file from folder /var/lib/mysql/databasename, copy the CSV to /var/lib/mysql/databasename/xxx.csv
+2 run the sql in mysql
+load data infile 'xxx.csv' 
+into table databasename.article
+fields terminated by ',' optionally enclosed by '"' escaped by '"' 
+lines terminated by '\n'; 
