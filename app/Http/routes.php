@@ -87,3 +87,9 @@ Route::get('sitemap3', function(){
 
 
 Route::get('/article', 'ArticleController@index');
+Route::get('/admin/article/list', 'ArticleController@admin_list');
+
+Route::get('/admin/article/list2', [
+        'middleware' => 'has_perm:_superadmin,_group-editor',
+        'uses' => 'ArticleController@admin_list',
+]);

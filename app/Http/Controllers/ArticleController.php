@@ -22,4 +22,13 @@ class ArticleController extends Controller
             //'user' => $user,
         ]);
     }
+
+    public function admin_list(Request $request)
+    {
+        
+        return view('article.admin_list', [
+            'article' => Article::find(7899),
+            //'user' => $user,
+        ]);
+    }
 }

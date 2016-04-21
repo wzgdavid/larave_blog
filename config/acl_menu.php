@@ -71,5 +71,12 @@ return [
                 "permissions" => []
             ],
 
+            [
+                    "name"        => "Article",
+                    "route"       => "article",
+                    "link"        => '/admin/article/list',
+                    "permissions" => ["_superadmin","_group-editor"]
+            ],
+
     ]
 ];

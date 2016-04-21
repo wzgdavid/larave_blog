@@ -53,7 +53,7 @@ postgres中boolean是用true和false表示 （在csv中是t和f）
 2----导入后用py脚本导入布尔值 
 
 
-****when export from postgres
+****when export from postgresql
 0----  change some title with ';', (in csv if the title have a ';' it will be separate to two columns)
 update article_article set title =  'China’s Copycats: Online vs. Offline.' where id=7939;
 update article_article set title =  'Web browsers used most in China: how this impacts online campaigns.' where id=7804;
@@ -86,7 +86,7 @@ my way is import the origin csv data first, then update the boolean values by a 
 **** when write the Laravel Eloquent model
 1----modify the date_created and date_modified to created_at and updated_at
 alter table blog.article change column date_created created_at timestamp;
-
+alter table blog.article change column date_modified updated_at timestamp;
 一些sql
 #delete FROM blog.article where id>0;
 看column是否对齐
