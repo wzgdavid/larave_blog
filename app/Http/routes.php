@@ -81,3 +81,9 @@ Route::get('sitemap3', function(){
     $sitemap->store('xml', 'mysitemap');
     return $sitemap->render('xml');
 });
+
+
+
+
+
+Route::get('/article', 'ArticleController@index');

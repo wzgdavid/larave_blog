@@ -33,8 +33,7 @@ select * from article_article where title like '%;%';
 太多了，不列举了，什么情况？？
 拷到mysql中后没影响的，但把t和f通过py脚本改掉之后，不行了
 **想出个解决方法
-   1 先别改t和f，导入mysql中，然后通过py脚本光导t f  的列  
-   2 或者索性手动改试试（不行）
+
 3----超级用户postgres， 密码postgres 登录
 运行sql
 COPY (SELECT * FROM article_article limit 50) TO '/home/david/myfile.csv' WITH CSV HEADER;
@@ -55,25 +54,43 @@ postgres中boolean是用true和false表示 （在csv中是t和f）
 
 
 ****when export from postgres
-1  need to login postgres by a root user, the username is postgres
-2  create the new csv file,and chmod 777 it
-3  run the sql below
-COPY (SELECT * FROM article_article limit 50) TO '/home/david/xxx.csv' WITH CSV HEADER;
-4  delete the first line in the exported CSV file (the first line is column name, if not delete the line will be copied to mysql table)
+0----  change some title with ';', (in csv if the title have a ';' it will be separate to two columns)
+update article_article set title =  'China’s Copycats: Online vs. Offline.' where id=7939;
+update article_article set title =  'Web browsers used most in China: how this impacts online campaigns.' where id=7804;
+update article_article set title =  'Web browsers used most in China: how this impacts online campaigns.' where id=7926;
+update article_article set title =  'Douban.com: China’s Amazon/Digg Hybrid Social Media Network.' where id=7973;
+update article_article set title ='“China average daily salary is RMB 111.99???”: Chinese netizens challenge government statistics.	' where id=8029;
+update article_article set title =  'China Telecom: Becoming the telephone version of Google.' where id=8072;
+update article_article set title =  'The Rich Tighten Pockets: Online Shopping is New Obsession' where id=8169;
+update article_article set title =  'The Good, The Bad And The Foreigner: Learning To Accept Myself Through The Eyes Of Others.' where id=7541;
+update article_article set title =  'Johnson & Johnson: Big girls don’t cry… or let their bones break.' where id=8066;
+select * from article_article where title like '%;%';
+1----  need to login postgres by a root user, the username is postgres
+2----  create the new csv file,and chmod 777 it
+3----  run the sql below
+COPY (SELECT * FROM article_article) TO '/home/david/xxx.csv' WITH CSV HEADER;
+4----  delete the first line in the exported CSV file (the first line is column name, if not delete the line will be copied to mysql table)
 
 
 ****when import to mysql
-1 mysql read the file from folder /var/lib/mysql/databasename, copy the CSV to /var/lib/mysql/databasename/xxx.csv
-2 run the sql in mysql
+1---- mysql read the file from folder /var/lib/mysql/databasename, so copy the CSV to /var/lib/mysql/databasename/xxx.csv
+2---- run the sql in mysql
 load data infile 'xxx.csv' 
 into table databasename.article
 fields terminated by ',' optionally enclosed by '"' escaped by '"' 
 lines terminated by '\n'; 
-3 the boolean value in postgres is t and f,but in mysql is 1 and 0 (tinyint),it will not be transformed 	automaticly, so need do something to change the t and f to 1 and 0 in the CSV.
+3---- the boolean value in postgres is t and f,but in mysql is 1 and 0 (tinyint),it will not be transformed 	automaticly, so need do something to change the t and f to 1 and 0 in the CSV.
 but modify the boolean in csv will make some column not correct.
-my way is import the data first, then update the boolean by id.
+my way is import the origin csv data first, then update the boolean values by a script(I write a py script)
+
+**** when write the Laravel Eloquent model
+1----modify the date_created and date_modified to created_at and updated_at
+alter table blog.article change column date_created created_at timestamp;
 
 一些sql
 #delete FROM blog.article where id>0;
 看column是否对齐
 select * FROM blog.article where id in (8029 ,10691,  10099, 8810, 8936, 8939 , 10126 ,10128 ,10222 ,9217 ,9178,7898,7899)
+
+
+拷贝table好了，接下来写article的model
