@@ -51,7 +51,7 @@ lines terminated by '\n';
 postgres中boolean是用true和false表示 （在csv中是t和f）
 但mysql中是用1和0（tinyint）表示，直接导入的话在mysql中都是显示0
 把t和f改成1和0
-
+2----导入后用py脚本导入布尔值 
 
 
 ****when export from postgres
@@ -60,7 +60,8 @@ postgres中boolean是用true和false表示 （在csv中是t和f）
 3  run the sql below
 COPY (SELECT * FROM article_article limit 50) TO '/home/david/xxx.csv' WITH CSV HEADER;
 4  delete the first line in the exported CSV file (the first line is column name, if not delete the line will be copied to mysql table)
-5 the boolean value in postgres is t and f,but in mysql is 1 and 0 (tinyint),it will not be transformed 	automaticly, so need do something to change the t and f to 1 and 0 in the CSV
+
+
 ****when import to mysql
 1 mysql read the file from folder /var/lib/mysql/databasename, copy the CSV to /var/lib/mysql/databasename/xxx.csv
 2 run the sql in mysql
@@ -68,3 +69,11 @@ load data infile 'xxx.csv'
 into table databasename.article
 fields terminated by ',' optionally enclosed by '"' escaped by '"' 
 lines terminated by '\n'; 
+3 the boolean value in postgres is t and f,but in mysql is 1 and 0 (tinyint),it will not be transformed 	automaticly, so need do something to change the t and f to 1 and 0 in the CSV.
+but modify the boolean in csv will make some column not correct.
+my way is import the data first, then update the boolean by id.
+
+一些sql
+#delete FROM blog.article where id>0;
+看column是否对齐
+select * FROM blog.article where id in (8029 ,10691,  10099, 8810, 8936, 8939 , 10126 ,10128 ,10222 ,9217 ,9178,7898,7899)
