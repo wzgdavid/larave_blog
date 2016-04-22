@@ -25,11 +25,19 @@ class ArticleController extends Controller
 
     public function admin_list(Request $request)
     {
-        Log::info('admin_list----------------------------');
+        /*Log::info('admin_list----------------------------');
         Log::info($request);
-        Log::info('admin_list----------------------------');
+        Log::info('admin_list----------------------------');*/
+
+
+        //$articles = Article::all();
+        // too many data ,so for easy (for temp
+        $articles = Article::take(20)->get(); 
+        /*$articles = Article::orderBy('author_id', 'desc')
+               ->take(50)
+               ->get();*/
         return view('article.admin_list', [
-            'article' => Article::find(7899),
+            'articles' => $articles,
             //'user' => $user,
             "request" => $request,
         ]);

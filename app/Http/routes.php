@@ -89,16 +89,31 @@ Route::get('sitemap3', function(){
 Route::get('/article', 'ArticleController@index');
 //Route::get('/admin/article/list', 'ArticleController@admin_list');
 
+
+
 Route::group(['middleware' => ['web']], function ()
 {
     Route::group(['middleware' => ['admin_logged', 'can_see']], function ()
     {
         Route::get('/admin/article/list', [
-            'middleware' => 'has_perm:_superadmin',
+            'middleware' => 'has_perm:_superadmin,_group-editor',
             'uses' => 'ArticleController@admin_list',
+            'as' => 'admin.article.list',
         ]);
 
-        
+        Route::get('/admin/article/edit', [
+                'as'   => 'admin.article.edit',
+                'uses' => 'ArticleController@edit_article',
+        ]);
+        Route::post('/admin/article/edit', [
+                'as'   => 'admin.article.edit',
+                'uses' => 'ArticleController@article_edit_post'
+        ]);
+        Route::get('/admin/article/delete', [
+                'as'   => 'admin.article.delete',
+                'uses' => 'ArticleController@delete_article'
+        ]);
+
 
     });
 

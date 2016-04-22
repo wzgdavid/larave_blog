@@ -84,10 +84,7 @@ but modify the boolean in csv will make some column not correct.
 my way is import the origin csv data first, then update the boolean values by a script(I write a py script)
 
 **** when write the Laravel Eloquent model（改成created_at 和 updated_at）
-1----modify the date_created and date_modified to created_at and updated_at, and type to timestamp
-alter table blog.article change column date_created created_at timestamp;
-alter table blog.article change column date_modified updated_at timestamp;
-
+用laravel的migrate
 
 一些sql
 #delete FROM blog.article where id>0;
@@ -98,5 +95,11 @@ alter table blog.article add column is_in_sitemap tinyint(1) default 0;
 加proofread列  （语法检测）
 alter table blog.article add column is_proofread tinyint(1) default 0;
 
+1----modify the date_created and date_modified to created_at and updated_at, and type to timestamp
+alter table blog.article change column date_created created_at timestamp;
+alter table blog.article change column date_modified updated_at timestamp;
+ 改回来
+alter table blog.article change column created_at date_created datetime;
+alter table blog.article change column updated_at date_modified datetime;
 
 拷贝table好了，接下来写article的model

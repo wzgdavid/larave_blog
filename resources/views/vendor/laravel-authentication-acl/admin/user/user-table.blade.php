@@ -4,6 +4,7 @@
     </div>
     <div class="panel-body">
         <div class="row">
+            <!--
             <div class="col-lg-10 col-md-9 col-sm-9">
                 {!! Form::open(['method' => 'get', 'class' => 'form-inline']) !!}
                     <div class="form-group">
@@ -17,6 +18,7 @@
                     </div>
                 {!! Form::close() !!}
             </div>
+            -->
             <div class="col-lg-2 col-md-3 col-sm-3">
                     <a href="{!! URL::route('users.edit') !!}" class="btn btn-info"><i class="fa fa-plus"></i> Add New</a>
             </div>
