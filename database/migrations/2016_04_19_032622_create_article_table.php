@@ -19,8 +19,8 @@ class CreateArticleTable extends Migration
             $table->boolean('is_welcome')->default(0);
             $table->integer('category_id');
             $table->integer('user_id');
-            $table->datetime('date_created');
-            $table->datetime('date_modified');
+            $table->datetime('date_created');// change to created_at
+            $table->datetime('date_modified'); // updated_at
             $table->string('title', 200);
             $table->text('subtitle')->nullable();
             $table->text('content')->nullable();
