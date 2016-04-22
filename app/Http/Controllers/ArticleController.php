@@ -42,4 +42,9 @@ class ArticleController extends Controller
             "request" => $request,
         ]);
     }
+
+    public function delete_article(Request $request){
+        Article::destroy($request->input('id'));
+        return redirect('/admin/article/list');
+    }
 }

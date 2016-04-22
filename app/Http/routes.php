@@ -107,7 +107,7 @@ Route::group(['middleware' => ['web']], function ()
         ]);
         Route::post('/admin/article/edit', [
                 'as'   => 'admin.article.edit',
-                'uses' => 'ArticleController@article_edit_post'
+                'uses' => 'ArticleController@post_edit_article'
         ]);
         Route::get('/admin/article/delete', [
                 'as'   => 'admin.article.delete',
