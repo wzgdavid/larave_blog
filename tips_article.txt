@@ -83,14 +83,18 @@ lines terminated by '\n';
 but modify the boolean in csv will make some column not correct.
 my way is import the origin csv data first, then update the boolean values by a script(I write a py script)
 
-**** when write the Laravel Eloquent model
+**** when write the Laravel Eloquent model（改成created_at 和 updated_at）
 1----modify the date_created and date_modified to created_at and updated_at
 alter table blog.article change column date_created created_at timestamp;
 alter table blog.article change column date_modified updated_at timestamp;
+
+
 一些sql
 #delete FROM blog.article where id>0;
 看column是否对齐
 select * FROM blog.article where id in (8029 ,10691,  10099, 8810, 8936, 8939 , 10126 ,10128 ,10222 ,9217 ,9178,7898,7899)
+加add_to_sitemap列
+alter table blog.article modify column is_in_sitemap tinyint(1) default 0;
 
 
 拷贝table好了，接下来写article的model
