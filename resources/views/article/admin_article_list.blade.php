@@ -77,8 +77,8 @@
 
                               <td>
                                   @if(! $article->protected)
-                                      <a href="{!! URL::route('admin.article.edit', ['id' => $article->id]) !!}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                                      <a href="{!! URL::route('admin.article.delete',['id' => $article->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
+                                      <a href="{!! URL::route('admin.article.edit', ['id' => $article->id]) !!}" title='edit'><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                                      <a href="{!! URL::route('admin.article.delete',['id' => $article->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete" title='delete'><i class="fa fa-trash-o fa-2x red"></i></a>
                                   @else
                                       <i class="fa fa-times fa-2x light-blue"></i>
                                       <i class="fa fa-times fa-2x margin-left-12 light-blue"></i>
