@@ -6,12 +6,17 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Article;
-use View, Redirect, App, Config, Log;
+use View, Redirect, App, Config, Log, DB;
+
 
 class ArticleController extends Controller
 {
     //
     protected $auth;
+    public function __construct($config_reader = null)
+    {
+        $this->config_reader = $config_reader ? $config_reader : App::make('config');
+    }
 
     public function index(Request $request)
     {
@@ -25,17 +30,11 @@ class ArticleController extends Controller
 
     public function admin_list(Request $request)
     {
-        /*Log::info('admin_list----------------------------');
-        Log::info($request);
-        Log::info('admin_list----------------------------');*/
+        $results_per_page = $this->config_reader->get('acl_base.rows_per_page');
+        $articles = Article::orderBy('date_created', 'desc')
+               ->take($results_per_page)
+               ->get();
 
-
-        //$articles = Article::all();
-        // too many data ,so for easy (for temp
-        $articles = Article::take(20)->get(); 
-        /*$articles = Article::orderBy('author_id', 'desc')
-               ->take(50)
-               ->get();*/
         return view('article.admin_list', [
             'articles' => $articles,
             //'user' => $user,

@@ -196,7 +196,7 @@ def import_mysql_boolean():
         arow.append(1) if row[6] is True else arow.append(0) # is_homepage_sponsored
         arow.append(1) if row[7] is True else arow.append(0) # is_home_featured
         sql = '''
-        update article set 
+        update articles set 
             is_approved={is_approved}, 
             is_special={is_special}, 
             is_welcome={is_welcome}, 

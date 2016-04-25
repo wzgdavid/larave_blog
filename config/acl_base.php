@@ -47,6 +47,7 @@ return [
   */
   "user_login_redirect_url" => "/test",
 
+
   /*
   |--------------------------------------------------------------------------
   | User per page
@@ -57,6 +58,7 @@ return [
   */
 
   "users_per_page" => 60,
+
 
   /*
   |--------------------------------------------------------------------------
@@ -78,6 +80,7 @@ return [
    |
    */
 
+  'rows_per_page' => 60, //if not set , use rows_per_page
   "captcha_signup" => true,
 
   /*

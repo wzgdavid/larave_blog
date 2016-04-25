@@ -60,6 +60,7 @@
                               <th>Homepage sponsor</th>
                               <th>SH Family show</th>
                               <th>SH Family sponsor</th>
+
                               <th>Operations</th>
                           </tr>
                       </thead>
@@ -69,10 +70,11 @@
                               <td>{!! $article->title !!}</td>
                               <td>{!! $article->get_author() !!}</td>
                               <td>{!! $article->shf_priority !!}</td>
-                              <td>{!! $article->is_home_featured !!}</td>
-                              <td>{!! $article->is_homepage_sponsored !!}</td>
-                              <td>{!! $article->is_shf_featured !!}</td>
-                              <td>{!! $article->is_shf_sponsored !!}</td>
+                              <td>{!! $article->is_home_featured ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>' !!}</td>
+                              <td>{!! $article->is_homepage_sponsored ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>' !!}</td>
+                              <td>{!! $article->is_shf_featured ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>' !!}</td>
+                              <td>{!! $article->is_shf_sponsored ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>' !!}</td>
+
                               <td>
                                   @if(! $article->protected)
                                       <a href="{!! URL::route('admin.article.edit', ['id' => $article->id]) !!}"><i class="fa fa-pencil-square-o fa-2x"></i></a>

@@ -38,6 +38,7 @@ select * from article_article where title like '%;%';
 运行sql
 COPY (SELECT * FROM article_article limit 50) TO '/home/david/myfile.csv' WITH CSV HEADER;
 4--把导出的csv文件的第一行（culomn名删了）
+
 csv导入mysql
 1----mysql 是从 /var/lib/mysql/blog （blog是数据库名）这个目录下读文件的，所以把csv放到此目录下
 然后在mysql运行sql命令：
@@ -83,7 +84,7 @@ lines terminated by '\n';
 but modify the boolean in csv will make some column not correct.
 my way is import the origin csv data first, then update the boolean values by a script(I write a py script)
 
-**** when write the Laravel Eloquent model（改成created_at 和 updated_at）
+
 用laravel的migrate
 
 一些sql
@@ -102,4 +103,45 @@ alter table blog.article change column date_modified updated_at timestamp;
 alter table blog.article change column created_at date_created datetime;
 alter table blog.article change column updated_at date_modified datetime;
 
-拷贝table好了，接下来写article的model
+
+load data infile 'all.csv' 
+into table blog.article
+fields terminated by ',' optionally enclosed by '"' escaped by '"' 
+lines terminated by '\n'; 
+执行上边sql后返回的警告
+10:47:24	load data infile 'all.csv'  into table blog.article fields terminated by ',' optionally enclosed by '"' escaped by '"'  lines terminated by '\n'	4573 row(s) affected, 64 warning(s): 1366 Incorrect integer value: 'id' for column 'id' at row 1 1366 Incorrect integer value: 'is_approved' for column 'is_approved' at row 1 1366 Incorrect integer value: 'is_special' for column 'is_special' at row 1 1366 Incorrect integer value: 'is_welcome' for column 'is_welcome' at row 1 1366 Incorrect integer value: 'category_id' for column 'category_id' at row 1 1366 Incorrect integer value: 'user_id' for column 'user_id' at row 1 1264 Out of range value for column 'date_created' at row 1 1264 Out of range value for column 'date_modified' at row 1 1366 Incorrect integer value: 'nid' for column 'nid' at row 1 1366 Incorrect integer value: 'is_shf_featured' for column 'is_shf_featured' at row 1 1366 Incorrect integer value: 'is_shf_sponsored' for column 'is_shf_sponsored' at row 1 1366 Incorrect integer value: 'is_homepage_sponsored' for column 'is_homepage_sponsored' at row 1 1366 Incorrect integer value: 'author_id' for column 'author_id' at row 1 1366 Incorrect integer value: 'shf_priority' for column 'shf_priority' at row 1 1366 Incorrect integer value: 'is_home_featured' for column 'is_home_featured' at row 1 1264 Out of range value for column 'datetime_publish' at row 1 1264 Out of range value for column 'datetime_unpublish' at row 1 1261 Row 1 doesn't contain data for all columns 1366 Incorrect integer value: 't' for column 'is_approved' at row 2 1366 Incorrect integer value: 'f' for column 'is_special' at row 2 1366 Incorrect integer value: 'f' for column 'is_welcome' at row 2 1264 Out of range value for column 'date_created' at row 2 1264 Out of range value for column 'date_modified' at row 2 1366 Incorrect integer value: 'f' for column 'is_shf_featured' at row 2 1366 Incorrect integer value: 'f' for column 'is_shf_sponsored' at row 2 1366 Incorrect integer value: 'f' for column 'is_homepage_sponsored' at row 2 1366 Incorrect integer value: 't' for column 'is_home_featured' at row 2 1264 Out of range value for column 'datetime_publish' at row 2 1264 Out of range value for column 'datetime_unpublish' at row 2 1261 Row 2 doesn't contain data for all columns 1366 Incorrect integer value: 't' for column 'is_approved' at row 3 1366 Incorrect integer value: 'f' for column 'is_special' at row 3 1366 Incorrect integer value: 'f' for column 'is_welcome' at row 3 1264 Out of range value for column 'date_created' at row 3 1264 Out of range value for column 'date_modified' at row 3 1366 Incorrect integer value: 'f' for column 'is_shf_featured' at row 3 1366 Incorrect integer value: 'f' for column 'is_shf_sponsored' at row 3 1366 Incorrect integer value: 'f' for column 'is_homepage_sponsored' at row 3 1366 Incorrect integer value: 't' for column 'is_home_featured' at row 3 1264 Out of range value for column 'datetime_publish' at row 3 1264 Out of range value for column 'datetime_unpublish' at row 3 1261 Row 3 doesn't contain data for all columns 1366 Incorrect integer value: 't' for column 'is_approved' at row 4 1366 Incorrect integer value: 'f' for column 'is_special' at row 4 1366 Incorrect integer value: 'f' for column 'is_welcome' at row 4 1264 Out of range value for column 'date_created' at row 4 1264 Out of range value for column 'date_modified' at row 4 1366 Incorrect integer value: 'f' for column 'is_shf_featured' at row 4 1366 Incorrect integer value: 'f' for column 'is_shf_sponsored' at row 4 1366 Incorrect integer value: 'f' for column 'is_homepage_sponsored' at row 4 1366 Incorrect integer value: 't' for column 'is_home_featured' at row 4 1264 Out of range value for column 'datetime_publish' at row 4 1264 Out of range value for column 'datetime_unpublish' at row 4 1261 Row 4 doesn't contain data for all columns 1366 Incorrect integer value: 't' for column 'is_approved' at row 5 1366 Incorrect integer value: 'f' for column 'is_special' at row 5 1366 Incorrect integer value: 'f' for column 'is_welcome' at row 5 1264 Out of range value for column 'date_created' at row 5 1264 Out of range value for column 'date_modified' at row 5 1366 Incorrect integer value: 'f' for column 'is_shf_featured' at row 5 1366 Incorrect integer value: 'f' for column 'is_shf_sponsored' at row 5 1366 Incorrect integer value: 'f' for column 'is_homepage_sponsored' at row 5 1366 Incorrect integer value: 'f' for column 'is_home_featured' at row 5 1264 Out of range value for column 'datetime_publish' at row 5 Records: 4573  Deleted: 0  Skipped: 0  Warnings: 55129	10.819 sec
+
+
+----------------------------------------------------
+10:54:01	load data infile 'all.csv'  into table blog.article fields terminated by ',' optionally enclosed by '"' escaped by '"'  lines terminated by '\n'	4572 row(s) affected, 64 warning(s): 
+1366 Incorrect integer value: 't' for column 'is_approved' at row 1 
+1366 Incorrect integer value: 'f' for column 'is_special' at row 1 
+1366 Incorrect integer value: 'f' for column 'is_welcome' at row 1 
+1264 Out of range value for column 'date_created' at row 1 1264 Out of range value for column 'date_modified' at row 1 1366 Incorrect integer value: 'f' for column 'is_shf_featured' at row 1 
+1366 Incorrect integer value: 'f' for column 'is_shf_sponsored' at row 1 
+1366 Incorrect integer value: 'f' for column 'is_homepage_sponsored' at row 1 
+1366 Incorrect integer value: 't' for column 'is_home_featured' at row 1 
+1264 Out of range value for column 'datetime_publish' at row 1 
+1264 Out of range value for column 'datetime_unpublish' at row 1 
+1366 Incorrect integer value: '' for column 'is_proofread' at row 1 
+1262 Row 1 was truncated; it contained more data than there were input columns 
+
+1366 Incorrect integer value: 't' for column 'is_approved' at row 2 
+1366 Incorrect integer value: 'f' for column 'is_special' at row 2 
+1366 Incorrect integer value: 'f' for column 'is_welcome' at row 2 
+1264 Out of range value for column 'date_created' at row 2 
+1264 Out of range value for column 'date_modified' at row 2 
+1366 Incorrect integer value: 'f' for column 'is_shf_featured' at row 2 
+1366 Incorrect integer value: 'f' for column 'is_shf_sponsored' at row 2 
+1366 Incorrect integer value: 'f' for column 'is_homepage_sponsored' at row 2 
+1366 Incorrect integer value: 't' for column 'is_home_featured' at row 2 
+1264 Out of range value for column 'datetime_publish' at row 2 
+1264 Out of range value for column 'datetime_unpublish' at row 2 
+1366 Incorrect integer value: '' for column 'is_proofread' at row 2 
+1262 Row 2 was truncated; it contained more data than there were input columns 
+
+1366 Incorrect integer value: 't' for column 'is_approved' at row 3 1366 Incorrect integer value: 'f' for column 'is_special' at row 3 1366 Incorrect integer value: 'f' for column 'is_welcome' at row 3 1264 Out of range value for column 'date_created' at row 3 1264 Out of range value for column 'date_modified' at row 3 1366 Incorrect integer value: 'f' for column 'is_shf_featured' at row 3 1366 Incorrect integer value: 'f' for column 'is_shf_sponsored' at row 3 1366 Incorrect integer value: 'f' for column 'is_homepage_sponsored' at row 3 1366 Incorrect integer value: 't' for column 'is_home_featured' at row 3 1264 Out of range value for column 'datetime_publish' at row 3 1264 Out of range value for column 'datetime_unpublish' at row 3 1366 Incorrect integer value: '' for column 'is_proofread' at row 3 1262 Row 3 was truncated; it contained more data than there were input columns 1366 Incorrect integer value: 't' for column 'is_approved' at row 4 1366 Incorrect integer value: 'f' for column 'is_special' at row 4 1366 Incorrect integer value: 'f' for column 'is_welcome' at row 4 1264 Out of range value for column 'date_created' at row 4 1264 Out of range value for column 'date_modified' at row 4 1366 Incorrect integer value: 'f' for column 'is_shf_featured' at row 4 1366 Incorrect integer value: 'f' for column 'is_shf_sponsored' at row 4 1366 Incorrect integer value: 'f' for column 'is_homepage_sponsored' at row 4 1366 Incorrect integer value: 'f' for column 'is_home_featured' at row 4 1264 Out of range value for column 'datetime_publish' at row 4 1264 Out of range value for column 'datetime_unpublish' at row 4 1366 Incorrect integer value: '' for column 'is_proofread' at row 4 1262 Row 4 was truncated; it contained more data than there were input columns 1366 Incorrect integer value: 't' for column 'is_approved' at row 5 1366 Incorrect integer value: 'f' for column 'is_special' at row 5 1366 Incorrect integer value: 'f' for column 'is_welcome' at row 5 1264 Out of range value for column 'date_created' at row 5 1264 Out of range value for column 'date_modified' at row 5 1366 Incorrect integer value: 'f' for column 'is_shf_featured' at row 5 1366 Incorrect integer value: 'f' for column 'is_shf_sponsored' at row 5 1366 Incorrect integer value: 'f' for column 'is_homepage_sponsored' at row 5 1366 Incorrect integer value: 'f' for column 'is_home_featured' at row 5 1264 Out of range value for column 'datetime_publish' at row 5 1264 Out of range value for column 'datetime_unpublish' at row 5 1366 Incorrect integer value: '' for column 'is_proofread' at row 5 Records: 4572  Deleted: 0  Skipped: 0  Warnings: 59886	19.798 sec
+
+
+in Laravel the sql query is not correct,
+

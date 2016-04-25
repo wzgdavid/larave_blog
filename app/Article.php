@@ -7,12 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    protected $table = 'article';
+    //protected $table = 'article';
 
 
     public function get_author()
-    {
-    	$author = ArticleAuthor::find($this->author_id);
-    	return $author->author_name;
+    {   
+    	$aid = $this->author_id;
+    	if ($aid == 0) {
+    		$rtn = '(None)';
+    	}else{
+    		$author = ArticleAuthor::find($aid);
+    		$rtn = $author->author_name;
+        }
+    	return $rtn;
     }
 }
