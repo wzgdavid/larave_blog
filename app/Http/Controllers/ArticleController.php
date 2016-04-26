@@ -32,8 +32,8 @@ class ArticleController extends Controller
     public function admin_list(Request $request)
     {
         $results_per_page = $this->config_reader->get('acl_base.rows_per_page');
-        //$articles = Article::orderBy('date_created', 'desc')
-        $articles = Article::orderBy('page_title', 'desc')
+        $articles = Article::orderBy('date_created', 'desc')
+        //$articles = Article::orderBy('page_title', 'desc')
                ->take($results_per_page)
                ->get();
 
@@ -74,9 +74,6 @@ class ArticleController extends Controller
 
         $article = Article::find($id);
         $tags = $request->get('tags');
-        Log::info('---------------------1-');
-        Log::info($tags);
-        Log::info('---------------------2-');
         $article->retag($tags);
         //Event::fire('repository.updating', [$article]);
         $data = $request->all();

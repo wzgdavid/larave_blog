@@ -40,7 +40,11 @@ Admin area: edit article
                                 ], (isset($article->is_welcome) && $article->is_welcome) ? $article->is_welcome : "0" ) !!}
                             {!! Form::label("is_welcome","Welcome Guide: ") !!}
                 </div>
-
+                <!-- priority-->
+                <div class="form-group">
+                    {!! Form::label('priority','priority: ') !!}
+                    {!! Form::number('shf_priority', null, []) !!}
+                </div>
                 <div class="form-group">
                             {!! Form::select('is_home_featured', [
                                 1=>'Yes',
@@ -62,7 +66,7 @@ Admin area: edit article
                                 1=>'Yes',
                                 0=>'No',
                                 ], (isset($article->is_shf_featured) && $article->is_shf_featured) ? $article->is_shf_featured : "0" ) !!}
-                            {!! Form::label("is_shf_featured","Show on ShangHai family ") !!}
+                            {!! Form::label("is_shf_featured","Show on ShangHai Family ") !!}
                 </div>
 
                 <div class="form-group">
@@ -70,7 +74,7 @@ Admin area: edit article
                                 1=>'Yes',
                                 0=>'No',
                                 ], (isset($article->is_shf_sponsored) && $article->is_shf_sponsored) ? $article->is_shf_sponsored : "0" ) !!}
-                            {!! Form::label("is_shf_sponsored","Sponsored on homepage") !!}
+                            {!! Form::label("is_shf_sponsored","Sponsored on ShangHai Family") !!}
                 </div>
 
                 <!-- article title field -->
@@ -110,8 +114,8 @@ Admin area: edit article
                             {!! Form::label("is_proofread","is proofread ") !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::label('tags','tags: ') !!}
-                    {!! Form::text('tags', implode(',', $article->tagNames()), ['class' => 'form-control', 'placeholder' => 'tags']) !!}
+                    {!! Form::label('tags','tags: (for example: tag1,tag2,tag3)') !!}
+                    {!! Form::text('tags', implode(',', $article->tagNames()), ['class' => 'form-control', 'placeholder' => 'tag1,tag2,tag3']) !!}
                 </div>
 
 

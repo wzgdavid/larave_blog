@@ -160,6 +160,7 @@ def copy_article():
     mysql_conn.commit()
     mysql_conn.close()
 
+
 def import_mysql_boolean():
     '''
     postgres中boolean是用true和false表示 （在csv中是t和f）
@@ -223,6 +224,90 @@ def import_mysql_boolean():
     mysql_conn.close()
 
 
+def copy_article_tags():
+
+    '''
+    clear the table
+    delete FROM blog.tagging_tagged where id > 0;delete FROM blog.tagging_tags where id > 0;
+    '''
+    #############
+    #copy tagged item
+    cur = psycopg2_conn.cursor()
+    cur.execute('''
+        select a.id, a.object_id, b.name, b.slug
+        from taggit_taggeditem as a join taggit_tag as b
+                                         on a.tag_id = b.id
+                                         
+
+        ''')
+    rows = cur.fetchall() 
+    #for row in rows:
+    #    print row
+    cur.close()
+    psycopg2_conn.commit()
+
+
+    cur2 = mysql_conn.cursor()
+    for row in rows:
+        row2 = list()
+        row2.append(row[0])
+        row2.append(row[1])
+        row2.append(u'App\\\Article')
+        row2.append(row[2])
+        row2.append(row[3])
+                                  #       a.id    a.object_id   'App\Article'    b.name      b.slug
+        sql = '''
+        insert into tagging_tagged values({id}, {taggable_id}, "{taggable_type}","{tag_name}", '{tag_slug}')        
+
+        '''.format(id=row2[0],
+                   taggable_id=row2[1],
+                   taggable_type=row2[2],
+                   tag_name=row2[3],
+                   tag_slug=row2[4],
+
+            )
+        print sql
+        cur2.execute(sql) 
+    cur2.close()
+    mysql_conn.commit()
+
+    #############
+    #copy tags
+    cur = psycopg2_conn.cursor()
+    cur.execute('''
+        select a.id, a.slug, a.name
+        from taggit_tag as a
+        ''')
+    rows = cur.fetchall() 
+    #for row in rows:
+    #    print row
+    cur.close()
+    psycopg2_conn.commit()
+    psycopg2_conn.close()
+
+    cur2 = mysql_conn.cursor()
+    for row in rows:
+        row2 = list()
+        row2.append(row[0])
+        row2.append(row[1])
+        row2.append(row[2])
+
+                                  #       a.id    a.object_id   'App\Article'    b.name      b.slug
+        sql = '''
+        insert into tagging_tags values({id}, "{slug}", "{name}",0, 1)        
+
+        '''.format(id=row2[0],
+                   slug=row2[1],
+                   name=row2[2],
+
+            )
+        print sql
+        cur2.execute(sql) 
+    cur2.close()
+    mysql_conn.commit()
+    mysql_conn.close()
+
+
 
 
 
@@ -230,8 +315,8 @@ if __name__ == '__main__':
     #copy_category()
     #copy_author()
     #copy_article()
-    import_mysql_boolean()
-
+    #import_mysql_boolean()
+    copy_article_tags()
     pass
 
 
