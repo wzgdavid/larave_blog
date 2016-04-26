@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
 		"jacopo/laravel-authentication-acl": "1.3.*",
-        "roumen/sitemap": "^2.6"
+        "roumen/sitemap": "^2.6",
+        "rtconner/laravel-tagging": "~2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

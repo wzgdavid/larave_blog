@@ -10,7 +10,8 @@ class Article extends Model
     //protected $table = 'article';
     const UPDATED_AT = 'date_modified';
     const CREATED_AT = 'date_created';
-
+    
+    use \Conner\Tagging\Taggable;
 
     protected $fillable = [
         'is_approved',

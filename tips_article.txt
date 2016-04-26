@@ -105,3 +105,5 @@ alter table blog.article change column updated_at date_modified datetime;
 
 
 tags等以后弄
+1 laravel的article 可以tag    OK
+2 expat 的tag表拷到laravel中，格式以后者

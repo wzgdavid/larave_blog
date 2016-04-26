@@ -72,13 +72,18 @@ class ArticleController extends Controller
     {
         $id = $request->get('id');
 
-        $obj = Article::find($id);
-        //Event::fire('repository.updating', [$obj]);
+        $article = Article::find($id);
+        $tags = $request->get('tags');
+        Log::info('---------------------1-');
+        Log::info($tags);
+        Log::info('---------------------2-');
+        $article->retag($tags);
+        //Event::fire('repository.updating', [$article]);
         $data = $request->all();
         //unset($data['_token']);
-        $obj->update($data);
-        //return $obj;
-        return Redirect::route('admin.article.edit',["id" => $obj->id])->withMessage(Config::get('acl_messages.flash.success.article_edit_success'));
+        $article->update($data);
+        //return $article;
+        return Redirect::route('admin.article.edit',["id" => $article->id])->withMessage(Config::get('acl_messages.flash.success.article_edit_success'));
     }
 
 }

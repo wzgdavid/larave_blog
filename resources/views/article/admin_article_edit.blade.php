@@ -109,6 +109,12 @@ Admin area: edit article
                                 ], (isset($article->is_proofread) && $article->is_proofread) ? $article->is_proofread : "0" ) !!}
                             {!! Form::label("is_proofread","is proofread ") !!}
                 </div>
+                <div class="form-group">
+                    {!! Form::label('tags','tags: ') !!}
+                    {!! Form::text('tags', implode(',', $article->tagNames()), ['class' => 'form-control', 'placeholder' => 'tags']) !!}
+                </div>
+
+
                 {!! Form::hidden('id') !!}
                 <a href="{!! URL::route('admin.article.delete',['id' => $article->id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>
                 {!! Form::submit('Save', array("class"=>"btn btn-info pull-right ")) !!}
