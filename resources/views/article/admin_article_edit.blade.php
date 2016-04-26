@@ -81,8 +81,18 @@ Admin area: edit article
                 <span class="text-danger">{!! $errors->first('title') !!}</span>
                 <!-- article subtitle field -->
                 <div class="form-group">
-                    {!! Form::label('subtitle','subtitle: *') !!}
+                    {!! Form::label('subtitle','subtitle: ') !!}
                     {!! Form::text('subtitle', null, ['class' => 'form-control', 'placeholder' => 'subtitle']) !!}
+                </div>
+                <!-- SEO Page Title -->
+                <div class="form-group">
+                    {!! Form::label('page_title','SEO Page Title:') !!}
+                    {!! Form::text('page_title', null, ['class' => 'form-control', 'placeholder' => 'SEO Page Title']) !!}
+                </div>
+                <!-- SEO Metadescription: -->
+                <div class="form-group">
+                    {!! Form::label('meta_description','SEO Metadescription:') !!}
+                    {!! Form::text('meta_description', null, ['class' => 'form-control', 'placeholder' => 'SEO Metadescription']) !!}
                 </div>
                 <span class="text-danger">{!! $errors->first('subtitle') !!}</span>
                 <div class="form-group">

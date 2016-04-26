@@ -32,7 +32,8 @@ class ArticleController extends Controller
     public function admin_list(Request $request)
     {
         $results_per_page = $this->config_reader->get('acl_base.rows_per_page');
-        $articles = Article::orderBy('date_created', 'desc')
+        //$articles = Article::orderBy('date_created', 'desc')
+        $articles = Article::orderBy('page_title', 'desc')
                ->take($results_per_page)
                ->get();
 
