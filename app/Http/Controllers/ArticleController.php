@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Article;
+use App\ArticleAuthor;
 use View, Redirect, App, Config, Log, DB, Event;
-
+use Cartalyst\Sentry\Users\Eloquent\User;
 
 class ArticleController extends Controller
 {
@@ -53,17 +54,50 @@ class ArticleController extends Controller
     {
         try
         {
-            $obj = Article::find($request->get('id'));
+            $article = Article::find($request->get('id'));
         }
         catch(UserNotFoundException $e)
         {
-            $obj = new Article;
+            $article = new Article;
         }
 
-        //return View::make('laravel-authentication-acl::admin.group.edit')->with(["article" => $obj/*, "presenter" => $presenter*/]);
+        try
+        {
+
+            $author = ArticleAuthor::find($article->author_id);
+            if (isset($author)){
+                $author_name = $author->author_name;
+            }else{
+                $author_name = 'no author';
+            }
+           
+        }
+        catch(UserNotFoundException $e)
+        {
+            $author_name = 'no author';
+        }
+
+        try
+        {
+
+            $user = User::find($article->user_id);
+            if (isset($user)){
+                $user_name = $user->name;
+            }else{
+                $user_name = 'no user';
+            }
+           
+        }
+        catch(UserNotFoundException $e)
+        {
+            $user_name = 'no this user';
+        }
+        
         return view('article.admin_article_edit', [
-            'article' => $obj,
+            'article' => $article,
             "request" => $request,
+            'author_name' => $author_name,
+            'user_name' => $user_name,
         ]);
 
     }

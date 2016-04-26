@@ -88,6 +88,16 @@ Admin area: edit article
                     {!! Form::label('subtitle','subtitle: ') !!}
                     {!! Form::text('subtitle', null, ['class' => 'form-control', 'placeholder' => 'subtitle']) !!}
                 </div>
+                <!-- user -->
+                <div class="form-group">
+                    {!! Form::label('user','User: ') !!}
+                    {!! Form::text('user_id', null, []) !!}<span > ( {{ $user_name }} )</span>
+                </div>
+                <!-- author -->
+                <div class="form-group">
+                    {!! Form::label('author','Author: ') !!}
+                    {!! Form::text('author_id', null, []) !!}<span > ( {{ $author_name }} )</span>
+                </div>
                 <!-- SEO Page Title -->
                 <div class="form-group">
                     {!! Form::label('page_title','SEO Page Title:') !!}
