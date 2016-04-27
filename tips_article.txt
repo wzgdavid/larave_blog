@@ -96,16 +96,21 @@ alter table blog.article add column is_in_sitemap tinyint(1) default 0;
 加proofread列  （语法检测）
 alter table blog.article add column is_proofread tinyint(1) default 0;
 
-1----modify the date_created and date_modified to created_at and updated_at, and type to timestamp
-alter table blog.article change column date_created created_at timestamp;
-alter table blog.article change column date_modified updated_at timestamp;
- 改回来
-alter table blog.article change column created_at date_created datetime;
-alter table blog.article change column updated_at date_modified datetime;
 
+
+
+ ForeignKey 问题(原来的expat 表格不遵守外键，先不管)
+ migration 中 做修改， 以后再做的时候直接create中写
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('article_category');
+            $table->integer('author_id')->unsigned();
+            $table->foreign('author_id')->references('id')->on('article_author');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
 
 
 do list
- 做article list 页面的search功能
+1 article edit 的 category
+2 做article list 页面的search功能
 
 

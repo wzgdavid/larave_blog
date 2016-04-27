@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Article;
 use App\ArticleAuthor;
+use App\ArticleCategory;
+use App\ArticleType;
 use View, Redirect, App, Config, Log, DB, Event;
 use Cartalyst\Sentry\Users\Eloquent\User;
 
@@ -26,6 +28,7 @@ class ArticleController extends Controller
         //$user = $request->user();
         return view('article.index', [
             'article' => Article::find(7899),
+            'article_category' => ArticleCategory::find(1),
             //'user' => $user,
         ]);
     }
@@ -52,18 +55,14 @@ class ArticleController extends Controller
 
     public function edit_article(Request $request)
     {
-        try
-        {
+        try{
             $article = Article::find($request->get('id'));
         }
-        catch(UserNotFoundException $e)
-        {
+        catch(UserNotFoundException $e){
             $article = new Article;
         }
 
-        try
-        {
-
+        try{
             $author = ArticleAuthor::find($article->author_id);
             if (isset($author)){
                 $author_name = $author->author_name;
@@ -72,32 +71,53 @@ class ArticleController extends Controller
             }
            
         }
-        catch(UserNotFoundException $e)
-        {
+        catch(UserNotFoundException $e){
             $author_name = 'no author';
         }
 
-        try
-        {
-
+        try{
             $user = User::find($article->user_id);
             if (isset($user)){
                 $user_name = $user->name;
             }else{
                 $user_name = 'no user';
-            }
-           
+            }   
         }
-        catch(UserNotFoundException $e)
-        {
+
+        catch(UserNotFoundException $e){
             $user_name = 'no this user';
         }
+
+        $category_array = array('no category');
         
+        /*$categories = ArticleCategory::all();
+        $types = ArticleType::all();*/
+
+        $categories = DB::table('article_category as a')
+            ->leftJoin('article_type as t', 'a.main_category_id', '=', 't.id')
+            ->leftJoin('article_category as b', 'a.parent_id', '=', 'b.id')
+            ->select('a.*', 'b.name as parent_name', 't.name as type_name')
+            ->orderBy('a.sort', 'asc')
+            ->get();
+        //Log::info('-----------------------------------');
+        foreach ($categories as $c){
+
+            //Log::info($c->type_name.' - '.$c->parent_name.' - '.$c->name);
+            $key = $c->id;
+            $value = $c->type_name.' - '.$c->parent_name.' - '.$c->name;
+            $category_array[$key] = $value;
+        }
+        //Log::info('-----------------------------------');
+
         return view('article.admin_article_edit', [
             'article' => $article,
             "request" => $request,
             'author_name' => $author_name,
             'user_name' => $user_name,
+            /*'category_array' =>[0=>'no category',
+                                1=>'aaa',
+                                2=>'bbb']*/
+            'category_array' =>$category_array,
         ]);
 
     }

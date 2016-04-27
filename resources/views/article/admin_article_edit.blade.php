@@ -93,6 +93,14 @@ Admin area: edit article
                     {!! Form::label('user','User: ') !!}
                     {!! Form::text('user_id', null, []) !!}<span > ( {{ $user_name }} )</span>
                 </div>
+                <!-- category -->
+                <div class="form-group">
+                    {!! Form::label("category","category") !!}
+                    {!! Form::select('category_id', $category_array, 
+                        (isset($article->category_id) && $article->category_id) ? $article->category_id : "0" ) !!}
+                            
+                </div>
+
                 <!-- author -->
                 <div class="form-group">
                     {!! Form::label('author','Author: ') !!}
