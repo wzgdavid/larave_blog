@@ -145,14 +145,11 @@ class ArticleController extends Controller
     public function changepic(Request $request){
         $file = $request->file('file');
         $id = $request->get('article_id');
-        Log::info('---------------------------------111');
+        /*Log::info('---------------------------------111');
         Log::info($id);
-        Log::info('---------------------------------111');
+        Log::info('---------------------------------111');*/
         $article = Article::find($id);
-        //echo $file.'</br>';
-        //$file->move($destinationPath, $fileName);
 
-        //Storage::delete($article->pic);
         if($file -> isValid()){
             $originalName = $file -> getClientOriginalName();
             $extension = $file -> getClientOriginalExtension(); //上传文件的后缀.
@@ -166,9 +163,7 @@ class ArticleController extends Controller
             $article->update([
                 'pic' => $pic,
             ]);
-            /*$request->user()->imgs()->create([
-                'src' => $pic,
-            ]);*/
+
         }
 
         return Redirect::route('admin.article.edit',["id" => $article->id])->withMessage(Config::get('acl_messages.flash.success.article_upload_pic_success'));
