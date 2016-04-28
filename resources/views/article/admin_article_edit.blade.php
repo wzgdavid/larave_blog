@@ -78,6 +78,16 @@ Admin area: edit article
                 <div class="form-group">
                     {!! Form::label('priority','priority: ') !!}
                     {!! Form::number('shf_priority', null, []) !!}
+
+                </div>
+                <!--publish datetime-->
+                <div class="form-group">
+                    {!! Form::label('datetime_publish','datetime_publish: ') !!}
+                    {!! Form::date('publish_date', explode(" ",$article->datetime_publish)[0], []) !!}
+                    {!! Form::time('publish_time', explode(" ",$article->datetime_publish)[1], []) !!}
+                    {!! Form::label('datetime_unpublish','datetime_unpublish: ') !!}
+                    {!! Form::date('unpublish_date', explode(" ",$article->datetime_unpublish)[0], []) !!}
+                    {!! Form::time('unpublish_time', explode(" ",$article->datetime_unpublish)[1], []) !!}
                 </div>
                 <div class="form-group">
                             {!! Form::select('is_home_featured', [
@@ -131,7 +141,7 @@ Admin area: edit article
                 <div class="form-group">
                     {!! Form::label("category","category") !!}
                     {!! Form::select('category_id', $category_array, 
-                        (isset($article->category_id) && $article->category_id) ? $article->category_id : "0" ) !!}
+                        (isset($article->category_id) && $article->category_id) ? $article->category_id : "0",['class' => 'form-control'] ) !!}
                             
                 </div>
 

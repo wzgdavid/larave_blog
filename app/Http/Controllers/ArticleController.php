@@ -135,6 +135,17 @@ class ArticleController extends Controller
         $article->retag($tags);
         //Event::fire('repository.updating', [$article]);
         $data = $request->all();
+        $publish_date = $request->get('publish_date');
+        $publish_time = $request->get('publish_time');
+        $unpublish_date = $request->get('unpublish_date');
+        $unpublish_time = $request->get('unpublish_time');
+
+
+        $data['datetime_publish'] = $publish_date.' '.$publish_time;
+        $data['datetime_unpublish'] = $unpublish_date.' '.$unpublish_time;
+        Log::info('---------------------------------77');
+        Log::info($data);
+        Log::info('---------------------------------77');
         //unset($data['_token']);
         $article->update($data);
         //return $article;
