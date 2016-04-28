@@ -9,7 +9,7 @@ use App\Article;
 use App\ArticleAuthor;
 use App\ArticleCategory;
 use App\ArticleType;
-use View, Redirect, App, Config, Log, DB, Event;
+use View, Redirect, App, Config, Log, DB, Event,Storage;
 use Cartalyst\Sentry\Users\Eloquent\User;
 
 class ArticleController extends Controller
@@ -109,6 +109,9 @@ class ArticleController extends Controller
         }
         //Log::info('-----------------------------------');
 
+        //$photo_src = 'http://localhost:8000/'.$article->pic;
+        $photo_src = config('app.host_url').$article->pic;
+
         return view('article.admin_article_edit', [
             'article' => $article,
             "request" => $request,
@@ -118,6 +121,7 @@ class ArticleController extends Controller
                                 1=>'aaa',
                                 2=>'bbb']*/
             'category_array' =>$category_array,
+            'photo_src' =>$photo_src,
         ]);
 
     }
@@ -136,5 +140,39 @@ class ArticleController extends Controller
         //return $article;
         return Redirect::route('admin.article.edit',["id" => $article->id])->withMessage(Config::get('acl_messages.flash.success.article_edit_success'));
     }
+
+
+    public function changepic(Request $request){
+        $file = $request->file('file');
+        $id = $request->get('article_id');
+        Log::info('---------------------------------111');
+        Log::info($id);
+        Log::info('---------------------------------111');
+        $article = Article::find($id);
+        //echo $file.'</br>';
+        //$file->move($destinationPath, $fileName);
+
+        Storage::delete($article->pic);
+        if($file -> isValid()){
+            $originalName = $file -> getClientOriginalName();
+            $extension = $file -> getClientOriginalExtension(); //上传文件的后缀.
+            //echo $extension.'</br>';
+            $newName = md5(date('ymdhis').$originalName).".".$extension;
+
+            $path = $file -> move(public_path().'/article/image/',$newName);
+            $pic = 'article/image/'.$newName;
+            //echo $pic;
+            $article->update([
+                'pic' => $pic,
+            ]);
+            /*$request->user()->imgs()->create([
+                'src' => $pic,
+            ]);*/
+        }
+
+        return Redirect::route('admin.article.edit',["id" => $article->id])->withMessage(Config::get('acl_messages.flash.success.article_edit_success'));
+    }
+
+
 
 }

@@ -113,7 +113,10 @@ Route::group(['middleware' => ['web']], function ()
                 'as'   => 'admin.article.delete',
                 'uses' => 'ArticleController@delete_article'
         ]);
-
+        Route::post('/admin/article/changepic', [
+                'as'   => 'admin.article.changepic',
+                'uses' => 'ArticleController@changepic'
+        ]);
 
     });
 

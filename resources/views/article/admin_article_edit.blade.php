@@ -23,6 +23,40 @@ Admin area: edit article
                 <h3 class="panel-title bariol-thin">{!! isset($article->id) ? '<i class="fa fa-pencil"></i> Edit' : '<i class="fa fa-lock"></i> Create' !!} article</h3>
             </div>
             <div class="panel-body">
+                <!-- cover photo-->
+        {!! Form::open(['route' => 'admin.article.changepic', 'method' => 'POST', 'files' => true]) !!}
+        {!! Form::label('cover photo',$article->pic ? 'Change cover photo: ' : 'Upload cover photo: ') !!}
+                        <a href="{{ $photo_src }}">{{ $photo_src }}</a>
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <input id="img-input" name="file" type="file" class="form-control required"/>
+                            </div>
+                        </div>
+        {!! Form::hidden('article_id', $article->id) !!}
+        <div class="form-group">
+            {!! Form::submit('Update cover photo', ['class' => 'btn btn-info']) !!}
+        </div>
+        
+
+
+        {!! Form::close() !!}
+
+                    <!-- upload image Form -->
+                   <!-- <form action="/upload_img" method="post"  enctype="multipart/form-data" class="form-horizontal">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <input id="img-input" name="file" type="file" class="form-control required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="">
+                                <input id="btn-upload" type="submit" name="submit" value="Upload" class="btn btn-info" />
+                            </div>
+                        </div> 
+
+                    </form>-->
+        
                 {!! Form::model($article, [ 'url' => [URL::route('admin.article.edit'), $article->id], 'method' => 'post'] )  !!}
                        
                 <div class="form-group">
@@ -135,6 +169,8 @@ Admin area: edit article
                     {!! Form::label('tags','tags: (for example: tag1,tag2,tag3)') !!}
                     {!! Form::text('tags', implode(',', $article->tagNames()), ['class' => 'form-control', 'placeholder' => 'tag1,tag2,tag3']) !!}
                 </div>
+
+
 
 
                 {!! Form::hidden('id') !!}
