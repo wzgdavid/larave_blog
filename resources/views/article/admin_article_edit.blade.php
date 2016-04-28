@@ -89,6 +89,7 @@ Admin area: edit article
                     {!! Form::date('unpublish_date', explode(" ",$article->datetime_unpublish)[0], []) !!}
                     {!! Form::time('unpublish_time', explode(" ",$article->datetime_unpublish)[1], []) !!}
                 </div>
+
                 <div class="form-group">
                             {!! Form::select('is_home_featured', [
                                 1=>'Yes',
@@ -132,6 +133,13 @@ Admin area: edit article
                     {!! Form::label('subtitle','subtitle: ') !!}
                     {!! Form::text('subtitle', null, ['class' => 'form-control', 'placeholder' => 'subtitle']) !!}
                 </div>
+
+                <!-- content -->
+                <div class="form-group">
+                    {!! Form::label('content','content: ') !!}
+                    {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
+                </div>
+
                 <!-- user -->
                 <div class="form-group">
                     {!! Form::label('user','User: ') !!}

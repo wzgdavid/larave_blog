@@ -55,43 +55,16 @@ class ArticleController extends Controller
 
     public function edit_article(Request $request)
     {
-        try{
-            $article = Article::find($request->get('id'));
+        /*try{
+            
         }
         catch(UserNotFoundException $e){
             $article = new Article;
-        }
-
-        try{
-            $author = ArticleAuthor::find($article->author_id);
-            if (isset($author)){
-                $author_name = $author->author_name;
-            }else{
-                $author_name = 'no author';
-            }
-           
-        }
-        catch(UserNotFoundException $e){
-            $author_name = 'no author';
-        }
-
-        try{
-            $user = User::find($article->user_id);
-            if (isset($user)){
-                $user_name = $user->name;
-            }else{
-                $user_name = 'no user';
-            }   
-        }
-
-        catch(UserNotFoundException $e){
-            $user_name = 'no this user';
-        }
-
+        }*/
         $category_array = array('no category');
         
-        /*$categories = ArticleCategory::all();
-        $types = ArticleType::all();*/
+            /*$categories = ArticleCategory::all();
+            $types = ArticleType::all();*/
 
         $categories = DB::table('article_category as a')
             ->leftJoin('article_type as t', 'a.main_category_id', '=', 't.id')
@@ -99,30 +72,69 @@ class ArticleController extends Controller
             ->select('a.*', 'b.name as parent_name', 't.name as type_name')
             ->orderBy('a.sort', 'asc')
             ->get();
-        //Log::info('-----------------------------------');
+            //Log::info('-----------------------------------');
         foreach ($categories as $c){
 
-            //Log::info($c->type_name.' - '.$c->parent_name.' - '.$c->name);
-            $key = $c->id;
-            $value = $c->type_name.' - '.$c->parent_name.' - '.$c->name;
-            $category_array[$key] = $value;
+                //Log::info($c->type_name.' - '.$c->parent_name.' - '.$c->name);
+                $key = $c->id;
+                $value = $c->type_name.' - '.$c->parent_name.' - '.$c->name;
+                $category_array[$key] = $value;
         }
-        //Log::info('-----------------------------------');
 
-        //$photo_src = 'http://localhost:8000/'.$article->pic;
-        $photo_src = config('app.host_url').$article->pic;
 
-        return view('article.admin_article_edit', [
-            'article' => $article,
-            "request" => $request,
-            'author_name' => $author_name,
-            'user_name' => $user_name,
+
+        $id = $request->get('id');
+        if (isset( $id )){
+            $article = Article::find($request->get('id'));
+            $author = ArticleAuthor::find($article->author_id);
+            if (isset($author)){
+                $author_name = $author->author_name;
+            }else{
+                $author_name = 'no author';
+            }
+            $user = User::find($article->user_id);
+            if (isset($user)){
+                $user_name = $user->name;
+            }else{
+                $user_name = 'no user';
+            }   
+
+            //Log::info('-----------------------------------');
+
+            //$photo_src = 'http://localhost:8000/'.$article->pic;
+            $photo_src = config('app.host_url').$article->pic;
+
+            return view('article.admin_article_edit', [
+                'article' => $article,
+                "request" => $request,
+                'author_name' => $author_name,
+                'user_name' => $user_name,
             /*'category_array' =>[0=>'no category',
                                 1=>'aaa',
                                 2=>'bbb']*/
-            'category_array' =>$category_array,
-            'photo_src' =>$photo_src,
-        ]);
+                'category_array' =>$category_array,
+                'photo_src' =>$photo_src,
+            ]);
+        }
+        else
+        {
+            $article = new Article;
+            $article->save();
+            $article->datetime_publish = date("Y-m-d").' '.date("h:i:s");
+            $article->datetime_unpublish = date("Y-m-d").' '.date("h:i:s");
+            $article->tags='tags';
+            return view('article.admin_article_edit', [
+                'article' => $article,
+                "request" => $request,
+                'author_name' => '',
+                'user_name' => '',
+                'category_array' =>$category_array,
+                'photo_src' => '',
+            ]);
+        }
+
+
+
 
     }
 
@@ -143,9 +155,9 @@ class ArticleController extends Controller
 
         $data['datetime_publish'] = $publish_date.' '.$publish_time;
         $data['datetime_unpublish'] = $unpublish_date.' '.$unpublish_time;
-        Log::info('---------------------------------77');
+        /*Log::info('---------------------------------77');
         Log::info($data);
-        Log::info('---------------------------------77');
+        Log::info('---------------------------------77');*/
         //unset($data['_token']);
         $article->update($data);
         //return $article;
