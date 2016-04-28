@@ -152,7 +152,7 @@ class ArticleController extends Controller
         //echo $file.'</br>';
         //$file->move($destinationPath, $fileName);
 
-        Storage::delete($article->pic);
+        //Storage::delete($article->pic);
         if($file -> isValid()){
             $originalName = $file -> getClientOriginalName();
             $extension = $file -> getClientOriginalExtension(); //上传文件的后缀.
@@ -161,7 +161,8 @@ class ArticleController extends Controller
 
             $path = $file -> move(public_path().'/article/image/',$newName);
             $pic = 'article/image/'.$newName;
-            //echo $pic;
+            
+            @unlink ($article->pic); //delete the origin pic
             $article->update([
                 'pic' => $pic,
             ]);
@@ -170,7 +171,7 @@ class ArticleController extends Controller
             ]);*/
         }
 
-        return Redirect::route('admin.article.edit',["id" => $article->id])->withMessage(Config::get('acl_messages.flash.success.article_edit_success'));
+        return Redirect::route('admin.article.edit',["id" => $article->id])->withMessage(Config::get('acl_messages.flash.success.article_upload_pic_success'));
     }
 
 
