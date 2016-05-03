@@ -160,6 +160,7 @@ return [
         'LaravelAcl\Authentication\AuthenticationServiceProvider',
         'Roumen\Sitemap\SitemapServiceProvider',
         Conner\Tagging\Providers\TaggingServiceProvider::class,
+        Unisharp\Ckeditor\ServiceProvider::class,//for edit article content 
 
     ],
 

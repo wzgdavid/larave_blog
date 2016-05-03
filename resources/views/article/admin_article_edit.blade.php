@@ -140,6 +140,12 @@ Admin area: edit article
                     {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
                 </div>
 
+    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace( 'content' );
+    </script>
+
+
                 <!-- user -->
                 <div class="form-group">
                     {!! Form::label('user','User: ') !!}
