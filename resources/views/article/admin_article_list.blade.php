@@ -101,7 +101,47 @@
             </div>
             <div class="col-md-3">
             	{{-- article search --}}
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i> User search</h3>
+    </div>
+    <div class="panel-body">
+        {!! Form::open(['route' => 'admin.article.list','method' => 'get']) !!}
+        <!-- title field -->
+        <div class="form-group">
+            {!! Form::label('title','title: ') !!}
+            {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'title']) !!}
+        </div>
+        <span class="text-danger">{!! $errors->first('email') !!}</span>
+        <!-- is home show field -->
+        <div class="form-group">
+            {!! Form::label('is_home_featured', 'Show on homepage: ') !!}
+            {!! Form::select('is_home_featured', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_home_featured',''), ["class" => "form-control"]) !!}
+        </div>
+        <!-- is home sponsored -->
+        <div class="form-group">
+            {!! Form::label('is_homepage_sponsored', 'Sponsored on homepage: ') !!}
+            {!! Form::select('is_homepage_sponsored', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_homepage_sponsored',''), ["class" => "form-control"]) !!}
+        </div>
+        <!-- is shf show -->
+        <div class="form-group">
+            {!! Form::label('is_shf_featured', 'Show on SHfamily: ') !!}
+            {!! Form::select('is_shf_featured', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_shf_featured',''), ["class" => "form-control"]) !!}
+        </div>
+        <!-- is shf sponsored  -->
+        <div class="form-group">
+            {!! Form::label('is_shf_sponsored', 'Sponsored on SHfamily: ') !!}
+            {!! Form::select('is_shf_sponsored', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_shf_sponsored',''), ["class" => "form-control"]) !!}
+        </div>
 
+
+        <div class="form-group">
+            <a href="{!! URL::route('users.list') !!}" class="btn btn-default search-reset">Reset</a>
+            {!! Form::submit('Search', ["class" => "btn btn-info", "id" => "search-submit"]) !!}
+        </div>
+        {!! Form::close() !!}
+    </div>
+</div>
                 {{-- article search end --}}
             </div>
         </div>

@@ -16,10 +16,12 @@ class ArticleController extends Controller
 {
     //
     protected $auth;
+    
     public function __construct($config_reader = null)
     {
         //$this->article_repository = App::make('article_repository');
         $this->config_reader = $config_reader ? $config_reader : App::make('config');
+        $this->results_per_page = $this->config_reader->get('acl_base.rows_per_page');
     }
 
     public function index(Request $request)
@@ -33,16 +35,55 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function admin_list(Request $request)
+    public function admin_list_backup(Request $request)
     {
-        $results_per_page = $this->config_reader->get('acl_base.rows_per_page');
+        
         $articles = Article::orderBy('date_created', 'desc')
         //$articles = Article::orderBy('page_title', 'desc')
-               ->take($results_per_page)
+               ->take($this->results_per_page)
                ->get();
 
         return view('article.admin_article_list', [
             'articles' => $articles,
+            //'user' => $user,
+            "request" => $request,
+        ]);
+    }
+
+    public function admin_list(Request $request)
+    {
+        //Log::info('admin_list-----------------99999--------');
+        //Log::info($request);
+
+        $q = Article::orderBy('date_created', 'desc');
+        $filter = $request->except(['page']);
+        foreach($filter as $key => $value){
+            if($value !== ''){
+                switch($key){
+                    case 'title':
+                        $q = $q->where('title', 'like', '%'.$value.'%');
+                        break;
+                    case 'is_home_featured':
+                        $q = $q->where('is_home_featured', $value);
+                        break;
+                    case 'is_homepage_sponsored':
+                        $q = $q->where('is_homepage_sponsored', $value);
+                        break;
+                    case 'is_shf_featured':
+                        $q = $q->where('is_shf_featured', $value);
+                        break;
+                    case 'is_shf_sponsored':
+                        $q = $q->where('is_shf_sponsored', $value);
+                        break;
+                }
+            }
+        }
+        
+        
+        //$q = $q->select('*');
+        $articles = $q->take($this->results_per_page)->get();
+        return view('article.admin_article_list', [
+            'articles' =>  $articles,
             //'user' => $user,
             "request" => $request,
         ]);

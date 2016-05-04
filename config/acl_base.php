@@ -69,7 +69,7 @@ return [
   |
   */
 
-  "groups_per_page" => 60,
+  "groups_per_page" => 100,
 
     /*
    |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
    |
    */
 
-  'rows_per_page' => 60, //if not set , use rows_per_page
+  'rows_per_page' => 100, //if not set , use rows_per_page
   "captcha_signup" => true,
 
   /*
