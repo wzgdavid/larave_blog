@@ -1,7 +1,7 @@
 vendor
 /node_modules
 /public/storage
-/ public/article/image
+/public/sitemap.xml
 /storage
 Homestead.yaml
 Homestead.json

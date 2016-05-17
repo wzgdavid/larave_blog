@@ -109,8 +109,4 @@ alter table blog.article add column is_proofread tinyint(1) default 0;
             $table->foreign('user_id')->references('id')->on('users');
 
 
-do list
-1 article edit 的 content
-2 做article list 页面的search功能
-
 

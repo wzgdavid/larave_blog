@@ -2,6 +2,7 @@
 app_path()        -----/home/david/vote/app   同app('path')
 config_path()      -----/home/david/vote/config
 config_path('auth')-----/home/david/vote/config/auth
+public_path()           /home/david/blog/public
 
 django 密码加密代码， 但怎么解码？
 vim /home/david/.virtualenvs/expat/local/lib/python2.7/site-packages/django/contrib/auth/hashers.py

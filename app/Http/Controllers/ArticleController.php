@@ -11,6 +11,7 @@ use App\ArticleCategory;
 use App\ArticleType;
 use View, Redirect, App, Config, Log, DB, Event,Storage;
 use Cartalyst\Sentry\Users\Eloquent\User;
+use DOMDocument;
 
 class ArticleController extends Controller
 {
@@ -179,6 +180,49 @@ class ArticleController extends Controller
 
     }
 
+    private function add_to_sitemap($article_id=null, $article_url=null, $lastmod=null){
+        $path = public_path().'/sitemap.xml';
+        $books = new DOMDocument();
+        $books->load($path);
+
+        $url_elements = $books->getElementsByTagName('url');
+        foreach($url_elements as $one){
+            if ($article_id == $one->getAttribute('article_id')) {
+                return;
+            }
+        }
+
+        $urlset = $books->getElementsByTagName('urlset')->item(0);
+        $new_url = $books->createElement('url');
+        $new_url->setAttribute('article_id', $article_id);
+        $new_loc = $books->createElement('loc');
+        $new_lastmod = $books->createElement('lastmod');
+        $new_loc->nodeValue = $article_url;
+        $new_lastmod->nodeValue = $lastmod;
+        $new_url->appendChild($new_loc);
+        $new_url->appendChild($new_lastmod);
+        $urlset->appendChild($new_url);
+        //echo $urlset->item(1)->nodeValue;
+        $books->save($path);
+    }
+
+    private function remove_from_sitemap($article_id=null){  
+        $path = public_path().'/sitemap.xml';
+        $books = new DOMDocument();
+        $books->load($path);
+        $url_elements = $books->getElementsByTagName('url');
+        foreach($url_elements as $one){
+            if ($article_id == $one->getAttribute('article_id')) {
+                Log::info('----------------remove_from_sitemap-----------------77');
+                Log::info($one->parentNode->nodeValue);
+                $one->parentNode->removeChild($one);
+                $books->save($path);
+                return;
+            }
+        }
+        
+    }
+
     public function post_edit_article(Request $request)
     {
         $id = $request->get('id');
@@ -200,6 +244,13 @@ class ArticleController extends Controller
         Log::info($data);
         Log::info('---------------------------------77');*/
         //unset($data['_token']);
+        if ($request->get('is_in_sitemap') == true) {
+            
+            $this->add_to_sitemap($id, $article->hyperlink);
+        }else{
+            $this->remove_from_sitemap($id);
+        }
+
         $article->update($data);
         //return $article;
         return Redirect::route('admin.article.edit',["id" => $article->id])->withMessage(Config::get('acl_messages.flash.success.article_edit_success'));
