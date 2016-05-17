@@ -213,8 +213,6 @@ class ArticleController extends Controller
         $url_elements = $books->getElementsByTagName('url');
         foreach($url_elements as $one){
             if ($article_id == $one->getAttribute('article_id')) {
-                Log::info('----------------remove_from_sitemap-----------------77');
-                Log::info($one->parentNode->nodeValue);
                 $one->parentNode->removeChild($one);
                 $books->save($path);
                 return;
