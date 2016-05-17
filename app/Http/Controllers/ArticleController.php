@@ -196,11 +196,14 @@ class ArticleController extends Controller
         $new_url = $books->createElement('url');
         $new_url->setAttribute('article_id', $article_id);
         $new_loc = $books->createElement('loc');
-        $new_lastmod = $books->createElement('lastmod');
         $new_loc->nodeValue = $article_url;
+        $new_lastmod = $books->createElement('lastmod');
+        $changefreq = $books->createElement('changefreq');
+        $changefreq->nodeValue = 'monthly';
         $new_lastmod->nodeValue = $lastmod;
         $new_url->appendChild($new_loc);
         $new_url->appendChild($new_lastmod);
+        $new_url->appendChild($changefreq);
         $urlset->appendChild($new_url);
         //echo $urlset->item(1)->nodeValue;
         $books->save($path);
@@ -219,6 +222,11 @@ class ArticleController extends Controller
             }
         }
         
+    }
+
+    private function check_sitemap(){
+        /*if unpublish date, remove article from sitemap 
+        */
     }
 
     public function post_edit_article(Request $request)
@@ -248,7 +256,7 @@ class ArticleController extends Controller
         }else{
             $this->remove_from_sitemap($id);
         }
-
+        $this->check_sitemap();
         $article->update($data);
         //return $article;
         return Redirect::route('admin.article.edit',["id" => $article->id])->withMessage(Config::get('acl_messages.flash.success.article_edit_success'));

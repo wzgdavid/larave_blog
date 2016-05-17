@@ -29,12 +29,16 @@ Admin area: edit article
                         <a href="{{ $photo_src }}">{{ $photo_src }}</a>
                         <div class="form-group">
                             <div class="col-sm-6">
+                                <input type="hidden" name="MAX_FILE_SIZE" value="300000">
                                 <input id="img-input" name="file" type="file" class="form-control required"/>
                             </div>
+                            <span style="color:gray">choose a picture less than 300k</span>
                         </div>
         {!! Form::hidden('article_id', $article->id) !!}
+        <div style="clear:both;"></div>
         <div class="form-group">
             {!! Form::submit('Update cover photo', ['class' => 'btn btn-info']) !!}
+            
         </div>
         
 
