@@ -163,7 +163,7 @@ class ArticleController extends Controller
             $article = new Article;
             $article->save();
             $article->datetime_publish = date("Y-m-d").' '.date("h:i:s");
-            $article->datetime_unpublish = date("Y-m-d").' '.date("h:i:s");
+            $article->datetime_unpublish = date("Y-m-d",strtotime("+100 year")).' '.date("h:i:s");
             $article->tags='tags';
             return view('article.admin_article_edit', [
                 'article' => $article,
@@ -224,9 +224,23 @@ class ArticleController extends Controller
         
     }
 
-    private function check_sitemap(){
-        /*if unpublish date, remove article from sitemap 
+    private function check_unpublish(Request $request=null){
+        /*if unpublish date, remove article from sitemap and change aproved to false
         */
+        $articles = Article::where('is_in_sitemap', 1)
+               ->orderBy('datetime_unpublish', 'asc')
+               ->take(10) //no need to check all
+               ->get();
+        $now = date("Y-m-d").' '.date("h:i:s");
+        foreach($articles as $one){
+            if ( strtotime($now) > strtotime($one->datetime_unpublish) ){
+                $data = array();
+                $data['is_in_sitemap'] = 0;
+                $data['is_approved'] = 0;
+                $one->update($data);
+                $this->remove_from_sitemap($one->id);
+            }
+        }
     }
 
     public function post_edit_article(Request $request)
@@ -256,7 +270,7 @@ class ArticleController extends Controller
         }else{
             $this->remove_from_sitemap($id);
         }
-        $this->check_sitemap();
+        $this->check_unpublish();
         $article->update($data);
         //return $article;
         return Redirect::route('admin.article.edit',["id" => $article->id])->withMessage(Config::get('acl_messages.flash.success.article_edit_success'));
