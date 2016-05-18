@@ -153,7 +153,7 @@ Admin area: edit article
                 <!-- user -->
                 <div class="form-group">
                     {!! Form::label('user','User: ') !!}
-                    {!! Form::text('user_id', null, []) !!}<span > ( {{ $user_name }} )</span>
+                    {!! Form::text('user_id', null, []) !!}<a href="/" target='_blank'><img src="/imgs/selector-search.gif"></a> <span > ( {{ $user_name }} )</span>
                 </div>
                 <!-- category -->
                 <div class="form-group">
