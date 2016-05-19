@@ -154,4 +154,9 @@ where email in (select email from auth_user group by email having count(email) >
 table中email有大小写之分，应该不分大小写，只要字母一样都算重复
 select *  from auth_user  where LOWER(email) in (select LOWER(email) from auth_user group by LOWER(email) having count(LOWER(email)) > 1)  order by email
 
+
+从postgresql拷贝表到mysql步骤
+1，用laravel的migrate功能，根据postgresql建立mysql表
+2， 写python脚本，一条条从postgresql拷到mysql的表中
+
         
