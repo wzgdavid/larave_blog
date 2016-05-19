@@ -50,7 +50,11 @@ Route::group(['middleware' => ['web']], function ()
                 'as'   => 'admin.article.changepic',
                 'uses' => 'ArticleController@changepic'
         ]);
-
+        Route::get('/admin/classified/list', [
+            'middleware' => 'has_perm:_superadmin,_group-editor',
+            'uses' => 'ClassifiedController@admin_list',
+            'as' => 'admin.classified.list',
+        ]);
     });
 
 

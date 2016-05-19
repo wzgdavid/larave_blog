@@ -77,6 +77,12 @@ return [
                     "link"        => '/admin/article/list',
                     "permissions" => ["_superadmin","_group-editor"]
             ],
+            [
+                    "name"        => "Classified",
+                    "route"       => "classified",
+                    "link"        => '/admin/classified/list',
+                    "permissions" => ["_superadmin","_group-editor"]
+            ],
 
     ]
 ];
