@@ -18,7 +18,7 @@ class CreateClassifiedTable extends Migration
             $table->boolean('is_individual')->default(0);
             $table->string('title', 200);
             $table->string('slug', 200);
-            $table->text('content')->nullable();
+            $table->text('content');
             $table->datetime('start_datetime')->nullable();
             $table->datetime('end_datetime')->nullable();
             $table->string('price', 200);
@@ -33,8 +33,8 @@ class CreateClassifiedTable extends Migration
             $table->string('forum_url', 400);
             $table->boolean('featured')->default(0);
             $table->integer('category_id')->nullable();
-            $table->integer('merto_line');
-            $table->integer('station');
+            $table->integer('merto_line')->nullable();
+            $table->integer('station')->nullable();
             $table->datetime('date_modified');
         });
     }
