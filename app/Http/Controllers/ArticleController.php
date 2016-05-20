@@ -124,7 +124,6 @@ class ArticleController extends Controller
         }
 
 
-
         $id = $request->get('id');
         if (isset( $id )){
             $article = Article::find($request->get('id'));
@@ -174,9 +173,6 @@ class ArticleController extends Controller
                 'photo_src' => '',
             ]);
         }
-
-
-
 
     }
 

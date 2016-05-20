@@ -157,6 +157,11 @@ select *  from auth_user  where LOWER(email) in (select LOWER(email) from auth_u
 
 从postgresql拷贝表到mysql步骤
 1，用laravel的migrate功能，根据postgresql建立mysql表
+    php artisan make:migration create_tasks_table --create=tasks
+   修改生成的database/xxx_migration
+   然后 php artisan migrate
 2， 写python脚本，一条条从postgresql拷到mysql的表中
-
+3,  生成model
+    php artisan make:model Task
+    model中写fillable，可以edit
         

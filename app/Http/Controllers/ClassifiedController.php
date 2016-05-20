@@ -55,5 +55,35 @@ class ClassifiedController extends Controller
         return redirect('/admin/classified/list');
     }
 
+    public function edit(Request $request){
+
+    	$id = $request->get('id');
+        Log::info('-------------edit--------------------77');
+        Log::info($id);
+        Log::info('-------------edit--------------------77');
+        if (isset( $id )){
+            $classified = Classified::find($id);
+           
+
+            return view('classified.edit', [
+                'classified' => $classified,
+                "request" => $request,
+            ]);
+        }
+    }
+
+    public function post_edit(Request $request){
+        $id = $request->get('id');
+
+        $classified = Classified::find($id);
+
+        $data = $request->all();
+        unset($data['_token']);
+        $classified->update($data);
+        //return $article;
+        return Redirect::route('admin.classified.edit',["id" => $classified->id])->withMessage(Config::get('acl_messages.flash.success.classified_edit_success'));
+
+    }
+
 
 }
