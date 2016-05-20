@@ -7,7 +7,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 {{-- print messages --}}
                 <?php $message = Session::get('message'); ?>
                 @if( isset($message) )
@@ -27,26 +27,52 @@
         <h3 class="panel-title bariol-thin"><i class="fa fa-user"></i> {!! $request->all() ? 'Search results:' : 'Articles' !!}</h3>
     </div>
     <div class="panel-body">
-        <div class="row">
-        	<!-- ordering
-            <div class="col-lg-10 col-md-9 col-sm-9">
-                {!! Form::open(['method' => 'get', 'class' => 'form-inline']) !!}
-                    <div class="form-group">
-                        {!! Form::select('order_by', ["" => "select column", "first_name" => "First name", "last_name" => "Last name", "email" => "Email", "last_login" => "Last login", "active" => "Active"], $request->get('order_by',''), ['class' => 'form-control']) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::select('ordering', ["asc" => "Ascending", "desc" => "descending"], $request->get('ordering','asc'), ['class' =>'form-control']) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::submit('Order', ['class' => 'btn btn-default']) !!}
-                    </div>
-                {!! Form::close() !!}
-            </div>
-            -->
+       <div class="row">
             <div class="col-lg-2 col-md-3 col-sm-3">
-                    <a href="{!! URL::route('admin.article.edit') !!}" class="btn btn-info"><i class="fa fa-plus"></i> Add New</a>
+                    <a href="{!! URL::route('admin.article.edit') !!}" class="btn btn-info"><i class="fa fa-plus"></i> Add New Article</a>
             </div>
+       </div>
+        <div class="row">
+        	
+            <div class="col-lg-10 col-md-9 col-sm-9">
+        {!! Form::open(['route' => 'admin.article.list','method' => 'get']) !!}
+        <!-- title field -->
+        <div class="form-group" style="float:left;width:300px;">
+            {!! Form::label('title','title: ') !!}
+            {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'title']) !!}
         </div>
+        
+        <!-- is home show field -->
+        <div class="form-group" style="float:left;width:200px;">
+            {!! Form::label('is_home_featured', 'Show on homepage: ') !!}
+            {!! Form::select('is_home_featured', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_home_featured',''), ["class" => "form-control"]) !!}
+        </div>
+        <!-- is home sponsored -->
+        <div class="form-group" style="float:left;width:200px;">
+            {!! Form::label('is_homepage_sponsored', 'Sponsored on homepage: ') !!}
+            {!! Form::select('is_homepage_sponsored', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_homepage_sponsored',''), ["class" => "form-control"]) !!}
+        </div>
+        <!-- is shf show -->
+        <div class="form-group" style="float:left;width:200px;">
+            {!! Form::label('is_shf_featured', 'Show on SHfamily: ') !!}
+            {!! Form::select('is_shf_featured', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_shf_featured',''), ["class" => "form-control"]) !!}
+        </div>
+        <!-- is shf sponsored  -->
+        <div class="form-group" style="float:left;width:200px;">
+            {!! Form::label('is_shf_sponsored', 'Sponsored on SHfamily: ') !!}
+            {!! Form::select('is_shf_sponsored', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_shf_sponsored',''), ["class" => "form-control"]) !!}
+        </div>
+
+        <div style="clear:both"></div>
+        <div class="form-group">
+            <a href="{!! URL::route('users.list') !!}" class="btn btn-default search-reset">Reset</a>
+            {!! Form::submit('Search', ["class" => "btn btn-info", "id" => "search-submit"]) !!}
+        </div>
+        {!! Form::close() !!}
+            </div>
+
+        </div>
+
       <div class="row">
           <div class="col-md-12">
               @if(! $articles->isEmpty() )
@@ -99,51 +125,7 @@
 {{-- article lists  end--}}
 
             </div>
-<div class="col-md-3">
-            	{{-- article search --}}
-  <div class="panel panel-info">
-    <div class="panel-heading">
-        <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i> Article search</h3>
-    </div>
-    <div class="panel-body">
-        {!! Form::open(['route' => 'admin.article.list','method' => 'get']) !!}
-        <!-- title field -->
-        <div class="form-group">
-            {!! Form::label('title','title: ') !!}
-            {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'title']) !!}
-        </div>
-        <span class="text-danger">{!! $errors->first('email') !!}</span>
-        <!-- is home show field -->
-        <div class="form-group">
-            {!! Form::label('is_home_featured', 'Show on homepage: ') !!}
-            {!! Form::select('is_home_featured', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_home_featured',''), ["class" => "form-control"]) !!}
-        </div>
-        <!-- is home sponsored -->
-        <div class="form-group">
-            {!! Form::label('is_homepage_sponsored', 'Sponsored on homepage: ') !!}
-            {!! Form::select('is_homepage_sponsored', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_homepage_sponsored',''), ["class" => "form-control"]) !!}
-        </div>
-        <!-- is shf show -->
-        <div class="form-group">
-            {!! Form::label('is_shf_featured', 'Show on SHfamily: ') !!}
-            {!! Form::select('is_shf_featured', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_shf_featured',''), ["class" => "form-control"]) !!}
-        </div>
-        <!-- is shf sponsored  -->
-        <div class="form-group">
-            {!! Form::label('is_shf_sponsored', 'Sponsored on SHfamily: ') !!}
-            {!! Form::select('is_shf_sponsored', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_shf_sponsored',''), ["class" => "form-control"]) !!}
-        </div>
 
-
-        <div class="form-group">
-            <a href="{!! URL::route('users.list') !!}" class="btn btn-default search-reset">Reset</a>
-            {!! Form::submit('Search', ["class" => "btn btn-info", "id" => "search-submit"]) !!}
-        </div>
-        {!! Form::close() !!}
-    </div>
-  </div>
-                {{-- article search end --}}
-</div>
         
         </div>
 </div>
