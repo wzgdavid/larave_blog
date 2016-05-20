@@ -90,7 +90,7 @@
               {{--  search --}}
   <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i> Article search</h3>
+        <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i> Classified search</h3>
     </div>
     <div class="panel-body">
         {!! Form::open(['route' => 'admin.classified.list','method' => 'get']) !!}

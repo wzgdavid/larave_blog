@@ -41,7 +41,7 @@
             {!! Form::label('title','title: ') !!}
             {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'title']) !!}
         </div>
-        
+         
         <!-- is home show field -->
         <div class="form-group" style="float:left;width:200px;">
             {!! Form::label('is_home_featured', 'Show on homepage: ') !!}
@@ -63,8 +63,7 @@
             {!! Form::select('is_shf_sponsored', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_shf_sponsored',''), ["class" => "form-control"]) !!}
         </div>
 
-        <div style="clear:both"></div>
-        <div class="form-group">
+        <div class="form-group" style="float:left;padding:12px;">
             <a href="{!! URL::route('users.list') !!}" class="btn btn-default search-reset">Reset</a>
             {!! Form::submit('Search', ["class" => "btn btn-info", "id" => "search-submit"]) !!}
         </div>
