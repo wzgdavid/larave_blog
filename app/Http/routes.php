@@ -33,8 +33,8 @@ Route::group(['middleware' => ['web']], function ()
             'uses' => 'ArticleController@admin_list',
             'as' => 'admin.article.list',
         ]);
-
         Route::get('/admin/article/edit', [
+            'middleware' => 'has_perm:_superadmin,_group-editor',
                 'as'   => 'admin.article.edit',
                 'uses' => 'ArticleController@edit_article',
         ]);
@@ -50,10 +50,23 @@ Route::group(['middleware' => ['web']], function ()
                 'as'   => 'admin.article.changepic',
                 'uses' => 'ArticleController@changepic'
         ]);
+
         Route::get('/admin/classified/list', [
             'middleware' => 'has_perm:_superadmin,_group-editor',
             'uses' => 'ClassifiedController@admin_list',
             'as' => 'admin.classified.list',
+        ]);
+        Route::get('/admin/classified/edit', [
+                'as'   => 'admin.classified.edit',
+                'uses' => 'ClassifiedController@edit',
+        ]);
+        Route::post('/admin/classified/edit', [
+                'as'   => 'admin.classified.edit',
+                'uses' => 'ClassifiedController@post_edit'
+        ]);
+        Route::get('/admin/classified/delete', [
+                'as'   => 'admin.classified.delete',
+                'uses' => 'ClassifiedController@delete'
         ]);
     });
 

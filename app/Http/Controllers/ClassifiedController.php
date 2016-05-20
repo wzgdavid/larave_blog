@@ -19,6 +19,41 @@ class ClassifiedController extends Controller
     }
 
     public function admin_list(Request $request){
-    	
+        /*$classifieds = Classified::orderBy('create_datetime', 'desc')
+               ->take($this->results_per_page)
+               ->get();
+        return view('classified.admin_list', [
+            'classifieds' =>  $classifieds,
+            //'user' => $user,
+            "request" => $request,
+        ]);*/
+
+        $q = Classified::orderBy('create_datetime', 'desc');
+        $filter = $request->except(['page']);
+        foreach($filter as $key => $value){
+            if($value !== ''){
+                switch($key){
+                    case 'title':
+                        $q = $q->where('title', 'like', '%'.$value.'%');
+                        break;
+                }
+            }
+        }
+        
+        
+        //$q = $q->select('*');
+        $classifieds = $q->take($this->results_per_page)->get();
+        return view('classified.admin_list', [
+            'classifieds' =>  $classifieds,
+            //'user' => $user,
+            "request" => $request,
+        ]);
     }
+
+    public function delete(Request $request){
+        Classified::destroy($request->get('id')); // alse can use ->input('id')
+        return redirect('/admin/classified/list');
+    }
+
+
 }

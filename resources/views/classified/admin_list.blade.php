@@ -1,7 +1,7 @@
 @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
-    Admin area: articles list
+    Admin area: classified list
 @stop
 
 @section('content')
@@ -21,10 +21,10 @@
                 @endif
 
 
-                {{-- article lists --}}
+                {{-- classified lists --}}
 	<div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title bariol-thin"><i class="fa fa-user"></i> {!! $request->all() ? 'Search results:' : 'Articles' !!}</h3>
+        <h3 class="panel-title bariol-thin"><i class="fa fa-user"></i> {!! $request->all() ? 'Search results:' : 'Classifieds' !!}</h3>
     </div>
     <div class="panel-body">
         <div class="row">
@@ -44,41 +44,28 @@
             </div>
             -->
             <div class="col-lg-2 col-md-3 col-sm-3">
-                    <a href="{!! URL::route('admin.article.edit') !!}" class="btn btn-info"><i class="fa fa-plus"></i> Add New</a>
+                    <a href="{!! URL::route('admin.classified.edit') !!}" class="btn btn-info"><i class="fa fa-plus"></i> Add New</a>
             </div>
         </div>
       <div class="row">
           <div class="col-md-12">
-              @if(! $articles->isEmpty() )
+              @if(! $classifieds->isEmpty() )
               <table class="table table-hover">
                       <thead>
                           <tr>
                               <th>Title</th>
-                              <th>Author</th>
-                              <th>Priority</th>
-                              <th>Homepage show</th>
-                              <th>Homepage sponsor</th>
-                              <th>SH Family show</th>
-                              <th>SH Family sponsor</th>
-
-                              <th>Operations</th>
+                              
                           </tr>
                       </thead>
                       <tbody>
-                          @foreach($articles as $article)
+                          @foreach($classifieds as $classified)
                           <tr>
-                              <td>{!! $article->title !!}</td>
-                              <td>{!! $article->get_author() !!}</td>
-                              <td>{!! $article->shf_priority !!}</td>
-                              <td>{!! $article->is_home_featured ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>' !!}</td>
-                              <td>{!! $article->is_homepage_sponsored ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>' !!}</td>
-                              <td>{!! $article->is_shf_featured ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>' !!}</td>
-                              <td>{!! $article->is_shf_sponsored ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>' !!}</td>
-
+                              <td>{!! $classified->title !!}</td>
+                              
                               <td>
-                                  @if(! $article->protected)
-                                      <a href="{!! URL::route('admin.article.edit', ['id' => $article->id]) !!}" title='edit'><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                                      <a href="{!! URL::route('admin.article.delete',['id' => $article->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete" title='delete'><i class="fa fa-trash-o fa-2x red"></i></a>
+                                  @if(! $classified->protected)
+                                      <a href="{!! URL::route('admin.classified.edit', ['id' => $classified->id]) !!}" title='edit'><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                                      <a href="{!! URL::route('admin.classified.delete',['id' => $classified->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete" title='delete'><i class="fa fa-trash-o fa-2x red"></i></a>
                                   @else
                                       <i class="fa fa-times fa-2x light-blue"></i>
                                       <i class="fa fa-times fa-2x margin-left-12 light-blue"></i>
@@ -100,40 +87,20 @@
 
             </div>
 <div class="col-md-3">
-            	{{-- article search --}}
+              {{--  search --}}
   <div class="panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i> Article search</h3>
     </div>
     <div class="panel-body">
-        {!! Form::open(['route' => 'admin.article.list','method' => 'get']) !!}
+        {!! Form::open(['route' => 'admin.classified.list','method' => 'get']) !!}
         <!-- title field -->
         <div class="form-group">
             {!! Form::label('title','title: ') !!}
             {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'title']) !!}
         </div>
         <span class="text-danger">{!! $errors->first('email') !!}</span>
-        <!-- is home show field -->
-        <div class="form-group">
-            {!! Form::label('is_home_featured', 'Show on homepage: ') !!}
-            {!! Form::select('is_home_featured', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_home_featured',''), ["class" => "form-control"]) !!}
-        </div>
-        <!-- is home sponsored -->
-        <div class="form-group">
-            {!! Form::label('is_homepage_sponsored', 'Sponsored on homepage: ') !!}
-            {!! Form::select('is_homepage_sponsored', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_homepage_sponsored',''), ["class" => "form-control"]) !!}
-        </div>
-        <!-- is shf show -->
-        <div class="form-group">
-            {!! Form::label('is_shf_featured', 'Show on SHfamily: ') !!}
-            {!! Form::select('is_shf_featured', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_shf_featured',''), ["class" => "form-control"]) !!}
-        </div>
-        <!-- is shf sponsored  -->
-        <div class="form-group">
-            {!! Form::label('is_shf_sponsored', 'Sponsored on SHfamily: ') !!}
-            {!! Form::select('is_shf_sponsored', ['' => 'Any', 1 => 'Yes', 0 => 'No'], $request->get('is_shf_sponsored',''), ["class" => "form-control"]) !!}
-        </div>
-
+      
 
         <div class="form-group">
             <a href="{!! URL::route('users.list') !!}" class="btn btn-default search-reset">Reset</a>
@@ -142,9 +109,8 @@
         {!! Form::close() !!}
     </div>
   </div>
-                {{-- article search end --}}
+                {{--  search end --}}
 </div>
-        
         </div>
 </div>
 @stop
