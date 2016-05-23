@@ -4,6 +4,7 @@
 Admin area: edit article
 @stop
 
+
 @section('content')
 
 <div class="row">
@@ -194,8 +195,8 @@ Admin area: edit article
                             {!! Form::label("is_proofread","is proofread ") !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::label('tags','tags: (for example: tag1,tag2,tag3)') !!}
-                    {!! Form::text('tags', implode(',', $article->tagNames()), ['class' => 'form-control', 'placeholder' => 'tag1,tag2,tag3']) !!}
+                    {!! Form::label('tags','tags:') !!}
+                    {!! Form::text('tags', implode(',', $article->tagNames()), ['class' => 'form-control']) !!}
                 </div>
 
 
@@ -213,6 +214,8 @@ Admin area: edit article
 
 @section('footer_scripts')
 {!! HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/slugit.js') !!}
+
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script>
     $(".delete").click(function(){
         return confirm("Are you sure to delete this item?");
@@ -220,5 +223,57 @@ Admin area: edit article
     $(function(){
         $('#slugme').slugIt();
     });
+
+//tags autocomplete
+
+$(function() {
+    function split( val ) {
+      return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+    }
+ 
+    $( "#tags" )
+      // 当选择一个条目时不离开文本域
+      .bind( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).data( "ui-autocomplete" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        source: function( request, response ) {
+          $.getJSON( "/admin/article/searchtags", {
+            term: extractLast( request.term )
+          }, response );
+        },
+        search: function() {
+          // 自定义最小长度
+          var term = extractLast( this.value );
+          if ( term.length < 2 ) {
+            return false;
+          }
+        },
+        focus: function() {
+          // 防止在获得焦点时插入值
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // 移除当前输入
+          terms.pop();
+          // 添加被选项
+          terms.push( ui.item.value );
+          // 添加占位符，在结尾添加逗号+空格
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
+      });
+  });
+
+
+
 </script>
 @stop

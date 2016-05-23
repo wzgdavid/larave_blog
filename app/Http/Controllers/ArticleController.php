@@ -300,6 +300,24 @@ class ArticleController extends Controller
         return Redirect::route('admin.article.edit',["id" => $article->id])->withMessage(Config::get('acl_messages.flash.success.article_upload_pic_success'));
     }
 
+    public function searchtags(Request $request){
+        
+        $term = $request->get('term');
+
+        $availableTags = [];
+        $tags = DB::table('tagging_tags')
+                ->select('name')
+                ->where('name', 'like', $term.'%')
+                ->get();
+    
+        foreach ($tags as $tag){
+            Log::info('-----------------searchtags----------------foreach');
+            Log::info($tag->name);
+            $availableTags[]=$tag->name;
+        }
+
+        return $availableTags;
+    }
 
 
 }

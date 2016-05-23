@@ -9,7 +9,7 @@
     <meta name="keywords" content="">
     <meta name="author" content="">
 
-
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
     {!! HTML::style('packages/jacopo/laravel-authentication-acl/css/bootstrap.min.css') !!}
     {!! HTML::style('packages/jacopo/laravel-authentication-acl/css/style.css') !!}
     <!--{!! HTML::style('packages/jacopo/laravel-authentication-acl/css/baselayout.css') !!}-->
