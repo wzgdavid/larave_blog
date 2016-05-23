@@ -103,7 +103,7 @@
       
 
         <div class="form-group">
-            <a href="{!! URL::route('users.list') !!}" class="btn btn-default search-reset">Reset</a>
+            <a href="{!! URL::route('admin.classified.list') !!}" class="btn btn-default search-reset">Reset</a>
             {!! Form::submit('Search', ["class" => "btn btn-info", "id" => "search-submit"]) !!}
         </div>
         {!! Form::close() !!}

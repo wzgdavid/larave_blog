@@ -64,7 +64,7 @@
         </div>
 
         <div class="form-group" style="float:left;padding:12px;">
-            <a href="{!! URL::route('users.list') !!}" class="btn btn-default search-reset">Reset</a>
+            <a href="{!! URL::route('admin.article.list') !!}" class="btn btn-default search-reset">Reset</a>
             {!! Form::submit('Search', ["class" => "btn btn-info", "id" => "search-submit"]) !!}
         </div>
         {!! Form::close() !!}

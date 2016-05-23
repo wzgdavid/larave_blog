@@ -103,7 +103,7 @@ class ArticleController extends Controller
         catch(UserNotFoundException $e){
             $article = new Article;
         }*/
-        $category_array = array('no category');
+        $category_array = array('--------');
         
             /*$categories = ArticleCategory::all();
             $types = ArticleType::all();*/

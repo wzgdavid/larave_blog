@@ -58,9 +58,19 @@ class ClassifiedController extends Controller
     public function edit(Request $request){
 
     	$id = $request->get('id');
-        Log::info('-------------edit--------------------77');
+        /*Log::info('-------------edit--------------------77');
         Log::info($id);
-        Log::info('-------------edit--------------------77');
+        Log::info('-------------edit--------------------77');*/
+
+        $categories = ClassifiedCategory::all();
+        $category_array = array('--------');
+        foreach ($categories as $c){
+
+                //Log::info($c->type_name.' - '.$c->parent_name.' - '.$c->name);
+                $key = $c->id;
+                $value = $c->name;
+                $category_array[$key] = $value;
+        }
         if (isset( $id )){
             $classified = Classified::find($id);
            
@@ -68,6 +78,7 @@ class ClassifiedController extends Controller
             return view('classified.edit', [
                 'classified' => $classified,
                 "request" => $request,
+                'category_array' =>$category_array,
             ]);
         }
     }
@@ -78,7 +89,13 @@ class ClassifiedController extends Controller
         $classified = Classified::find($id);
 
         $data = $request->all();
-        unset($data['_token']);
+        //unset($data['_token']);
+        $start_date = $request->get('start_date');
+        $start_time = $request->get('start_time');
+        $end_date = $request->get('end_date');
+        $end_time = $request->get('end_time');
+        $data['start_datetime'] = $start_date.' '.$start_time;
+        $data['end_datetime'] = $end_date.' '.$end_time;
         $classified->update($data);
         //return $article;
         return Redirect::route('admin.classified.edit',["id" => $classified->id])->withMessage(Config::get('acl_messages.flash.success.classified_edit_success'));
