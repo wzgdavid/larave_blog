@@ -311,8 +311,8 @@ class ArticleController extends Controller
                 ->get();
     
         foreach ($tags as $tag){
-            Log::info('-----------------searchtags----------------foreach');
-            Log::info($tag->name);
+            /*Log::info('-----------------searchtags----------------foreach');
+            Log::info($tag->name);*/
             $availableTags[]=$tag->name;
         }
 
