@@ -12,19 +12,20 @@
           <div class="classified-list-item">
     <a href="{{$item->get_absolute_url}}"><img src="{%replace_none $item->get_main_image_url default_main_img%}" alt="" class="list-image"/></a>
     <div class="i-right">
-      <div class="i1"><a href="{{$item->get_absolute_url}}">{{$item->title }}</a></div>
+      <div class="i1"><a href="{{$item->get_absolute_url}}">{{ substr($item->title, 0, 100) }}</a></div>
       <div class="i2">
         
-        <div class="i2i2">{{$item->content }}</div>
+        <div class="i2i2">{{ substr($item->content, 0, 120) }}</div>
       </div>
       <div class="i3">
         <a href=""><span>Posted</span></a>
         <br />
-        <span class="i3i1">{{$item->start_datetime}}</span>
+        <span class="i3i1">{{ date("d",strtotime($item->start_datetime)) }}</span>
         <br />
-        <span class="i3i2">{{$item->start_datetime}}</span>
+        
+        <span class="i3i2">{{ date("y-m",strtotime($item->start_datetime)) }}</span>
         <br />
-        <span class="i3i3">{{$item->start_datetime}}</span>
+        <!--<span class="i3i3">{{$item->start_datetime}}</span>-->
       </div>
       <div style="clear:both"></div>
     </div>

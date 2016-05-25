@@ -418,3 +418,8 @@ div.clear_both {
 .view_other_thumbnail a {
 	text-decoration:none
 }
+.divide{
+	background: url(/imgs/shadow.png) repeat;
+	width:750px;
+	height:10px;
+}
