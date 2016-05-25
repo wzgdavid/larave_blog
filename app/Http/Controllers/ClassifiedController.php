@@ -102,5 +102,14 @@ class ClassifiedController extends Controller
 
     }
 
+    public function list_view(Request $request){
+        // in SHexpat
+        //qs = qs.filter(is_approved=True).order_by('-create_datetime')
+        $classifieds = Classified::paginate(20);
+        return view('classified.list_view', [
+                "request" => $request,
+                'classifieds' => $classifieds,
 
+        ]);
+    }
 }

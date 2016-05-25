@@ -73,7 +73,7 @@
                     <li class="active"><a href="#">Home</a></li>
                     <li><a href="/article">article</a></li>
                     <li><a href="/votepage">vote</a></li>
-                    <li><a href='/myimgs'>add img</a></li>
+                    <li><a href='/classified'>Classified</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

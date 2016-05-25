@@ -26,6 +26,13 @@ Route::get('/article', 'ArticleController@index');
 
 Route::group(['middleware' => ['web']], function ()
 {
+
+
+    Route::get('/classified', [
+        'as'   => 'classified',
+        'uses' => 'ClassifiedController@list_view',
+    ]);
+
     Route::group(['middleware' => ['admin_logged', 'can_see']], function ()
     {
         Route::get('/admin/article/list', [
