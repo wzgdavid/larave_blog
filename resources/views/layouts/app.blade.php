@@ -131,7 +131,7 @@
             <div class='row' id='footer-section1'>
               <div class='col-xs-4 col-sm-3 col-md-2 col-lg-2'>
                 
-                  <img src="/imgs/cityweekend-logo.png" class='autoimg' ></img>
+                  <img src="/imgs/expat_logo.jpg" class='autoimg' ></img>
                
               </div>
               <div class='col-sm-12 col-md-8 col-lg-8'>
