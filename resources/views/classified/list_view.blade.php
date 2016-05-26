@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    <title>Classifies</title>
+    <title>Classified</title>
     <link rel="stylesheet" href="/css/classified.css" type="text/css" />
 @endsection
 

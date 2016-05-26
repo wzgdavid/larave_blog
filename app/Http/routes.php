@@ -36,7 +36,10 @@ Route::group(['middleware' => ['web']], function ()
         'as'   => 'classified.item_view',
         'uses' => 'ClassifiedController@item_view',
     ]);
-
+    Route::get('/classified/edit_view', [
+        'as'   => 'classified.edit_view',
+        'uses' => 'ClassifiedController@edit_view',
+    ]);
 
     Route::group(['middleware' => ['admin_logged', 'can_see']], function ()
     {

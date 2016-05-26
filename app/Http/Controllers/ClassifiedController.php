@@ -154,4 +154,12 @@ class ClassifiedController extends Controller
         }
     }
 
+    public function edit_view(Request $request){
+
+    }
+
+    public function submit_edit(Request $request){
+
+    }
+
 }
