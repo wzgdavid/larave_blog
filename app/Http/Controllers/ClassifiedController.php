@@ -155,11 +155,26 @@ class ClassifiedController extends Controller
     }
 
     public function edit_view(Request $request){
-
+        $classified = new Classified;
+        $categories = ClassifiedCategory::all();
+        $category_array = array('--------');
+        foreach ($categories as $c){
+                $key = $c->id;
+                $value = $c->name;
+                $category_array[$key] = $value;
+        }
+        return view('classified.edit_view',[
+            'classified' => $classified,
+            "request" => $request,
+            'category_array' =>$category_array,
+        ]);
     }
 
     public function submit_edit(Request $request){
+        $id = $request->get('id');
 
+        $classified = Classified::find($id);
+        return redirect('/classified');
     }
 
 }

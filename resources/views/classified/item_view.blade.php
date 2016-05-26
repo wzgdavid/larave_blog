@@ -1,13 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.classified')
 
-@section('head')
-    <title>Classified</title>
-    <link rel="stylesheet" href="/css/classified.css" type="text/css" />
-@endsection
-
-
-@section('content')
-<div class="container">
+@section('main_left')
+<div class="main_left">
   <div class="classified-item-right">
     <div class="cr1">{{$item->title}}</div>
     @if( $item->is_approved == 0 )

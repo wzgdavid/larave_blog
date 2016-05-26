@@ -1,13 +1,10 @@
-@extends('layouts.app')
-
-@section('head')
-    <title>Classified</title>
-    <link rel="stylesheet" href="/css/classified.css" type="text/css" />
-@endsection
+@extends('layouts.classified')
 
 
-@section('content')
-<div class="container">
+
+
+@section('main_left')
+<div class="main_left">
     @foreach ($classifieds as $item)
           <div class="classified-list-item">
     <a href="{{$item->get_absolute_url}}"><img src="{%replace_none $item->get_main_image_url default_main_img%}" alt="" class="list-image"/></a>
@@ -36,7 +33,8 @@
   </div>
   <div class="divide"></div>
     @endforeach
+    {!! $classifieds->links() !!}
 </div>
-{!! $classifieds->links() !!}
+
 @endsection
 
