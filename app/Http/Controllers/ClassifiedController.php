@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\ClassifiedPostRequest;
 use App\Classified;
 use App\ClassifiedCategory;
 use View, Redirect, App, Config, Log, DB, Event,Storage;
@@ -171,10 +172,18 @@ class ClassifiedController extends Controller
     }
 
     public function submit_edit(Request $request){
-        $id = $request->get('id');
-
+        /*$id = $request->get('id');
         $classified = Classified::find($id);
+        Log::info('-------------submit_edit-------------------- ');
+        Log::info($id);
+        Log::info('-------------submit_edit-------------------- ');*/
+        $classified = new Classified;
+        $classified->save();
+        $classified->is_approved = 1;
+        $data = $request->all();
+        $classified->update($data);
         return redirect('/classified');
+       
     }
 
 }
