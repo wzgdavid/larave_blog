@@ -9,7 +9,7 @@ use App\Http\Requests\ClassifiedPostRequest;
 use App\Classified;
 use App\ClassifiedCategory;
 use View, Redirect, App, Config, Log, DB, Event,Storage;
-
+use Illuminate\Validation\Validator;
 
 class ClassifiedController extends Controller
 {
@@ -172,11 +172,26 @@ class ClassifiedController extends Controller
     }
 
     public function submit_edit(Request $request){
-        /*$id = $request->get('id');
-        $classified = Classified::find($id);
-        Log::info('-------------submit_edit-------------------- ');
-        Log::info($id);
+        $category_id = $request->get('category_id');
+        //$classified = Classified::find($id);
+       /* Log::info('-------------submit_edit-------------------- ');
+        Log::info($category_id);
         Log::info('-------------submit_edit-------------------- ');*/
+
+        $this->validate($request, [
+            'title' => 'required|max:200',
+            'content' => 'required|max:60000',
+            //'category_id' => 'required|digits_between:1,9999999',
+            'category_id' => 'required|not_in:0',
+
+            
+        ]);
+        $messages = [
+
+            'digits_between' => 'Category is required',
+    
+        ];
+        $validator = Validator::make($input, $rules, $messages);
         $classified = new Classified;
         $classified->save();
         $classified->is_approved = 1;

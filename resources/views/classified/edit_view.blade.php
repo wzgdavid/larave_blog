@@ -5,18 +5,30 @@
 
 @section('main_left')
 <div class="main_left">
+    @if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
             <div class="panel-body">
                 {!! Form::model($classified, [ 'url' => [URL::route('classified.submit_edit'), $classified->id], 'method' => 'post'] )  !!}
                        
                 <!-- category -->
                 <div class="form-group">
+                    <font color="red">*</font>
                     {!! Form::label("category","select category") !!}
                     {!! Form::select('category_id', $category_array, 
                         (isset($classified->category_id) && $classified->category_id) ? $classified->category_id : "0",['class' => 'form-control'] ) !!}  
                 </div>
                 <!-- classified title field -->
                 <div class="form-group">
-                    {!! Form::label('title','title: *') !!}
+                    <font color="red">*</font>
+                    {!! Form::label('title','title: ') !!}
+                    
                     {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'title']) !!}
                 </div>
                 <div class="form-group">
@@ -72,6 +84,7 @@
                 </div>
                 <!-- content -->
                 <div class="form-group">
+                    <font color="red">*</font>
                     {!! Form::label('content','Description: ') !!}
                     {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
                 </div>
