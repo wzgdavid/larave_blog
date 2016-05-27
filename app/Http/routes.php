@@ -36,19 +36,27 @@ Route::group(['middleware' => ['web']], function ()
         'as'   => 'classified.item_view',
         'uses' => 'ClassifiedController@item_view',
     ]);
-    Route::get('/classified/edit_view', [
-        'as'   => 'classified.edit_view',
-        'uses' => 'ClassifiedController@edit_view',
-    ]);
-    Route::post('/classified/edit_view', [
-        'as'   => 'classified.submit_edit',
-        'uses' => 'ClassifiedController@submit_edit',
-    ]);
+
     Route::get('/classified/get_metro_stations', [
         'as'   => 'classified.get_metro_stations',
         'uses' => 'ClassifiedController@get_metro_stations',
     ]);
 
+    //need user logged
+    Route::group(['middleware' => ['logged']], function ()
+    {
+        Route::get('/classified/edit_view', [
+            'as'   => 'classified.edit_view',
+            'uses' => 'ClassifiedController@edit_view',
+        ]);
+        Route::post('/classified/edit_view', [
+            'as'   => 'classified.submit_edit',
+            'uses' => 'ClassifiedController@submit_edit',
+        ]);
+
+    });
+
+    //need admin logged
     Route::group(['middleware' => ['admin_logged', 'can_see']], function ()
     {
         Route::get('/admin/article/list', [
