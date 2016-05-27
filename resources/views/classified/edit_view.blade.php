@@ -90,7 +90,23 @@
         //alert(line);
         $.get( "/classified/get_metro_stations", { line: line} )
             .done(function( data ) {
-                //alert( "Data Loaded: " + data );
+                var json_data = eval('(' + data + ')');
+                //alert( "Data Loaded: " + json_data );
+                /*for(var i=0; i<json_data.length; i++)  {
+                    //alert(json_data[i])
+                    $.each(json_data[i],function(name,value) {
+                            alert(name);
+                            //alert(value);
+                    });
+                }*/
+                $( "#station option" ).remove();
+                for(var obj in json_data){  
+                    var id = json_data[obj].id;
+                    var station = json_data[obj].station
+                    var option = '<option value="'+id+'">'+station+'</option>'; 
+                    $("#station").append(option);
+                }
+
             });
         }); 
 </script>
