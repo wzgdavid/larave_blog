@@ -185,5 +185,13 @@ class ClassifiedController extends Controller
         return redirect('/classified');
        
     }
+    public function get_metro_stations(Request $request){
+        $line = $request->get('line');
+        $stations = DB::table('metro')
+                ->select('id', 'station')
+                ->where('line', $line)
+                ->get();
+        return  json_encode($stations);
 
+    }
 }

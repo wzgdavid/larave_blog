@@ -44,6 +44,10 @@ Route::group(['middleware' => ['web']], function ()
         'as'   => 'classified.submit_edit',
         'uses' => 'ClassifiedController@submit_edit',
     ]);
+    Route::get('/classified/get_metro_stations', [
+        'as'   => 'classified.get_metro_stations',
+        'uses' => 'ClassifiedController@get_metro_stations',
+    ]);
 
     Route::group(['middleware' => ['admin_logged', 'can_see']], function ()
     {

@@ -36,7 +36,7 @@
                             
                 </div>
                 <div class="form-group">
-                    {!! Form::label("merto_line","merto line: ") !!}
+                    {!! Form::label("merto_line","metro line: ") !!}
                             {!! Form::select('merto_line', [
                                 1=>'Line 1',
                                 2=>'Line 2',
@@ -56,6 +56,15 @@
                                 16=>'Line 16',
                                 ], (isset($classified->merto_line) && $classified->merto_line) ? $classified->merto_line : "0",['class' => 'form-control'] ) !!}
                             
+                
+                </div>
+                <div class="form-group">
+                    {!! Form::label("station","station: ") !!}
+                            {!! Form::select('station', [
+                                
+                                ], (isset($classified->station) && $classified->station) ? $classified->station : "0",['class' => 'form-control'] ) !!}
+                            
+                
                 </div>
                 <div class="form-group">
                     {!! Form::label('price','price:') !!}
@@ -74,6 +83,16 @@
               
             </div>
 </div>
-
+<script>
+    $("#merto_line").change(function(){
+        
+        var line=$(this).val();
+        //alert(line);
+        $.get( "/classified/get_metro_stations", { line: line} )
+            .done(function( data ) {
+                //alert( "Data Loaded: " + data );
+            });
+        }); 
+</script>
 @endsection
 
