@@ -5,8 +5,36 @@
 
 @section('main_left')
 <div class="main_left">
+
+
+  
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Classified</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+       @include(config('laravel-menu.views.bootstrap-items'), array('items' => $MyNavBar->roots()))
+
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
     @foreach ($classifieds as $item)
-          <div class="classified-list-item">
+  <div class="classified-list-item">
     <a href="{{$item->get_absolute_url}}"><img src="{%replace_none $item->get_main_image_url default_main_img%}" alt="" class="list-image"/></a>
     <div class="i-right">
       <div class="i1">

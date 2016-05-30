@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\ClassifiedPostRequest;
 use App\Classified;
 use App\ClassifiedCategory;
-use View, Redirect, App, Config, Log, DB, Event,Storage;
+use View, Redirect, App, Config, Log, DB, Event,Storage, Menu;
 use Illuminate\Validation\Validator;
 
 class ClassifiedController extends Controller
@@ -17,6 +17,7 @@ class ClassifiedController extends Controller
     {
         $this->config_reader = $config_reader ? $config_reader : App::make('config');
         $this->results_per_page = $this->config_reader->get('acl_base.rows_per_page');
+        $this->authenticator = App::make('authenticator');
     }
 
     public function admin_list(Request $request){
@@ -119,6 +120,19 @@ class ClassifiedController extends Controller
     public function list_view(Request $request){
         // in SHexpat
         //qs = qs.filter(is_approved=True).order_by('-create_datetime')
+Menu::make('MyNavBar', function($menu){
+
+
+
+  $menu->add('About',    array('route'  => 'classified'));
+
+  $menu->item('about')->add('Our Goals', 'our-goals');
+
+
+
+});
+
+
         $classifieds = Classified::where('is_approved', 1)
             ->orderBy('create_datetime', 'desc')
             ->paginate(20);
@@ -191,12 +205,19 @@ class ClassifiedController extends Controller
             'digits_between' => 'Category is required',
     
         ];
-        $validator = Validator::make($input, $rules, $messages);
+        //$validator = Validator::make($input, $rules, $messages);
         $classified = new Classified;
         $classified->save();
         $classified->is_approved = 1;
         $data = $request->all();
+
+        $logged_user = $this->authenticator->getLoggedUser();
+        $user_id = $logged_user->user_profile()->first()->id;
+        $classified->contributor_id = $user_id;
+        $classified->save();
         $classified->update($data);
+
+
         return redirect('/classified');
        
     }
