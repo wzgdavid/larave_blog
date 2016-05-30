@@ -162,6 +162,7 @@ return [
         Conner\Tagging\Providers\TaggingServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,//for edit article content 
         'Lavary\Menu\ServiceProvider',
+        'Cviebrock\EloquentSluggable\SluggableServiceProvider',
 
     ],
 

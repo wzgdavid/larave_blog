@@ -188,9 +188,7 @@ Menu::make('MyNavBar', function($menu){
     public function submit_edit(Request $request){
         $category_id = $request->get('category_id');
         //$classified = Classified::find($id);
-       /* Log::info('-------------submit_edit-------------------- ');
-        Log::info($category_id);
-        Log::info('-------------submit_edit-------------------- ');*/
+
 
         $this->validate($request, [
             'title' => 'required|max:200',
@@ -202,13 +200,13 @@ Menu::make('MyNavBar', function($menu){
         ]);
         //$validator = Validator::make($input, $rules, $messages);
         $classified = new Classified;
-        $classified->save();
         $classified->is_approved = 1;
         $data = $request->all();
 
         $logged_user = $this->authenticator->getLoggedUser();
         $user_id = $logged_user->user_profile()->first()->id;
         $classified->contributor_id = $user_id;
+        $classified->title = $data['title'];
         $classified->save();
         $classified->update($data);
 
