@@ -200,11 +200,6 @@ Menu::make('MyNavBar', function($menu){
 
             
         ]);
-        $messages = [
-
-            'digits_between' => 'Category is required',
-    
-        ];
         //$validator = Validator::make($input, $rules, $messages);
         $classified = new Classified;
         $classified->save();

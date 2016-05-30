@@ -122,14 +122,21 @@ Admin area: edit classified
                 <!--start and end datetime-->
                 <div class="form-group">
                     {!! Form::label('start_datetime','start_datetime: ') !!}
-                    {!! Form::date('start_date', explode(" ",$classified->start_datetime)[0], []) !!}
-                    {!! Form::time('start_time', explode(" ",$classified->start_datetime)[1], []) !!}
-                </div>
+                    {!! Form::date('start_date', 
+                        (isset($classified->start_datetime) && $classified->start_datetime) ?
+                        explode(" ",$classified->start_datetime)[0] : '') !!}
+                    {!! Form::time('start_time',                         
+                        (isset($classified->start_datetime) && $classified->start_datetime) ?
+                        explode(" ",$classified->start_datetime)[1] : '') !!}
                 <!--start and end datetime-->
                 <div class="form-group">  
                     {!! Form::label('end_datetime','end_datetime: ') !!}
-                    {!! Form::date('end_date', explode(" ",$classified->end_datetime)[0], []) !!}
-                    {!! Form::time('end_time', explode(" ",$classified->end_datetime)[1], []) !!}
+                    {!! Form::date('end_date', 
+                        (isset($classified->end_datetime) && $classified->end_datetime) ?
+                        explode(" ",$classified->end_datetime)[0] : '') !!}
+                    {!! Form::time('end_time', 
+                        (isset($classified->end_datetime) && $classified->end_datetime) ?
+                        explode(" ",$classified->end_datetime)[1] : '') !!}
                 </div>
                 <!-- classified price field -->
                 <div class="form-group">
