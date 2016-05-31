@@ -85,14 +85,25 @@ Admin area: edit article
                     {!! Form::number('shf_priority', null, []) !!}
 
                 </div>
+
                 <!--publish datetime-->
                 <div class="form-group">
                     {!! Form::label('datetime_publish','datetime_publish: ') !!}
-                    {!! Form::date('publish_date', explode(" ",$article->datetime_publish)[0], []) !!}
-                    {!! Form::time('publish_time', explode(" ",$article->datetime_publish)[1], []) !!}
+                    {!! Form::date('publish_date', 
+                        (isset($article->datetime_publish) && $article->datetime_publish) ?
+                        explode(" ",$article->datetime_publish)[0] : '') !!}
+                    {!! Form::time('publish_time',                         
+                        (isset($article->datetime_publish) && $article->datetime_publish) ?
+                        explode(" ",$article->datetime_publish)[1] : '') !!}
+                </div>
+                <div class="form-group">
                     {!! Form::label('datetime_unpublish','datetime_unpublish: ') !!}
-                    {!! Form::date('unpublish_date', explode(" ",$article->datetime_unpublish)[0], []) !!}
-                    {!! Form::time('unpublish_time', explode(" ",$article->datetime_unpublish)[1], []) !!}
+                    {!! Form::date('unpublish_date', 
+                        (isset($article->datetime_unpublish) && $article->datetime_unpublish) ?
+                        explode(" ",$article->datetime_unpublish)[0] : '') !!}
+                    {!! Form::time('unpublish_time',                         
+                        (isset($article->datetime_unpublish) && $article->datetime_unpublish) ?
+                        explode(" ",$article->datetime_unpublish)[1] : '') !!}
                 </div>
 
                 <div class="form-group">

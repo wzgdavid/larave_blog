@@ -43,9 +43,10 @@
                 {!! Form::close() !!}
             </div>
             -->
+            <!--
             <div class="col-lg-2 col-md-3 col-sm-3">
                     <a href="{!! URL::route('admin.classified.edit') !!}" class="btn btn-info"><i class="fa fa-plus"></i> Add New</a>
-            </div>
+            </div>-->
         </div>
       <div class="row">
           <div class="col-md-12">

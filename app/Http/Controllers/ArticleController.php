@@ -23,6 +23,7 @@ class ArticleController extends Controller
         //$this->article_repository = App::make('article_repository');
         $this->config_reader = $config_reader ? $config_reader : App::make('config');
         $this->results_per_page = $this->config_reader->get('acl_base.rows_per_page');
+        $this->authenticator = App::make('authenticator');
     }
 
     public function index(Request $request)
@@ -124,9 +125,9 @@ class ArticleController extends Controller
         }
 
 
-        $id = $request->get('id');
-        if (isset( $id )){
-            $article = Article::find($request->get('id'));
+        $article_id = $request->get('id');
+        if (isset( $article_id )){
+            $article = Article::find($article_id);
             $author = ArticleAuthor::find($article->author_id);
             if (isset($author)){
                 $author_name = $author->author_name;
@@ -160,20 +161,70 @@ class ArticleController extends Controller
         else
         {
             $article = new Article;
-            $article->save();
+            //$article->save();
+            //$article->retag('');
             $article->datetime_publish = date("Y-m-d").' '.date("h:i:s");
-            $article->datetime_unpublish = date("Y-m-d",strtotime("+100 year")).' '.date("h:i:s");
-            $article->tags='tags';
+            //$article->datetime_unpublish = date("Y-m-d",strtotime("+100 year")).' '.date("h:i:s");
+            //$article->datetime_unpublish = '';
+            
+
+            $logged_user = $this->authenticator->getLoggedUser();
+            $user_id = $logged_user->user_profile()->first()->id;
+            $user = User::find($user_id);
+            if (isset($user)){
+                $user_name = $user->name;
+            }else{
+                $user_name = 'no user';
+            }   
+            $article->user_id = $user_id;
+
             return view('article.admin_article_edit', [
                 'article' => $article,
-                "request" => $request,
+                //"request" => $request,
                 'author_name' => '',
-                'user_name' => '',
+                'user_name' => $user_name,
                 'category_array' =>$category_array,
                 'photo_src' => '',
+                
             ]);
         }
 
+    }
+
+    public function post_edit_article(Request $request)
+    {
+        $id = $request->get('id');
+
+        $article = Article::find($id);
+        if(!isset($article)){
+            $article = new Article;
+            $article->save();
+        }
+        $tags = $request->get('tags');
+        $article->retag($tags);
+        //Event::fire('repository.updating', [$article]);
+        $data = $request->all();
+        $publish_date = $request->get('publish_date');
+        $publish_time = $request->get('publish_time');
+        $unpublish_date = $request->get('unpublish_date');
+        $unpublish_time = $request->get('unpublish_time');
+
+        $data['datetime_publish'] = $publish_date.' '.$publish_time;
+        $data['datetime_unpublish'] = $unpublish_date.' '.$unpublish_time;
+        /*Log::info('---------------------------------77');
+        Log::info($data);
+        Log::info('---------------------------------77');*/
+        //unset($data['_token']);
+        if ($request->get('is_in_sitemap') == true) {
+            
+            $this->add_to_sitemap($id, $article->hyperlink);
+        }else{
+            $this->remove_from_sitemap($id);
+        }
+        $this->check_unpublish();
+        $article->update($data);
+        //return $article;
+        return Redirect::route('admin.article.edit',["id" => $article->id])->withMessage(Config::get('acl_messages.flash.success.article_edit_success'));
     }
 
     private function add_to_sitemap($article_id=null, $article_url=null, $lastmod=null){
@@ -239,38 +290,7 @@ class ArticleController extends Controller
         }
     }
 
-    public function post_edit_article(Request $request)
-    {
-        $id = $request->get('id');
 
-        $article = Article::find($id);
-        $tags = $request->get('tags');
-        $article->retag($tags);
-        //Event::fire('repository.updating', [$article]);
-        $data = $request->all();
-        $publish_date = $request->get('publish_date');
-        $publish_time = $request->get('publish_time');
-        $unpublish_date = $request->get('unpublish_date');
-        $unpublish_time = $request->get('unpublish_time');
-
-
-        $data['datetime_publish'] = $publish_date.' '.$publish_time;
-        $data['datetime_unpublish'] = $unpublish_date.' '.$unpublish_time;
-        /*Log::info('---------------------------------77');
-        Log::info($data);
-        Log::info('---------------------------------77');*/
-        //unset($data['_token']);
-        if ($request->get('is_in_sitemap') == true) {
-            
-            $this->add_to_sitemap($id, $article->hyperlink);
-        }else{
-            $this->remove_from_sitemap($id);
-        }
-        $this->check_unpublish();
-        $article->update($data);
-        //return $article;
-        return Redirect::route('admin.article.edit',["id" => $article->id])->withMessage(Config::get('acl_messages.flash.success.article_edit_success'));
-    }
 
 
     public function changepic(Request $request){

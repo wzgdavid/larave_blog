@@ -86,7 +86,7 @@ class ClassifiedController extends Controller
         else
         {
             $classified = new Classified;
-            $classified->save();
+            //$classified->save();
             $classified->start_datetime = date("Y-m-d").' '.date("h:i:s");
             $classified->end_datetime = date("Y-m-d",strtotime("+100 year")).' '.date("h:i:s");
 
