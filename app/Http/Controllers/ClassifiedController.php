@@ -43,8 +43,8 @@ class ClassifiedController extends Controller
         }
         
         
-        //$q = $q->select('*');
-        $classifieds = $q->take($this->results_per_page)->get();
+        //$classifieds = $q->take($this->results_per_page)->get();
+        $classifieds = $q->paginate($this->results_per_page);
         return view('classified.admin_list', [
             'classifieds' =>  $classifieds,
             //'user' => $user,
@@ -120,18 +120,31 @@ class ClassifiedController extends Controller
     public function list_view(Request $request){
         // in SHexpat
         //qs = qs.filter(is_approved=True).order_by('-create_datetime')
-Menu::make('MyNavBar', function($menu){
+        Menu::make('MyNavBar', function($menu){
 
+            $menu->add('Electronics',    array('route'  => 'classified'));
+            $menu->add('Furniture',    array('route'  => 'classified.item_view'));
+            $menu->add('Vehicles',    array('route'  => 'classified.item_view'));
+            $menu->add('Pets',    array('route'  => 'classified.item_view'));
+            $menu->add('Clothing & Jewelry',    array('route'  => 'classified.item_view'))
+                ->nickname('clothing');
+            $menu->add('Musical Instruments',    array('route'  => 'classified.item_view'))
+                ->nickname('instruments');
+            //$menu->item('instruments')->add('Other Vehicles', array('route'  => 'classified.item_view'));
+            $menu->add('Sporting Goods',    array('route'  => 'classified.item_view'));
+            $menu->add('Other',    array('route'  => 'classified.item_view'));
+            $menu->item('electronics')->add('Cell phones', array('route'  => 'classified.item_view'));
+            $menu->item('electronics')->add('Computers', array('route'  => 'classified.item_view'));
+            $menu->item('electronics')->add('Cameras', array('route'  => 'classified.item_view'));
+            $menu->item('electronics')->add('TV', array('route'  => 'classified.item_view'));
+            $menu->item('furniture')->add('Equipment', array('route'  => 'classified.item_view'));
+            $menu->item('furniture')->add('Home Furnishing', array('route'  => 'classified.item_view'));
+            $menu->item('vehicles')->add('Bikes', array('route'  => 'classified.item_view'));
+            $menu->item('vehicles')->add('Scooters', array('route'  => 'classified.item_view'));
+            $menu->item('vehicles')->add('Cars', array('route'  => 'classified.item_view'));
+            $menu->item('vehicles')->add('Other Vehicles', array('route'  => 'classified.item_view'));
 
-
-  $menu->add('About',    array('route'  => 'classified'));
-
-  $menu->item('about')->add('Our Goals', 'our-goals');
-
-
-
-});
-
+        });
 
         $classifieds = Classified::where('is_approved', 1)
             ->orderBy('create_datetime', 'desc')

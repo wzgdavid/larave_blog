@@ -79,6 +79,7 @@
               @else
                   <span class="text-warning"><h5>No results found.</h5></span>
               @endif
+              {!! $classifieds->links() !!}
           </div>
       </div>
     </div>
