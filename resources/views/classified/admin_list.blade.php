@@ -50,6 +50,7 @@
         </div>
       <div class="row">
           <div class="col-md-12">
+            {!! $classifieds->links() !!}
               @if(! $classifieds->isEmpty() )
               <table class="table table-hover">
                       <thead>
