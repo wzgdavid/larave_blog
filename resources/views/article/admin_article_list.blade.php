@@ -87,13 +87,14 @@
                               <th>SH Family show</th>
                               <th>SH Family sponsor</th>
 
-                              <th>Operations</th>
+                              <th>Delete</th>
                           </tr>
                       </thead>
                       <tbody>
                           @foreach($articles as $article)
                           <tr>
-                              <td>{!! $article->title !!}</td>
+                              <!-- <td>{!! $article->title !!}</td> -->
+                              <td><a href="{!! URL::route('admin.article.edit', ['id' => $article->id]) !!}" title='edit'>{!! $article->title !!}</a></td>
                               <td>{!! $article->get_author() !!}</td>
                               <td>{!! $article->shf_priority !!}</td>
                               <td>{!! $article->is_home_featured ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>' !!}</td>
@@ -103,10 +104,10 @@
 
                               <td>
                                   @if(! $article->protected)
-                                      <a href="{!! URL::route('admin.article.edit', ['id' => $article->id]) !!}" title='edit'><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                                      <a href="{!! URL::route('admin.article.delete',['id' => $article->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete" title='delete'><i class="fa fa-trash-o fa-2x red"></i></a>
+                                      <!-- <a href="{!! URL::route('admin.article.edit', ['id' => $article->id]) !!}" title='edit'><i class="fa fa-pencil-square-o fa-2x"></i></a> -->
+                                      <a href="{!! URL::route('admin.article.delete',['id' => $article->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete" title='delete'><i class="fa fa-trash-o fa-2x red"></i></a> 
                                   @else
-                                      <i class="fa fa-times fa-2x light-blue"></i>
+                                      <!-- <i class="fa fa-times fa-2x light-blue"></i> -->
                                       <i class="fa fa-times fa-2x margin-left-12 light-blue"></i>
                                   @endif
                               </td>                              

@@ -54,20 +54,20 @@
                       <thead>
                           <tr>
                               <th>Title</th>
-                              
+                              <th>Delete</th>
                           </tr>
                       </thead>
                       <tbody>
                           @foreach($classifieds as $classified)
                           <tr>
-                              <td>{!! $classified->title !!}</td>
-                              
+                              <!-- <td>{!! $classified->title !!}</td> -->
+                              <td><a href="{!! URL::route('admin.classified.edit', ['id' => $classified->id]) !!}" title='edit'> {!! $classified->title !!}</a></td>
                               <td>
                                   @if(! $classified->protected)
-                                      <a href="{!! URL::route('admin.classified.edit', ['id' => $classified->id]) !!}" title='edit'><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                                      <!-- <a href="{!! URL::route('admin.classified.edit', ['id' => $classified->id]) !!}" title='edit'><i class="fa fa-pencil-square-o fa-2x"></i></a> -->
                                       <a href="{!! URL::route('admin.classified.delete',['id' => $classified->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete" title='delete'><i class="fa fa-trash-o fa-2x red"></i></a>
                                   @else
-                                      <i class="fa fa-times fa-2x light-blue"></i>
+                                      <!-- <i class="fa fa-times fa-2x light-blue"></i> -->
                                       <i class="fa fa-times fa-2x margin-left-12 light-blue"></i>
                                   @endif
                               </td>                              
