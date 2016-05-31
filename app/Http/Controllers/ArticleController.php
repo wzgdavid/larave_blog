@@ -82,7 +82,7 @@ class ArticleController extends Controller
         
         
         //$q = $q->select('*');
-        $articles = $q->take($this->results_per_page)->get();
+        $articles = $q->paginate($this->results_per_page);
         return view('article.admin_article_list', [
             'articles' =>  $articles,
             //'user' => $user,

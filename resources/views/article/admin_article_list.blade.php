@@ -74,6 +74,7 @@
 
       <div class="row">
           <div class="col-md-12">
+            {!! $articles->links() !!}
               @if(! $articles->isEmpty() )
               <table class="table table-hover">
                       <thead>
@@ -117,6 +118,7 @@
               @else
                   <span class="text-warning"><h5>No results found.</h5></span>
               @endif
+              {!! $articles->links() !!}
           </div>
       </div>
     </div>
