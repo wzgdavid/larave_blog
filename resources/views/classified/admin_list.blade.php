@@ -9,32 +9,32 @@
     <div class="col-md-12">
       <div class="col-md-12">
               {{--  search --}}
-  <div class="panel panel-info">
-    <div class="panel-heading">
-        <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i> Classified search</h3>
-    </div>
-    <div class="panel-body">
-        {!! Form::open(['route' => 'admin.classified.list','method' => 'get']) !!}
-        <!-- title field -->
-        <div class="form-group">
-            {!! Form::label('title','title: ') !!}
-            {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'title']) !!}
-        </div>
-        <span class="text-danger">{!! $errors->first('email') !!}</span>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i> Classified search</h3>
+          </div>
+          <div class="panel-body">
+            {!! Form::open(['route' => 'admin.classified.list','method' => 'get']) !!}
+            <!-- title field -->
+            <div class="form-group">
+              {!! Form::label('title','title: ') !!}
+              {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'title']) !!}
+            </div>
+            <span class="text-danger">{!! $errors->first('email') !!}</span>
       
 
-        <div class="form-group">
-            <a href="{!! URL::route('admin.classified.list') !!}" class="btn btn-default search-reset">Reset</a>
-            {!! Form::submit('Search', ["class" => "btn btn-info", "id" => "search-submit"]) !!}
+            <div class="form-group">
+              <a href="{!! URL::route('admin.classified.list') !!}" class="btn btn-default search-reset">Reset</a>
+              {!! Form::submit('Search', ["class" => "btn btn-info", "id" => "search-submit"]) !!}
+            </div>
+            {!! Form::close() !!}
+          </div>
         </div>
-        {!! Form::close() !!}
-    </div>
-  </div>
                 {{--  search end --}}
-</div>
+      </div>
 
 
-            <div class="col-md-12">
+      <div class="col-md-12">
                 {{-- print messages --}}
                 <?php $message = Session::get('message'); ?>
                 @if( isset($message) )
@@ -49,12 +49,12 @@
 
 
                 {{-- classified lists --}}
-	<div class="panel panel-info">
-    <div class="panel-heading">
-        <h3 class="panel-title bariol-thin"><i class="fa fa-user"></i> {!! $request->all() ? 'Search results:' : 'Classifieds' !!}</h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
+	      <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title bariol-thin"><i class="fa fa-user"></i> {!! $request->all() ? 'Search results:' : 'Classifieds' !!}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="row">
         	<!-- ordering
             <div class="col-lg-10 col-md-9 col-sm-9">
                 {!! Form::open(['method' => 'get', 'class' => 'form-inline']) !!}
@@ -74,12 +74,12 @@
             <div class="col-lg-2 col-md-3 col-sm-3">
                     <a href="{!! URL::route('admin.classified.edit') !!}" class="btn btn-info"><i class="fa fa-plus"></i> Add New</a>
             </div>-->
-        </div>
-      <div class="row">
-          <div class="col-md-12">
-            {!! $classifieds->links() !!}
-              @if(! $classifieds->isEmpty() )
-              <table class="table table-hover">
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                {!! $classifieds->links() !!}
+                  @if(! $classifieds->isEmpty() )
+                  <table class="table table-hover">
                       <thead>
                           <tr>
                               <th>Title</th>
@@ -103,21 +103,21 @@
                           </tr>
                       </tbody>
                       @endforeach
-              </table>
+                  </table>
 
-              @else
+                  @else
                   <span class="text-warning"><h5>No results found.</h5></span>
-              @endif
-              {!! $classifieds->links() !!}
-          </div>
-      </div>
-    </div>
-	</div>
-{{-- article lists  end--}}
-
+                  @endif
+                {!! $classifieds->links() !!}
+              </div>
             </div>
+          </div>
+	      </div>
+        {{-- article lists  end--}}
 
-        </div>
+      </div>
+
+    </div>
 </div>
 @stop
 
