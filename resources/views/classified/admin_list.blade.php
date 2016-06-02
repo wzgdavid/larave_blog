@@ -7,7 +7,34 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-            <div class="col-md-9">
+      <div class="col-md-12">
+              {{--  search --}}
+  <div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i> Classified search</h3>
+    </div>
+    <div class="panel-body">
+        {!! Form::open(['route' => 'admin.classified.list','method' => 'get']) !!}
+        <!-- title field -->
+        <div class="form-group">
+            {!! Form::label('title','title: ') !!}
+            {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'title']) !!}
+        </div>
+        <span class="text-danger">{!! $errors->first('email') !!}</span>
+      
+
+        <div class="form-group">
+            <a href="{!! URL::route('admin.classified.list') !!}" class="btn btn-default search-reset">Reset</a>
+            {!! Form::submit('Search', ["class" => "btn btn-info", "id" => "search-submit"]) !!}
+        </div>
+        {!! Form::close() !!}
+    </div>
+  </div>
+                {{--  search end --}}
+</div>
+
+
+            <div class="col-md-12">
                 {{-- print messages --}}
                 <?php $message = Session::get('message'); ?>
                 @if( isset($message) )
@@ -89,31 +116,7 @@
 {{-- article lists  end--}}
 
             </div>
-<div class="col-md-3">
-              {{--  search --}}
-  <div class="panel panel-info">
-    <div class="panel-heading">
-        <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i> Classified search</h3>
-    </div>
-    <div class="panel-body">
-        {!! Form::open(['route' => 'admin.classified.list','method' => 'get']) !!}
-        <!-- title field -->
-        <div class="form-group">
-            {!! Form::label('title','title: ') !!}
-            {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'title']) !!}
-        </div>
-        <span class="text-danger">{!! $errors->first('email') !!}</span>
-      
 
-        <div class="form-group">
-            <a href="{!! URL::route('admin.classified.list') !!}" class="btn btn-default search-reset">Reset</a>
-            {!! Form::submit('Search', ["class" => "btn btn-info", "id" => "search-submit"]) !!}
-        </div>
-        {!! Form::close() !!}
-    </div>
-  </div>
-                {{--  search end --}}
-</div>
         </div>
 </div>
 @stop
