@@ -7,7 +7,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-            <div class="col-md-12">
+        <div class="col-md-12">
                 {{-- print messages --}}
                 <?php $message = Session::get('message'); ?>
                 @if( isset($message) )
@@ -21,20 +21,20 @@
                 @endif
 
 
-                {{-- article lists --}}
-	<div class="panel panel-info">
-    <div class="panel-heading">
-        <h3 class="panel-title bariol-thin"><i class="fa fa-user"></i> {!! $request->all() ? 'Search results:' : 'Articles' !!}</h3>
-    </div>
-    <div class="panel-body">
-       <div class="row">
-            <div class="col-lg-2 col-md-3 col-sm-3">
+  {{-- article lists --}}
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <h3 class="panel-title bariol-thin"><i class="fa fa-user"></i> {!! $request->all() ? 'Search results:' : 'Articles' !!}</h3>
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-lg-2 col-md-3 col-sm-3">
                     <a href="{!! URL::route('admin.article.edit') !!}" class="btn btn-info"><i class="fa fa-plus"></i> Add New Article</a>
-            </div>
-       </div>
-        <div class="row">
+                  </div>
+                </div>
+                <div class="row">
         	
-            <div class="col-lg-10 col-md-9 col-sm-9">
+                  <div class="col-lg-10 col-md-9 col-sm-9">
         {!! Form::open(['route' => 'admin.article.list','method' => 'get']) !!}
         <!-- title field -->
         <div class="form-group" style="float:left;width:300px;">
@@ -68,15 +68,15 @@
             {!! Form::submit('Search', ["class" => "btn btn-info", "id" => "search-submit"]) !!}
         </div>
         {!! Form::close() !!}
-            </div>
+                </div>
 
-        </div>
+                  </div>
 
-      <div class="row">
-          <div class="col-md-12">
-            {!! $articles->links() !!}
-              @if(! $articles->isEmpty() )
-              <table class="table table-hover">
+                  <div class="row">
+                    <div class="col-md-12">
+                    {!! $articles->links() !!}
+                    @if(! $articles->isEmpty() )
+                    <table class="table table-hover">
                       <thead>
                           <tr>
                               <th>Title</th>
@@ -114,22 +114,21 @@
                           </tr>
                       </tbody>
                       @endforeach
-              </table>
+                    </table>
 
-              @else
-                  <span class="text-warning"><h5>No results found.</h5></span>
-              @endif
-              {!! $articles->links() !!}
-          </div>
-      </div>
-    </div>
-	</div>
+                    @else
+                    <span class="text-warning"><h5>No results found.</h5></span>
+                    @endif
+                    {!! $articles->links() !!}
+                  </div>
+                  </div>
+                </div><!--panel-body-->
+              </div><!--panel panel-info-->
 {{-- article lists  end--}}
 
-            </div>
-
-        
         </div>
+
+    </div>
 </div>
 @stop
 
