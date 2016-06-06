@@ -165,16 +165,16 @@ class ClassifiedController extends Controller
     }
 
     private function find_classifieds_by_category_slug($slug){
-        Log::info('find_classifieds_by_category_slug -----------------------');
+        //Log::info('find_classifieds_by_category_slug -----------------------');
             $cid = $this->find_categoryid_by_slug($slug);
             $children_id = $this->find_children_id($cid);
             if (isset($children_id)){
-                Log::info('find_classifieds_by_category_slug -----has children_id------------------');
+                //Log::info('find_classifieds_by_category_slug -----has children_id------------------');
                 $classifieds = Classified::whereIn('category_id', $children_id)
                     ->orderBy('create_datetime', 'desc')
                     ->paginate(20); 
             }else{
-                Log::info('find_classifieds_by_category_slug -----no children_id------------------');
+                //Log::info('find_classifieds_by_category_slug -----no children_id------------------');
                 $classifieds = Classified::where('category_id', $cid)
                     ->orderBy('create_datetime', 'desc')
                     ->paginate(20); 
@@ -184,26 +184,26 @@ class ClassifiedController extends Controller
 
     private function find_categoryid_by_slug($slug){
         //ClassifiedCategory::->where('slug', $slug)
-        Log::info('find_categoryid_by_slug -----------------------');
+        //Log::info('find_categoryid_by_slug -----------------------');
         $result = DB::table('classified_category')->select('id')->where('slug', $slug)->get();
         $categoryid = $result[0]->id;
-        Log::info($categoryid );
+        //Log::info($categoryid );
         return $categoryid;
     }
 
     private function find_children_id($parent_id){
         $result = DB::table('classified_category')->select('id')->where('parent_id', $parent_id)->get();
         $rtn = array();
-        Log::info('find_children_id -----------------------');
+        //Log::info('find_children_id -----------------------');
         if(count($result)>0){
             //
             //Log::info($result);
-            Log::info('find_children_id -----isset------------------');
+            //Log::info('find_children_id -----isset------------------');
             foreach ($result as $k => $v){
                 $rtn[] = $v->id;
             }
         }else{
-            Log::info('find_children_id ----------null-------------');
+            //Log::info('find_children_id ----------null-------------');
             //eturn null;
             $rtn = null;
         }
