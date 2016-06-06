@@ -28,7 +28,7 @@ Route::group(['middleware' => ['web']], function ()
 {
 
 
-    Route::get('/classified', [
+    Route::get('/classified/{cate1?}/{cate2?}', [
         'as'   => 'classified',
         'uses' => 'ClassifiedController@list_view',
     ]);

@@ -117,32 +117,32 @@ class ClassifiedController extends Controller
 
     }
 
-    public function list_view(Request $request){
+    public function list_view(Request $request, $cate1 = null, $cate2=null){
         // in SHexpat
         //qs = qs.filter(is_approved=True).order_by('-create_datetime')
         Menu::make('MyNavBar', function($menu){
 
-            $menu->add('Electronics',    array('route'  => 'classified'));
-            $menu->add('Furniture',    array('route'  => 'classified.item_view'));
-            $menu->add('Vehicles',    array('route'  => 'classified.item_view'));
-            $menu->add('Pets',    array('route'  => 'classified.item_view'));
-            $menu->add('Clothing & Jewelry',    array('route'  => 'classified.item_view'))
+            $menu->add('Electronics',   Url('/classified/electronics'));
+            $menu->add('Furniture',    Url('/classified/furniture'));
+            $menu->add('Vehicles',     Url('/classified/vehicles'));
+            $menu->add('Pets',    Url('/classified/pets'));
+            $menu->add('Clothing & Jewelry',    Url('/classified/cothing-jewelry'))
                 ->nickname('clothing');
-            $menu->add('Musical Instruments',    array('route'  => 'classified.item_view'))
+            $menu->add('Musical Instruments',    Url('/classified/musical-instruments'))
                 ->nickname('instruments');
             //$menu->item('instruments')->add('Other Vehicles', array('route'  => 'classified.item_view'));
-            $menu->add('Sporting Goods',    array('route'  => 'classified.item_view'));
-            $menu->add('Other',    array('route'  => 'classified.item_view'));
-            $menu->item('electronics')->add('Cell phones', array('route'  => 'classified.item_view'));
-            $menu->item('electronics')->add('Computers', array('route'  => 'classified.item_view'));
-            $menu->item('electronics')->add('Cameras', array('route'  => 'classified.item_view'));
-            $menu->item('electronics')->add('TV', array('route'  => 'classified.item_view'));
-            $menu->item('furniture')->add('Equipment', array('route'  => 'classified.item_view'));
-            $menu->item('furniture')->add('Home Furnishing', array('route'  => 'classified.item_view'));
-            $menu->item('vehicles')->add('Bikes', array('route'  => 'classified.item_view'));
-            $menu->item('vehicles')->add('Scooters', array('route'  => 'classified.item_view'));
-            $menu->item('vehicles')->add('Cars', array('route'  => 'classified.item_view'));
-            $menu->item('vehicles')->add('Other Vehicles', array('route'  => 'classified.item_view'));
+            $menu->add('Sporting Goods',    Url('/classified/sporting-goods'));
+            $menu->add('Other',    Url('/classified/other'));
+            $menu->item('electronics')->add('Cell phones',Url('/classified/electronics/cell-phones'));
+            $menu->item('electronics')->add('Computers', Url('/classified/electronics/computers'));
+            $menu->item('electronics')->add('Cameras', Url('/classified/electronics/cameras'));
+            $menu->item('electronics')->add('TV', Url('/classified/electronics/tv'));
+            $menu->item('furniture')->add('Equipment', Url('/classified/furniture/equipment'));
+            $menu->item('furniture')->add('Home Furnishing', Url('/classified/furniture/home-furnishing'));
+            $menu->item('vehicles')->add('Bikes', Url('/classified/vehicles/bikes'));
+            $menu->item('vehicles')->add('Scooters', Url('/classified/vehicles/scooters'));
+            $menu->item('vehicles')->add('Cars', Url('/classified/vehicles/cars'));
+            $menu->item('vehicles')->add('Other Vehicles', Url('/classified/vehicles/other-vehicles'));
 
         });
 
