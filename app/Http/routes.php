@@ -26,16 +26,16 @@ Route::get('/article', 'ArticleController@index');
 
 Route::group(['middleware' => ['web']], function ()
 {
-
+    Route::get('/classified/item_view', [
+        'as'   => 'classified.item_view',
+        'uses' => 'ClassifiedController@item_view',
+    ]);
 
     Route::get('/classified/{cate1?}/{cate2?}', [
         'as'   => 'classified',
         'uses' => 'ClassifiedController@list_view',
     ]);
-    Route::get('/classified/item_view', [
-        'as'   => 'classified.item_view',
-        'uses' => 'ClassifiedController@item_view',
-    ]);
+
 
     Route::get('/classified/get_metro_stations', [
         'as'   => 'classified.get_metro_stations',

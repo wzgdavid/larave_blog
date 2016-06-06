@@ -126,7 +126,7 @@ class ClassifiedController extends Controller
             $menu->add('Furniture',    Url('/classified/furniture'));
             $menu->add('Vehicles',     Url('/classified/vehicles'));
             $menu->add('Pets',    Url('/classified/pets'));
-            $menu->add('Clothing & Jewelry',    Url('/classified/cothing-jewelry'))
+            $menu->add('Clothing & Jewelry',    Url('/classified/clothing-jewelry'))
                 ->nickname('clothing');
             $menu->add('Musical Instruments',    Url('/classified/musical-instruments'))
                 ->nickname('instruments');
@@ -137,7 +137,7 @@ class ClassifiedController extends Controller
             $menu->item('electronics')->add('Computers', Url('/classified/electronics/computers'));
             $menu->item('electronics')->add('Cameras', Url('/classified/electronics/cameras'));
             $menu->item('electronics')->add('TV', Url('/classified/electronics/tv'));
-            $menu->item('furniture')->add('Equipment', Url('/classified/furniture/equipment'));
+            $menu->item('furniture')->add('Office Equipment', Url('/classified/furniture/office-equipment'));
             $menu->item('furniture')->add('Home Furnishing', Url('/classified/furniture/home-furnishing'));
             $menu->item('vehicles')->add('Bikes', Url('/classified/vehicles/bikes'));
             $menu->item('vehicles')->add('Scooters', Url('/classified/vehicles/scooters'));
@@ -145,16 +145,73 @@ class ClassifiedController extends Controller
             $menu->item('vehicles')->add('Other Vehicles', Url('/classified/vehicles/other-vehicles'));
 
         });
-
-        $classifieds = Classified::where('is_approved', 1)
+        if (isset($cate2)){
+            $classifieds = $this->find_classifieds_by_category_slug($cate2);
+        }else if(isset($cate1)){
+            $classifieds = $this->find_classifieds_by_category_slug($cate1);
+        }else{
+            $classifieds = Classified::where('is_approved', 1)
             ->orderBy('create_datetime', 'desc')
-            ->paginate(20);
+            ->paginate(20); 
+        }
+
+        //$cid = $this->find_categoryid_by_slug('vehicles');
+        //$this->find_children_id($cid);
         return view('classified.list_view', [
                 "request" => $request,
                 'classifieds' => $classifieds,
 
         ]);
     }
+
+    private function find_classifieds_by_category_slug($slug){
+        Log::info('find_classifieds_by_category_slug -----------------------');
+            $cid = $this->find_categoryid_by_slug($slug);
+            $children_id = $this->find_children_id($cid);
+            if (isset($children_id)){
+                Log::info('find_classifieds_by_category_slug -----has children_id------------------');
+                $classifieds = Classified::whereIn('category_id', $children_id)
+                    ->orderBy('create_datetime', 'desc')
+                    ->paginate(20); 
+            }else{
+                Log::info('find_classifieds_by_category_slug -----no children_id------------------');
+                $classifieds = Classified::where('category_id', $cid)
+                    ->orderBy('create_datetime', 'desc')
+                    ->paginate(20); 
+            }
+        return $classifieds;
+    }
+
+    private function find_categoryid_by_slug($slug){
+        //ClassifiedCategory::->where('slug', $slug)
+        Log::info('find_categoryid_by_slug -----------------------');
+        $result = DB::table('classified_category')->select('id')->where('slug', $slug)->get();
+        $categoryid = $result[0]->id;
+        Log::info($categoryid );
+        return $categoryid;
+    }
+
+    private function find_children_id($parent_id){
+        $result = DB::table('classified_category')->select('id')->where('parent_id', $parent_id)->get();
+        $rtn = array();
+        Log::info('find_children_id -----------------------');
+        if(count($result)>0){
+            //
+            //Log::info($result);
+            Log::info('find_children_id -----isset------------------');
+            foreach ($result as $k => $v){
+                $rtn[] = $v->id;
+            }
+        }else{
+            Log::info('find_children_id ----------null-------------');
+            //eturn null;
+            $rtn = null;
+        }
+        //Log::info($rtn);
+        return $rtn;
+
+    }
+
 
     public function item_view(Request $request){
         $id = $request->get('id');
