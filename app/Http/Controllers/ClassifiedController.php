@@ -207,7 +207,26 @@ class ClassifiedController extends Controller
         }
         //Log::info($rtn);
         return $rtn;
+    }
 
+    private function find_category_parent_id($id){
+        $result = DB::table('classified_category')->select('parent_id')->where('id', $id)->get();
+
+        //Log::info('find_children_id -----------------------');
+        if(count($result)>0){
+            //
+            //Log::info($result);
+            Log::info('find_category_parent_id -----isset------------------');
+            foreach ($result as $k => $v){
+                $rtn = $v->parent_id;
+            }
+        }else{
+            Log::info('find_category_parent_id ----------null-------------');
+            //eturn null;
+            $rtn = null;
+        }
+        //Log::info($rtn);
+        return $rtn;
     }
 
 
@@ -253,6 +272,10 @@ class ClassifiedController extends Controller
         ]);
     }
 
+    private function generate_link($id){
+
+    }
+
     public function submit_edit(Request $request){
         //user submit edit
 
@@ -271,6 +294,7 @@ class ClassifiedController extends Controller
         ]);
         //$validator = Validator::make($input, $rules, $messages);
         $classified = new Classified;
+        
         $classified->is_approved = 1;
         $data = $request->all();
 
@@ -279,10 +303,16 @@ class ClassifiedController extends Controller
         $classified->contributor_id = $user_id;
         $classified->title = $data['title'];
         $classified->save();
-        Log::info($classified->slug);
+
+        
         $classified->update($data);
+        $id = $classified->id;
 
-
+        $category_id = $classified->category_id;
+        $pid = $this->find_category_parent_id($category_id);
+        
+        $classified = Classified::find($id);
+        
         return redirect('/classified');
        
     }
