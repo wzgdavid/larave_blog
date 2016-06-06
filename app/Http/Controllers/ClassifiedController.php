@@ -155,8 +155,6 @@ class ClassifiedController extends Controller
             ->paginate(20); 
         }
 
-        //$cid = $this->find_categoryid_by_slug('vehicles');
-        //$this->find_children_id($cid);
         return view('classified.list_view', [
                 "request" => $request,
                 'classifieds' => $classifieds,
@@ -256,13 +254,16 @@ class ClassifiedController extends Controller
     }
 
     public function submit_edit(Request $request){
+        //user submit edit
+
+        Log::info('submit_edit-=-=---------------');
         $category_id = $request->get('category_id');
         //$classified = Classified::find($id);
 
 
         $this->validate($request, [
             'title' => 'required|max:200',
-            'content' => 'required|max:60000',
+            'content' => 'required|max:20000',
             //'category_id' => 'required|digits_between:1,9999999',
             'category_id' => 'required|not_in:0',
 
@@ -278,6 +279,7 @@ class ClassifiedController extends Controller
         $classified->contributor_id = $user_id;
         $classified->title = $data['title'];
         $classified->save();
+        Log::info($classified->slug);
         $classified->update($data);
 
 

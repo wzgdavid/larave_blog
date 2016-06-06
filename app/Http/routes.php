@@ -31,10 +31,7 @@ Route::group(['middleware' => ['web']], function ()
         'uses' => 'ClassifiedController@item_view',
     ]);
 
-    Route::get('/classified/{cate1?}/{cate2?}', [
-        'as'   => 'classified',
-        'uses' => 'ClassifiedController@list_view',
-    ]);
+
 
 
     Route::get('/classified/get_metro_stations', [
@@ -55,6 +52,11 @@ Route::group(['middleware' => ['web']], function ()
         ]);
 
     });
+    
+    Route::get('/classified/{cate1?}/{cate2?}', [
+        'as'   => 'classified',
+        'uses' => 'ClassifiedController@list_view',
+    ]);
 
     //need admin logged
     Route::group(['middleware' => ['admin_logged', 'can_see']], function ()
