@@ -3,6 +3,7 @@ node_modules
 public/storage
 public/sitemap.xml
 public/article/image/
+public/media/
 storage
 Homestead.yaml
 Homestead.json

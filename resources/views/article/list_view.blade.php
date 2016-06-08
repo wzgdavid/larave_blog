@@ -14,11 +14,11 @@
 
     @foreach ($articles as $item)
   <div class="classified-list-item">
-    <a href="{{$item->get_absolute_url}}"><img src="{%replace_none $item->get_main_image_url default_main_img%}" alt="" class="list-image"/></a>
+    <a href="{{$item->get_absolute_url}}"><img src="{{ $item->pic }}" alt="" class="list-image"/></a>
     <div class="i-right">
       <div class="i1">
         <!--<a href="{{$item->get_absolute_url}}">{{ substr($item->title, 0, 100) }}</a>-->
-        <a href="{!! URL::route('classified.item_view', ['id' => $item->id]) !!}" title='edit'><i class="fa fa-pencil-square-o fa-2x">{{ substr($item->title, 0, 100) }}</i></a>
+        <a href="{!! URL::route('article.item_view', ['id' => $item->id]) !!}" title='edit'><i class="fa fa-pencil-square-o fa-2x">{{ substr($item->title, 0, 100) }}</i></a>
       </div>
       <div class="i2">
         
@@ -27,10 +27,10 @@
       <div class="i3">
         <a href=""><span>Posted</span></a>
         <br />
-        <span class="i3i1">{{ date("d",strtotime($item->start_datetime)) }}</span>
+        <span class="i3i1">{{ date("d",strtotime($item->datetime_publish)) }}</span>
         <br />
         
-        <span class="i3i2">{{ date("y-m",strtotime($item->start_datetime)) }}</span>
+        <span class="i3i2">{{ date("y-m",strtotime($item->datetime_unpublish)) }}</span>
         <br />
         <!--<span class="i3i3">{{$item->start_datetime}}</span>-->
       </div>

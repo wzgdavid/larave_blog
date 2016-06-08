@@ -22,17 +22,20 @@ Route::group(['middleware' => ['web']], function () {
 
 Route::group(['middleware' => ['web']], function ()
 {
-    Route::get('/classified/item_view', [
-        'as'   => 'classified.item_view',
-        'uses' => 'ClassifiedController@item_view',
-    ]);
+
 
     Route::get('/articles', [
         'as'   => 'article.list_view',
         'uses' => 'ArticleController@list_view',
     ]);
-
-
+    Route::get('/articles/item_view', [
+        'as'   => 'article.item_view',
+        'uses' => 'ArticleController@item_view',
+    ]);
+    Route::get('/classified/item_view', [
+        'as'   => 'classified.item_view',
+        'uses' => 'ClassifiedController@item_view',
+    ]);
     Route::get('/classified/get_metro_stations', [
         'as'   => 'classified.get_metro_stations',
         'uses' => 'ClassifiedController@get_metro_stations',
