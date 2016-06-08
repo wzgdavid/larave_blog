@@ -339,5 +339,19 @@ class ArticleController extends Controller
         return $availableTags;
     }
 
+    public function list_view(Request $request){
+
+
+        $articles = Article::where('is_approved', 1)
+            ->orderBy('date_created', 'desc')
+            ->paginate(20); 
+
+
+        return view('article.list_view', [
+                "request" => $request,
+                'articles' => $articles,
+
+        ]);
+    }
 
 }

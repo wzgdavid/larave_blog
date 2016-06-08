@@ -71,7 +71,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Home</a></li>
-                    <li><a href="/article">article</a></li>
+                    <li><a href="/articles">Article</a></li>
                     <li><a href="/votepage">vote</a></li>
                     <li><a href='/classified'>Classified</a></li>
                 </ul>

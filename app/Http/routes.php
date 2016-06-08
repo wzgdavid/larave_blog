@@ -19,10 +19,6 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 
-Route::get('/article', 'ArticleController@index');
-//Route::get('/admin/article/list', 'ArticleController@admin_list');
-
-
 
 Route::group(['middleware' => ['web']], function ()
 {
@@ -31,7 +27,10 @@ Route::group(['middleware' => ['web']], function ()
         'uses' => 'ClassifiedController@item_view',
     ]);
 
-
+    Route::get('/articles', [
+        'as'   => 'article.list_view',
+        'uses' => 'ArticleController@list_view',
+    ]);
 
 
     Route::get('/classified/get_metro_stations', [
