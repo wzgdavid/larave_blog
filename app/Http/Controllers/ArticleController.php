@@ -12,18 +12,21 @@ use App\ArticleType;
 use View, Redirect, App, Config, Log, DB, Event,Storage;
 use Cartalyst\Sentry\Users\Eloquent\User;
 use DOMDocument;
+use App\Repositories\ArticleRepository;
 
 class ArticleController extends Controller
 {
     //
     protected $auth;
     
-    public function __construct($config_reader = null)
+    public function __construct($config_reader = null,ArticleRepository $articles)
     {
         //$this->article_repository = App::make('article_repository');
         $this->config_reader = $config_reader ? $config_reader : App::make('config');
         $this->results_per_page = $this->config_reader->get('acl_base.rows_per_page');
         $this->authenticator = App::make('authenticator');
+        $this->articles = $articles;
+
     }
 
     public function index(Request $request)
@@ -92,7 +95,8 @@ class ArticleController extends Controller
     }
 
     public function delete_article(Request $request){
-        Article::destroy($request->get('id')); // alse can use ->input('id')
+        //Article::destroy($request->get('id')); // alse can use ->input('id')
+        $this->articles->delete($request->get('id'));
         return redirect('/admin/article/list');
     }
 

@@ -10,8 +10,10 @@ use LaravelAcl\Authentication\Models\Group;
 use LaravelAcl\Authentication\Exceptions\UserNotFoundException as NotFoundException;
 use App, Event;
 use Cartalyst\Sentry\Groups\GroupNotFoundException;
+use App\Article;
 
-class ArticleRepository implements BaseRepositoryInterface
+
+class ArticleRepository
 {
     /**
      * Sentry instance
@@ -52,17 +54,13 @@ class ArticleRepository implements BaseRepositoryInterface
         return $obj;
     }
 
-    /**
-     * Deletes a new object
-     *
-     * @param $id
-     * @return mixed
-     */
+
     public function delete($id)
     {
-        $obj = $this->find($id);
-        Event::fire('repository.deleting', [$obj]);
-        return $obj->delete();
+        //$obj = $this->find($id);
+        //Event::fire('repository.deleting', [$obj]);
+        //return $obj->delete();
+        Article::destroy($id);
     }
 
     /**
