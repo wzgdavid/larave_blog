@@ -81,6 +81,7 @@ return [
    */
 
   'rows_per_page' => 100, //if not set , use rows_per_page
+  'articles_per_page' => 20,
   "captcha_signup" => true,
 
   /*

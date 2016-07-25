@@ -346,9 +346,7 @@ class ArticleController extends Controller
     public function list_view(Request $request){
 
 
-        $articles = Article::where('is_approved', 1)
-            ->orderBy('date_created', 'desc')
-            ->paginate(20); 
+        $articles = $this->articles->get_articles(); 
 
 
         return view('article.list_view', [
