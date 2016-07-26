@@ -197,7 +197,7 @@ def import_mysql_boolean():
         arow.append(1) if row[6] is True else arow.append(0) # is_homepage_sponsored
         arow.append(1) if row[7] is True else arow.append(0) # is_home_featured
         sql = '''
-        update articles set 
+        update article_article set 
             is_approved={is_approved}, 
             is_special={is_special}, 
             is_welcome={is_welcome}, 
@@ -217,7 +217,7 @@ def import_mysql_boolean():
 
             )
 
-        print sql
+        #print sql
         cur2.execute(sql) 
     cur2.close()
     mysql_conn.commit()
@@ -315,8 +315,8 @@ if __name__ == '__main__':
     #copy_category()
     #copy_author()
     #copy_article()
-    #import_mysql_boolean()
-    copy_article_tags()
+    import_mysql_boolean()
+    #copy_article_tags()
     pass
 
 
