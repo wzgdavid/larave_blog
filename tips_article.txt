@@ -109,4 +109,24 @@ alter table blog.article add column is_proofread tinyint(1) default 0;
             $table->foreign('user_id')->references('id')->on('users');
 
 
-
+整理一下如下
+article表 从pgsql拷到mysql
+1  article表拷到本地pg数据库
+   1.1 $ pg_dump -h expat-posgres-0327.cps3uyndw5ab.ap-northeast-1.rds.amazonaws.com -U ringier expat -t article_article >/home/david/article_article.sql
+   1.2 改sql文件中的用户名，改为本地数据库的用户名  例如ringier-->david
+   1.3 $ psql -h localhost -U david postgres -t article_article< /home/david/article_article.sql
+2  从postgres中导出数据到csv中
+   2.1 新建一个csv文档，给权限，$ chmod 777 article_article.csv
+   2.2 以超级用户postgres， 密码postgres 登录 pgsql, 
+       运行sql, $ COPY (SELECT * FROM article_article) TO '/home/david/article_article.csv' WITH CSV HEADER;
+   2.3 用vim把导出的csv文件的第一行删掉（culomn名删了）
+3  csv中导入mysql
+   3.1 mysql 是从 /var/lib/mysql/blog （blog是数据库名）这个目录下读文件的，所以把csv放到此目录下
+       $ sudo cp article_article.csv /var/lib/mysql/blog/article_article.csv
+   3.2 建一个表article_article 
+   3.3然后在mysql运行sql命令：
+load data infile 'article_article.csv' 
+into table blog.article_article
+fields terminated by ',' optionally enclosed by '"' escaped by '"' 
+lines terminated by '\n'; 
+4  pgsql用true false表示boolean，mysql用0,1，此时的mysql的article表中布尔值都是0，明显不对， 所以要做修改，我是用python脚本
