@@ -113,9 +113,27 @@ class AuthController extends Controller {
      */
     public function getLogout()
     {
-        $this->authenticator->logout();
 
-        return redirect('/login');
+        //superadmin logout redirect to /admin/login, others to /login
+        $logged_user = $this->authenticator->getLoggedUser()->id;
+        $results = DB::table('users_groups')
+            ->select('user_id')
+            ->where('group_id', 1)->get();
+
+        $admin_id = array();
+        foreach ($results as $r){
+                array_push($admin_id, $r->user_id);
+        }
+
+        if (in_array($logged_user, $admin_id)){
+            $login = '/admin/login';
+        }else{
+            $login = '/login';
+        }
+        //end
+
+        $this->authenticator->logout();
+        return redirect($login);
     }
 
     /**
