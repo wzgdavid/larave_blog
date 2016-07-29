@@ -42,7 +42,7 @@
         <span class="i3i1">{{ date("d",strtotime($item->start_datetime)) }}</span>
         <br />
         
-        <span class="i3i2">{{ date("y-m",strtotime($item->start_datetime)) }}</span>
+        <span class="i3i2">{{ date("M",strtotime($item->start_datetime)) }}</span>
         <br />
         <!--<span class="i3i3">{{$item->start_datetime}}</span>-->
       </div>

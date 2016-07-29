@@ -32,7 +32,7 @@
         <span class="i3i1">{{ date("d",strtotime($item->datetime_publish)) }}</span>
         <br />
         
-        <span class="i3i2">{{ date("y-m",strtotime($item->datetime_unpublish)) }}</span>
+        <span class="i3i2">{{ date("M",strtotime($item->datetime_publish)) }}</span>
         <br />
         <!--<span class="i3i3">{{$item->start_datetime}}</span>-->
       </div>
