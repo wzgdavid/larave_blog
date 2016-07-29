@@ -34,7 +34,7 @@
         
         <span class="i3i2">{{ date("M",strtotime($item->datetime_publish)) }}</span>
         <br />
-        <!--<span class="i3i3">{{$item->start_datetime}}</span>-->
+        <span class="i3i3">{{ date("D",strtotime($item->datetime_publish)) }}</span>
       </div>
       <div style="clear:both"></div>
     </div>
