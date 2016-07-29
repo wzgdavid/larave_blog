@@ -22,7 +22,7 @@
       </div>
       <div class="i2">
         
-        <div class="i2i2">{{ substr($item->content, 0, 120) }}</div>
+        <div class="i2i2">{{ substr(strip_tags($item->content), 0, 120) }}</div>
       </div>
       <div class="i3">
         <a href=""><span>Posted</span></a>
