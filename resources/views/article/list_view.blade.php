@@ -14,7 +14,9 @@
 
     @foreach ($articles as $item)
   <div class="classified-list-item">
-    <a href="{{$item->get_absolute_url}}"><img src="{{ $item->pic }}" alt="" class="list-image"/></a>
+    <a href="{!! URL::route('article.item_view', ['id' => $item->id]) !!}">
+      <img src="{{ $item->pic }}" alt="" class="list-image"/>
+    </a>
     <div class="i-right">
       <div class="i1">
         <!--<a href="{{$item->get_absolute_url}}">{{ substr($item->title, 0, 100) }}</a>-->

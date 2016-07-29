@@ -25,15 +25,16 @@
 
     @foreach ($classifieds as $item)
   <div class="classified-list-item">
-    <a href="{{$item->get_absolute_url}}"><img src="{%replace_none $item->get_main_image_url default_main_img%}" alt="" class="list-image"/></a>
+    <a href="{!! URL::route('classified.item_view', ['id' => $item->id]) !!}">
+      <img src="{{ $item->get_main_image_url }}" alt="" class="list-image"/>
+    </a>
     <div class="i-right">
       <div class="i1">
-      	<!--<a href="{{$item->get_absolute_url}}">{{ substr($item->title, 0, 100) }}</a>-->
       	<a href="{!! URL::route('classified.item_view', ['id' => $item->id]) !!}" title='edit'><i class="fa fa-pencil-square-o fa-2x">{{ substr($item->title, 0, 100) }}</i></a>
       </div>
       <div class="i2">
         
-        <div class="i2i2">{{ substr($item->content, 0, 120) }}</div>
+        <div class="i2i2">{{ substr(strip_tags($item->content), 0, 120) }}</div>
       </div>
       <div class="i3">
         <a href=""><span>Posted</span></a>
