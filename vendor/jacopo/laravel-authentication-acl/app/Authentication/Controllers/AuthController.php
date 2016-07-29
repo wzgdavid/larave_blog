@@ -72,7 +72,8 @@ class AuthController extends Controller {
             $errors = $this->authenticator->getErrors();
             return redirect()->route("user.login")->withInput()->withErrors($errors);
         }
-
+        $logged_clientuser = $this->authenticator->getLoggedUser();
+        $request->session()->put('logged_clientuser', $logged_clientuser);
         return Redirect::to(Config::get('acl_base.user_login_redirect_url'));
         
     }
@@ -111,7 +112,7 @@ class AuthController extends Controller {
      * 
      * @return string
      */
-    public function getLogout()
+    public function getLogout(Request $request)
     {
 
         //superadmin logout redirect to /admin/login, others to /login
@@ -131,7 +132,7 @@ class AuthController extends Controller {
             $login = '/login';
         }
         //end
-
+        $request->session()->forget('logged_clientuser');
         $this->authenticator->logout();
         return redirect($login);
     }

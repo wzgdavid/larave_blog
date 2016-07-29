@@ -78,27 +78,14 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
-                    @if (Auth::guest())
+                    @if (Session::get('logged_clientuser') == null)
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/user/signup') }}">Register</a></li>
                     @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                            </ul>
-                        </li>
-
-
-
-                    @endif
                         <li class="dropdown dropdown-user">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown-profile">
                             @include('laravel-authentication-acl::admin.layouts.partials.avatar', ['size' => 18])
-                            <span id="nav-email">{{ isset($logged_user) ? $logged_user->email : 'User' }}</span> <i class="fa fa-caret-down"></i>
+                            <span id="nav-email">{{ Session::get('logged_clientuser')->email }}</span> <i class="fa fa-caret-down"></i>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
@@ -110,6 +97,10 @@
                                 </li>
                             </ul>
                         </li>
+
+        
+                    @endif
+
                 </ul>
 
             </div>
