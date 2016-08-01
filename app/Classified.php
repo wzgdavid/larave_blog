@@ -41,7 +41,7 @@ class Classified extends Model implements SluggableInterface
         'category_id',
         'merto_line',
         'station',
-
+        'url',
 
 
     ];

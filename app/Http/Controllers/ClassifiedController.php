@@ -10,6 +10,8 @@ use App\Classified;
 use App\ClassifiedCategory;
 use View, Redirect, App, Config, Log, DB, Event,Storage, Menu;
 use Illuminate\Validation\Validator;
+use Cocur\Slugify\Slugify;
+
 
 class ClassifiedController extends Controller
 {
@@ -299,15 +301,19 @@ class ClassifiedController extends Controller
         $data = $request->all();
 
         $logged_user = $this->authenticator->getLoggedUser();
-        $user_id = $logged_user->user_profile()->first()->id;
+        $user_id = $logged_user->id;
         $classified->contributor_id = $user_id;
         $classified->title = $data['title'];
         $classified->save();
 
-        
+        $slugify = new Slugify();
+        $slugged_title = $slugify->slugify($data['title']);
+        $data['url'] = $slugged_title.'-'.$classified->id;
         $classified->update($data);
         $id = $classified->id;
-
+        //Log::info($data);
+        //Log::info($classified);
+        
         $category_id = $classified->category_id;
         $pid = $this->find_category_parent_id($category_id);
         
