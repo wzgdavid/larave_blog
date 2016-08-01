@@ -224,20 +224,20 @@ class ArticleController extends Controller
         //unset($data['_token']);
         //Log::info('------------is_in_sitemap---------------------77');
         //Log::info('article title ---'.$article->title);
-
-        if ($request->get('is_in_sitemap') == 1) {
-        
-            //Log::info('is in sitemap');
-            $this->add_to_sitemap($article->id, $article->hyperlink);
-        }else{
-            //Log::info($request->get('is_in_sitemap'));
-            $this->remove_from_sitemap($id);
-        }
-        $this->check_unpublish();
         $slugify = new Slugify();
         $slugged_title = $slugify->slugify($request->get('title'));
         $data['hyperlink'] = $slugged_title.'-'.$article->id;
         //Log::info($data);
+        if ($request->get('is_in_sitemap') == 1) {
+        
+            //Log::info('is in sitemap');
+            $this->add_to_sitemap($article->id, $data['hyperlink']);
+        }else{
+            //Log::info($request->get('is_in_sitemap'));
+            $this->remove_from_sitemap($article->id);
+        }
+        $this->check_unpublish();
+
         $article->update($data);
 
         //return $article;
