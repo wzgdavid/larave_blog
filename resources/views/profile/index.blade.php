@@ -38,10 +38,16 @@
 
                         <h4><i class="fa fa-cubes"></i> User data</h4>
                         {!! Form::model($user_profile,['route'=>'users.profile.edit', 'method' => 'post']) !!}
-                        <!-- code text field -->
+                                                <!-- password text field -->
                         <div class="form-group">
-                            {!! Form::label('code','User code:') !!}
-                            {!! Form::text('code', null, ['class' => 'form-control', 'placeholder' => '']) !!}
+                            {!! Form::label('password','new password:') !!}
+                            {!! Form::password('password', ['class' => 'form-control']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('password') !!}</span>
+                        <!-- password_confirmation text field -->
+                        <div class="form-group">
+                            {!! Form::label('password_confirmation','confirm password:') !!}
+                            {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
                         </div>
                         <span class="text-danger">{!! $errors->first('code') !!}</span>
                         <!-- first_name text field -->
