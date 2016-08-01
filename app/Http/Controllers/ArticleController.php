@@ -13,6 +13,7 @@ use View, Redirect, App, Config, Log, DB, Event,Storage;
 use Cartalyst\Sentry\Users\Eloquent\User;
 use DOMDocument;
 use App\Repositories\ArticleRepository;
+use Cocur\Slugify\Slugify;
 
 class ArticleController extends Controller
 {
@@ -223,6 +224,7 @@ class ArticleController extends Controller
         //unset($data['_token']);
         //Log::info('------------is_in_sitemap---------------------77');
         //Log::info('article title ---'.$article->title);
+
         if ($request->get('is_in_sitemap') == 1) {
         
             //Log::info('is in sitemap');
@@ -232,7 +234,12 @@ class ArticleController extends Controller
             $this->remove_from_sitemap($id);
         }
         $this->check_unpublish();
+        $slugify = new Slugify();
+        $slugged_title = $slugify->slugify($request->get('title'));
+        $data['hyperlink'] = $slugged_title.'-'.$article->id;
+        //Log::info($data);
         $article->update($data);
+
         //return $article;
         return Redirect::route('admin.article.edit',["id" => $article->id])->withMessage(Config::get('acl_messages.flash.success.article_edit_success'));
     }

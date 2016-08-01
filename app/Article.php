@@ -37,6 +37,7 @@ class Article extends Model
         'page_title',
         'meta_description',
         'keywords',
+        'hyperlink',
 
         ];
 
