@@ -171,7 +171,7 @@ class ArticleController extends Controller
             //$article->save();
             //$article->retag('');
             $article->datetime_publish = date("Y-m-d").' '.date("h:i:s");
-            //$article->datetime_unpublish = date("Y-m-d",strtotime("+100 year")).' '.date("h:i:s");
+            $article->datetime_unpublish = date("Y-m-d",strtotime("+100 year")).' '.date("h:i:s");
             //$article->datetime_unpublish = '';
             
 
@@ -184,7 +184,7 @@ class ArticleController extends Controller
                 $user_name = 'no user';
             }   
             $article->user_id = $user_id;
-            $article->save();
+            //$article->save();
             return view('article.admin_article_edit', [
                 'article' => $article,
                 //"request" => $request,
@@ -200,6 +200,7 @@ class ArticleController extends Controller
 
     public function post_edit_article(Request $request)
     {
+        //Log::info('--------------post_edit_article-------------------');
         $id = $request->get('id');
 
         $article = Article::find($id);
@@ -219,7 +220,7 @@ class ArticleController extends Controller
         $data['datetime_publish'] = $publish_date.' '.$publish_time;
         $data['datetime_unpublish'] = $unpublish_date.' '.$unpublish_time;
         /*Log::info('---------------------------------77');
-        Log::info($data);
+        
         Log::info('---------------------------------77');*/
         //unset($data['_token']);
         //Log::info('------------is_in_sitemap---------------------77');
@@ -227,7 +228,7 @@ class ArticleController extends Controller
         $slugify = new Slugify();
         $slugged_title = $slugify->slugify($request->get('title'));
         $data['hyperlink'] = $slugged_title.'-'.$article->id;
-        //Log::info($data);
+        
         if ($request->get('is_in_sitemap') == 1) {
         
             //Log::info('is in sitemap');
@@ -236,8 +237,9 @@ class ArticleController extends Controller
             //Log::info($request->get('is_in_sitemap'));
             $this->remove_from_sitemap($article->id);
         }
+        
+        //Log::info($data);
         $this->check_unpublish();
-
         $article->update($data);
 
         //return $article;
