@@ -108,13 +108,13 @@ Route::group(['middleware' => ['web']], function ()
             'as'   => 'userprofile.test',
             'uses' => 'LaravelAcl\Authentication\Controllers\AuthController@test'
         ]);
+
+    Route::group(['middleware' => ['logged']], function ()
+    {
         Route::get('/user/profile/edit', [
             'as'   => 'userprofile.edit',
             'uses' => 'LaravelAcl\Authentication\Controllers\AuthController@editProfile2'
         ]);
-    Route::group(['middleware' => ['logged']], function ()
-    {
-
 
     });
 
