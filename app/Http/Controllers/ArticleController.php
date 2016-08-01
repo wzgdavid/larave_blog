@@ -96,7 +96,9 @@ class ArticleController extends Controller
 
     public function delete_article(Request $request){
         //Article::destroy($request->get('id')); // alse can use ->input('id')
-        $this->articles->delete($request->get('id'));
+        $aid = $request->get('id');
+        $this->articles->delete($aid);
+        $this->remove_from_sitemap($aid);
         return redirect('/admin/article/list');
     }
 
@@ -181,7 +183,7 @@ class ArticleController extends Controller
                 $user_name = 'no user';
             }   
             $article->user_id = $user_id;
-
+            $article->save();
             return view('article.admin_article_edit', [
                 'article' => $article,
                 //"request" => $request,
@@ -219,10 +221,14 @@ class ArticleController extends Controller
         Log::info($data);
         Log::info('---------------------------------77');*/
         //unset($data['_token']);
-        if ($request->get('is_in_sitemap') == true) {
-            
-            $this->add_to_sitemap($id, $article->hyperlink);
+        //Log::info('------------is_in_sitemap---------------------77');
+        //Log::info('article title ---'.$article->title);
+        if ($request->get('is_in_sitemap') == 1) {
+        
+            //Log::info('is in sitemap');
+            $this->add_to_sitemap($article->id, $article->hyperlink);
         }else{
+            //Log::info($request->get('is_in_sitemap'));
             $this->remove_from_sitemap($id);
         }
         $this->check_unpublish();
@@ -278,17 +284,23 @@ class ArticleController extends Controller
     private function check_unpublish(Request $request=null){
         /*if unpublish date, remove article from sitemap and change aproved to false
         */
+        //Log::info('------------check_unpublish---------------------');
         $articles = Article::where('is_in_sitemap', 1)
                ->orderBy('datetime_unpublish', 'asc')
                ->take(10) //no need to check all
                ->get();
         $now = date("Y-m-d").' '.date("h:i:s");
         foreach($articles as $one){
+            //Log::info($one->title);
+            //Log::info(strtotime($now));
+            //Log::info( strtotime($one->datetime_unpublish) );
             if ( strtotime($now) > strtotime($one->datetime_unpublish) ){
+
                 $data = array();
                 $data['is_in_sitemap'] = 0;
                 $data['is_approved'] = 0;
                 $one->update($data);
+                //Log::info($one->id);
                 $this->remove_from_sitemap($one->id);
             }
         }
