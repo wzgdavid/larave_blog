@@ -378,15 +378,6 @@ class ArticleController extends Controller
     public function item_view(Request $request){
         $id = $request->get('id');
 
-        /*$categories = ClassifiedCategory::all();
-        $category_array = array('--------');
-        foreach ($categories as $c){
-
-                //Log::info($c->type_name.' - '.$c->parent_name.' - '.$c->name);
-                $key = $c->id;
-                $value = $c->name;
-                $category_array[$key] = $value;
-        }*/
         if (isset( $id )){
             $item = Article::find($id);
            
@@ -401,4 +392,15 @@ class ArticleController extends Controller
         }
     }
 
+    public function item_view2(Request $request, $hyperlink){
+
+            $item = Article::where('hyperlink', $hyperlink)->first();
+
+            return view('article.item_view', [
+                'item' => $item,
+                "request" => $request,
+                //'category_array' =>$category_array,
+            ]);
+
+    }
 }

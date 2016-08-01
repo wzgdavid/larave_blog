@@ -32,6 +32,10 @@ Route::group(['middleware' => ['web']], function ()
         'as'   => 'article.item_view',
         'uses' => 'ArticleController@item_view',
     ]);
+    Route::get('/articles/item/{hyperlink}', [
+        'as'   => 'article.item_view2',
+        'uses' => 'ArticleController@item_view2',
+    ]);
     Route::get('/classified/item_view', [
         'as'   => 'classified.item_view',
         'uses' => 'ClassifiedController@item_view',
