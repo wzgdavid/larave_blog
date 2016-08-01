@@ -176,7 +176,8 @@ class ArticleController extends Controller
             
 
             $logged_user = $this->authenticator->getLoggedUser();
-            $user_id = $logged_user->user_profile()->first()->id;
+            //$user_id = $logged_user->user_profile()->first()->id;
+            $user_id = $logged_user->id;
             $user = User::find($user_id);
             if (isset($user)){
                 $user_name = $user->name;
@@ -185,6 +186,7 @@ class ArticleController extends Controller
             }   
             $article->user_id = $user_id;
             //$article->save();
+            Log::info($article);
             return view('article.admin_article_edit', [
                 'article' => $article,
                 //"request" => $request,
