@@ -116,8 +116,8 @@ class AuthController extends Controller {
     {
 
         //superadmin logout redirect to /admin/login, others to /login
-        $logged_user = $this->authenticator->getLoggedUser()->id;
-        $results = DB::table('users_groups')
+        //$logged_user = $this->authenticator->getLoggedUser()->id;
+        /*$results = DB::table('users_groups')
             ->select('user_id')
             ->where('group_id', 1)->get();
 
@@ -127,14 +127,14 @@ class AuthController extends Controller {
         }
 
         if (in_array($logged_user, $admin_id)){
-            $login = '/admin/login';
+            $login = $_SERVER['HTTP_REFERER'];
         }else{
-            $login = '/login';
-        }
-        //end
+            $login = $_SERVER['HTTP_REFERER'];
+        }*/
+        
         $request->session()->forget('logged_clientuser');
         $this->authenticator->logout();
-        return redirect($login);
+        return redirect($_SERVER['HTTP_REFERER']);
     }
 
     /**
