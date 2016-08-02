@@ -203,6 +203,10 @@ class ArticleController extends Controller
     public function post_edit_article(Request $request)
     {
         //Log::info('--------------post_edit_article-------------------');
+        $this->validate($request, [
+            'title' => 'required|max:200',
+            'content' => 'required', 
+        ]);
         $id = $request->get('id');
 
         $article = Article::find($id);
@@ -245,7 +249,8 @@ class ArticleController extends Controller
         $article->update($data);
 
         //return $article;
-        return Redirect::route('admin.article.edit',["id" => $article->id])->withMessage(Config::get('acl_messages.flash.success.article_edit_success'));
+        return Redirect::route('admin.article.edit',["id" => $article->id])
+        ->withMessage(Config::get('acl_messages.flash.success.article_edit_success'));
     }
 
     private function add_to_sitemap($article_id=null, $article_url=null, $lastmod=null){
