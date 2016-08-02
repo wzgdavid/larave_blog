@@ -5,15 +5,7 @@
 
 @section('main_left')
 <div class="main_left">
-    @if (count($errors) > 0)
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+
             <div class="panel-body">
                 {!! Form::model($classified, [ 'url' => [URL::route('classified.submit_edit'), $classified->id], 'method' => 'post'] )  !!}
                        
@@ -24,6 +16,7 @@
                     {!! Form::select('category_id', $category_array, 
                         (isset($classified->category_id) && $classified->category_id) ? $classified->category_id : "0",['class' => 'form-control'] ) !!}  
                 </div>
+                <span class="text-danger">{!! $errors->first('category_id') !!}</span>
                 <!-- classified title field -->
                 <div class="form-group">
                     <font color="red">*</font>
@@ -31,6 +24,7 @@
                     
                     {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'title']) !!}
                 </div>
+                <span class="text-danger">{!! $errors->first('title') !!}</span>
                 <div class="form-group">
                     {!! Form::label("district","city area:") !!}
                     {!! Form::select('district_id', [
@@ -88,7 +82,7 @@
                     {!! Form::label('content','Description: ') !!}
                     {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
                 </div>
-
+                <span class="text-danger">{!! $errors->first('content') !!}</span>
                 {!! Form::hidden('id') !!}
                 
                 {!! Form::submit('Save', array("class"=>"btn btn-info pull-right ")) !!}
