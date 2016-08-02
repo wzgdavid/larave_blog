@@ -31,7 +31,7 @@ Admin area: edit article
                         <div class="form-group">
                             <div class="col-sm-6">
                                 <input type="hidden" name="MAX_FILE_SIZE" value="300000">
-                                <input id="img-input" name="file" type="file" class="form-control required"/>
+                                <input id="img-input" name="cover-photo" type="file" class="form-control required"/>
                             </div>
                             <span style="color:gray">choose a picture less than 300k</span>
                         </div>

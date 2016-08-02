@@ -104,7 +104,7 @@ Route::group(['middleware' => ['web']], function ()
       |--------------------------------------------------------------------------
       |
       */
-        Route::get('/test', [
+        Route::get('/testuserprofile', [
             'as'   => 'userprofile.test',
             'uses' => 'LaravelAcl\Authentication\Controllers\AuthController@test'
         ]);

@@ -15,6 +15,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/', function () {
         return view('welcome');
     });
+    Route::get('/test', function () {
+
+        Storage::disk('local')->put('file.txt', 'Contents');
+    });
 
 });
 

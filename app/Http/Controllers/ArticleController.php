@@ -186,7 +186,7 @@ class ArticleController extends Controller
             }   
             $article->user_id = $user_id;
             //$article->save();
-            Log::info($article);
+            //Log::info($article);
             return view('article.admin_article_edit', [
                 'article' => $article,
                 //"request" => $request,
@@ -321,20 +321,23 @@ class ArticleController extends Controller
 
 
     public function changepic(Request $request){
-        $file = $request->file('file');
+        $photo = $request->file('cover-photo');
         $id = $request->get('article_id');
         /*Log::info('---------------------------------111');
         Log::info($id);
         Log::info('---------------------------------111');*/
         $article = Article::find($id);
-
-        if($file -> isValid()){
-            $originalName = $file -> getClientOriginalName();
-            $extension = $file -> getClientOriginalExtension(); //上传文件的后缀.
+        if (!isset($article)){
+            $article = new Article;
+            $article->save();
+        }
+        if($photo -> isValid()){
+            $originalName = $photo -> getClientOriginalName();
+            $extension = $photo -> getClientOriginalExtension(); //上传文件的后缀.
             //echo $extension.'</br>';
             $newName = md5(date('ymdhis').$originalName).".".$extension;
 
-            $path = $file -> move(public_path().'/article/image/',$newName);
+            $path = $photo -> move(public_path().'/article/image/',$newName);
             $pic = 'article/image/'.$newName;
             
             @unlink ($article->pic); //delete the origin pic
