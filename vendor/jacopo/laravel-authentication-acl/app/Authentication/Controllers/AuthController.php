@@ -90,12 +90,7 @@ class AuthController extends Controller {
 
     public function editProfile2(Request $request)
     {
-        //for client user
-        //$user_id = $request->get('user_id');
-        //Log::info('user id ----------------- '.$user_id.'====');
-
         $logged_user = $this->authenticator->getLoggedUser();
-
         $user_id = $logged_user->user_profile()->first()->id;
         $user_profile = $logged_user->user_profile()->first();
         $custom_profile_repo = App::make('custom_profile_repository', [$user_profile->id]);
@@ -114,27 +109,10 @@ class AuthController extends Controller {
      */
     public function getLogout(Request $request)
     {
-
-        //superadmin logout redirect to /admin/login, others to /login
-        //$logged_user = $this->authenticator->getLoggedUser()->id;
-        /*$results = DB::table('users_groups')
-            ->select('user_id')
-            ->where('group_id', 1)->get();
-
-        $admin_id = array();
-        foreach ($results as $r){
-                array_push($admin_id, $r->user_id);
-        }
-
-        if (in_array($logged_user, $admin_id)){
-            $login = $_SERVER['HTTP_REFERER'];
-        }else{
-            $login = $_SERVER['HTTP_REFERER'];
-        }*/
-        
         $request->session()->forget('logged_clientuser');
         $this->authenticator->logout();
-        return redirect($_SERVER['HTTP_REFERER']);
+        //return redirect($_SERVER['HTTP_REFERER']);
+        return back();
     }
 
     /**
